@@ -29,4 +29,20 @@ public class InteractionManager : MonoBehaviour
     {
         
     }
+
+    public OVRManager manager;
+    public Camera camera;
+
+    public void ToggleAR()
+    {
+        
+        if(manager.isInsightPassthroughEnabled)
+        {
+            manager.isInsightPassthroughEnabled = false;
+            camera.clearFlags = CameraClearFlags.Skybox;
+        } else {
+            manager.isInsightPassthroughEnabled = true;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+        }
+    }
 }
