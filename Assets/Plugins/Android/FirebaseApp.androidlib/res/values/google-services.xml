@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">947278970521</string>
+  <string name="google_storage_bucket" translatable="false">eduvr-fd56d.appspot.com</string>
+  <string name="project_id" translatable="false">eduvr-fd56d</string>
+  <string name="google_api_key" translatable="false">AIzaSyAvOAyRI-P_Nt5XfqlR6pd0F7AtVRS6aeY</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAvOAyRI-P_Nt5XfqlR6pd0F7AtVRS6aeY</string>
+  <string name="google_app_id" translatable="false">1:947278970521:android:85cd1603d6e43a52d30208</string>
+  <string name="default_web_client_id" translatable="false">947278970521-84m1r48brdvkll775ohi8p917ip1cvol.apps.googleusercontent.com</string>
+</resources>
