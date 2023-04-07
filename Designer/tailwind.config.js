@@ -5,6 +5,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
   ],
+  important: '#__next',
   theme: {
     extend: {
       backgroundImage: {
@@ -15,4 +16,7 @@ module.exports = {
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  }
 }

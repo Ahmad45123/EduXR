@@ -1,8 +1,9 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import { Unity, useUnityContext } from "react-unity-webgl";
-
-const inter = Inter({ subsets: ['latin'] })
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { Button } from "@mui/material";
 
 export default function Home() {
 
@@ -18,14 +19,18 @@ export default function Home() {
       productVersion: "0.1",
     });
 
-  return (
-    <main className='bg-white w-full h-full'>
-      <div className='flex'>
-        <div>
+    function sendToUnity() {
+      sendMessage("Cube", "MoveRight");
+    }
 
+  return (
+    <main className="flex min-h-screen flex-col justify-between p-4">
+      <div className='flex gap-4 w-full'>
+        <div className="w-1/8">
+          <Button variant="contained" onClick={sendToUnity}>Move Right</Button>
         </div>
-        <div>
-          <Unity unityProvider={unityProvider} />
+        <div className="w-3/4">
+          <Unity unityProvider={unityProvider} className="w-full"/>
         </div>
       </div>
     </main>
