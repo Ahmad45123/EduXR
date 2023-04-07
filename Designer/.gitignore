@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+public/renderer/index.html
+public/renderer/Build/renderer.data
+public/renderer/Build/renderer.framework.js
+public/renderer/Build/renderer.loader.js
+public/renderer/Build/renderer.wasm
