@@ -11,7 +11,11 @@ const $nodewidth = 200;
 const $socketmargin = 6;
 const $socketsize = 16;
 
-type NodeExtraData = { width?: number; height?: number };
+type NodeExtraData = {
+  width?: number;
+  height?: number;
+  orderIndex?: { [key: string]: number };
+};
 
 export const NodeStyles = styled.div<
   NodeExtraData & { selected: boolean; styles?: (props: any) => any }
@@ -21,17 +25,16 @@ export const NodeStyles = styled.div<
   border-radius: 10px;
   cursor: pointer;
   box-sizing: border-box;
-  width: ${(props) =>
+  width: ${props =>
     Number.isFinite(props.width) ? `${props.width}px` : `${$nodewidth}px`};
-  height: ${(props) =>
-    Number.isFinite(props.height) ? `${props.height}px` : "auto"};
+  height: ${props => (Number.isFinite(props.height) ? `${props.height}px` : 'auto')};
   padding-bottom: 6px;
   position: relative;
   user-select: none;
   &:hover {
     background: #333;
   }
-  ${(props) =>
+  ${props =>
     props.selected &&
     css`
       border-color: red;
@@ -59,7 +62,8 @@ export const NodeStyles = styled.div<
     display: inline-block;
   }
   .input-title,
-  .output-title,.control-title {
+  .output-title,
+  .control-title {
     vertical-align: middle;
     color: white;
     display: inline-block;
@@ -78,24 +82,151 @@ export const NodeStyles = styled.div<
     display: block;
     padding: 5px;
   }
-  ${(props) => props.styles && props.styles(props)}
+  ${props => props.styles && props.styles(props)}
 `;
 
 type Props<S extends ClassicScheme> = {
-  data: S["Node"] & NodeExtraData;
+  data: S['Node'] & NodeExtraData;
   styles?: () => any;
   emit: RenderEmit<S>;
 };
 export type NodeComponent<Scheme extends ClassicScheme> = (
-  props: Props<Scheme>
+  props: Props<Scheme>,
 ) => JSX.Element;
 
+type ControlOrInputOrOutput =
+  | ClassicPreset.Control
+  | ClassicPreset.Input<ClassicPreset.Socket>
+  | ClassicPreset.Output<ClassicPreset.Socket>;
+
 export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
-  const inputs = Object.entries(props.data.inputs);
-  const outputs = Object.entries(props.data.outputs);
-  const controls = Object.entries(props.data.controls);
+  let inputs = Object.entries(props.data.inputs);
+  let outputs = Object.entries(props.data.outputs);
   const selected = props.data.selected || false;
-  const { id, label, width, height } = props.data;
+  const { id, label, width, height, orderIndex } = props.data;
+
+  const everythingList: [string, ControlOrInputOrOutput | undefined][] = Object.entries(
+    props.data.controls,
+  );
+
+  const execInpt = inputs.find(x => x[1]?.socket.name === 'exec');
+  everythingList.push(...inputs.filter(x => x[1]?.socket.name !== 'exec'));
+
+  const execOutputs = outputs.filter(x => x[1]?.socket.name === 'exec');
+  everythingList.push(...outputs.filter(x => x[1]?.socket.name !== 'exec'));
+
+  if (orderIndex) {
+    everythingList.sort((a, b) => {
+      return orderIndex[a[0]] - orderIndex[b[0]];
+    });
+  }
+
+  function RenderItemm(key: string, itm: ControlOrInputOrOutput) {
+    if (itm instanceof ClassicPreset.Control) {
+      return (
+        <div className="flex">
+          <span className="control-title self-center" data-testid="control-title">
+            {key}:
+          </span>
+          <RefComponent
+            className="control"
+            key={key}
+            init={ref =>
+              props.emit({
+                type: 'render',
+                data: {
+                  type: 'control',
+                  element: ref,
+                  payload: itm as any,
+                },
+              })
+            }
+            data-testid={`control-${key}`}
+          />
+        </div>
+      );
+    }
+
+    if (itm instanceof ClassicPreset.Input) {
+      return (
+        <div className="input ml-2" key={key} data-testid={`input-${key}`}>
+          <RefComponent
+            className="input-socket"
+            init={ref =>
+              props.emit({
+                type: 'render',
+                data: {
+                  type: 'socket',
+                  side: 'input',
+                  key: key,
+                  nodeId: id,
+                  element: ref,
+                  payload: itm.socket as any,
+                },
+              })
+            }
+            data-testid="input-socket"
+          />
+          {itm && (
+            <div className="input-title" data-testid="input-title">
+              {itm?.label}
+            </div>
+          )}
+          {itm?.control && itm?.showControl && (
+            <span className="input-control w-full ml-4">
+              <RefComponent
+                className="input-control"
+                key={key}
+                init={ref =>
+                  itm.control &&
+                  props.emit({
+                    type: 'render',
+                    data: {
+                      type: 'control',
+                      element: ref,
+                      payload: itm.control as any,
+                    },
+                  })
+                }
+                data-testid="input-control"
+              />
+            </span>
+          )}
+        </div>
+      );
+    }
+
+    if (itm instanceof ClassicPreset.Output) {
+      return (
+        <div
+          className={'output' + (itm.socket.name !== 'exec' ? ' mr-2' : '')}
+          key={key}
+          data-testid={`output-${key}`}
+        >
+          <div className="output-title" data-testid="output-title">
+            {itm?.label}
+          </div>
+          <RefComponent
+            className="output-socket"
+            init={ref =>
+              props.emit({
+                type: 'render',
+                data: {
+                  type: 'socket',
+                  side: 'output',
+                  key: key,
+                  nodeId: id,
+                  element: ref,
+                  payload: itm.socket as any,
+                },
+              })
+            }
+            data-testid="output-socket"
+          />
+        </div>
+      );
+    }
+  }
 
   return (
     <NodeStyles
@@ -105,113 +236,65 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
       styles={props.styles}
       data-testid="node"
     >
-      <div className="title" data-testid="title">
-        {label}
-      </div>
-      {/* Inputs */}
-      {inputs.map(
-        ([key, input]) =>
-          input && (
-            <div className={"input" + (input.socket.name !== "exec" ? " ml-2" : "")} key={key} data-testid={`input-${key}`}>
-              <RefComponent
-                className="input-socket"
-                init={(ref) =>
-                  props.emit({
-                    type: "render",
-                    data: {
-                      type: "socket",
-                      side: "input",
-                      key: key,
-                      nodeId: id,
-                      element: ref,
-                      payload: input.socket as any
-                    }
-                  })
-                }
-                data-testid="input-socket"
-              />
-              {input && (
-                <div className="input-title" data-testid="input-title">
-                  {input?.label}
-                </div>
-              )}
-              {input?.control && input?.showControl && (
-                <span className="input-control w-full ml-4">
-                  <RefComponent
-                    className="input-control"
-                    key={key}
-                    init={(ref) =>
-                      input.control &&
-                      props.emit({
-                        type: "render",
-                        data: {
-                          type: "control",
-                          element: ref,
-                          payload: input.control as any
-                        }
-                      })
-                    }
-                    data-testid="input-control"
-                  />
-                </span>
-              )}
-            </div>
-          )
-      )}
-
-      {/* Controls */}
-      {controls.map(([key, control]) => {
-        if (!control) return null;
-        return (<div className="flex">
-          <span className="control-title self-center" data-testid="control-title">
-            {key}: 
-          </span>
+      <div className="title flex" data-testid="title">
+        {execInpt && (
           <RefComponent
-            className="control"
-            key={key}
-            init={(ref) =>
+            className="input-socket -ml-2 h-10"
+            init={ref =>
               props.emit({
-                type: "render",
+                type: 'render',
                 data: {
-                  type: "control",
+                  type: 'socket',
+                  side: 'input',
+                  key: execInpt[0],
+                  nodeId: id,
                   element: ref,
-                  payload: control as any
-                }
+                  payload: execInpt[1]?.socket as any,
+                },
               })
             }
-            data-testid={`control-${key}`}
+            data-testid="input-socket"
           />
-        </div>);
-      })}
-
-      {/* Outputs */}
-      {outputs.map(
-        ([key, output]) =>
-          output && (
-            <div className={"output" + (output.socket.name !== "exec" ? " mr-2" : "")} key={key} data-testid={`output-${key}`}>
-              <div className="output-title" data-testid="output-title">
-                {output?.label}
-              </div>
-              <RefComponent
-                className="output-socket"
-                init={(ref) =>
-                  props.emit({
-                    type: "render",
-                    data: {
-                      type: "socket",
-                      side: "output",
-                      key: key,
-                      nodeId: id,
-                      element: ref,
-                      payload: output.socket as any
+        )}
+        <span className="mt-2">{label}</span>
+        <div className="ml-auto -mr-2 -mt-2">
+          {execOutputs.map(
+            ([key, output]) =>
+              output && (
+                <div
+                  className={'output' + (output.socket.name !== 'exec' ? ' mr-2' : '')}
+                  key={key}
+                  data-testid={`output-${key}`}
+                >
+                  <div className="output-title" data-testid="output-title">
+                    {output?.label}
+                  </div>
+                  <RefComponent
+                    className="output-socket"
+                    init={ref =>
+                      props.emit({
+                        type: 'render',
+                        data: {
+                          type: 'socket',
+                          side: 'output',
+                          key: key,
+                          nodeId: id,
+                          element: ref,
+                          payload: output.socket as any,
+                        },
+                      })
                     }
-                  })
-                }
-                data-testid="output-socket"
-              />
-            </div>
-          )
-      )}
+                    data-testid="output-socket"
+                  />
+                </div>
+              ),
+          )}
+        </div>
+      </div>
+
+      {everythingList
+        .filter(([key, obj]) => obj !== undefined)
+        .map(([key, obj]) => RenderItemm(key, obj!))}
     </NodeStyles>
   );
 }
