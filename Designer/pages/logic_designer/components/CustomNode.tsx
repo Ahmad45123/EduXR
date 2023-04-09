@@ -124,10 +124,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
   function RenderItemm(key: string, itm: ControlOrInputOrOutput) {
     if (itm instanceof ClassicPreset.Control) {
       return (
-        <div className="flex">
-          <span className="control-title self-center" data-testid="control-title">
-            {key}:
-          </span>
+        <div className="flex my-3">
           <RefComponent
             className="control"
             key={key}
