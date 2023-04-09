@@ -14,8 +14,8 @@ export class IfNode extends ClassicPreset.Node {
   constructor() {
     super('If');
 
-    const left = new ClassicPreset.Input(stringSocket, 'Left');
-    const right = new ClassicPreset.Input(stringSocket, 'Right');
+    const left = new ClassicPreset.Input(stringSocket, 'Left Value');
+    const right = new ClassicPreset.Input(stringSocket, 'Right Value');
     left.addControl(new InputBoxControl('Left Value'));
     right.addControl(new InputBoxControl('Right Value'));
 
