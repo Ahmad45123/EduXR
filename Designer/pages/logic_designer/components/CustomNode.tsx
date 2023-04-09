@@ -147,9 +147,9 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
 
     if (itm instanceof ClassicPreset.Input) {
       return (
-        <div className="input ml-2" key={key} data-testid={`input-${key}`}>
+        <div className="input ml-2 flex" key={key} data-testid={`input-${key}`}>
           <RefComponent
-            className="input-socket"
+            className="input-socket self-center"
             init={ref =>
               props.emit({
                 type: 'render',
@@ -165,13 +165,12 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
             }
             data-testid="input-socket"
           />
-          {itm && (
-            <div className="input-title" data-testid="input-title">
+          {!itm.control || !itm.showControl ? (
+            <div className="input-title self-center" data-testid="input-title">
               {itm?.label}
             </div>
-          )}
-          {itm?.control && itm?.showControl && (
-            <span className="input-control w-full ml-4">
+          ) : (
+            <span className="input-control self-center w-72">
               <RefComponent
                 className="input-control"
                 key={key}
