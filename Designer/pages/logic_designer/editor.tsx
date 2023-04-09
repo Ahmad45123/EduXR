@@ -17,6 +17,7 @@ import { GotoSceneNode } from './nodes/GotoSceneNode';
 import { IfNode } from './nodes/IfNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
+import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 
 type Schemes = GetSchemes<
   ClassicPreset.Node,
@@ -50,6 +51,9 @@ export async function createEditor(container: HTMLElement) {
         control(data) {
           if (data.payload instanceof ComboBoxControl) {
             return ComboBoxControlImpl;
+          }
+          if (data.payload instanceof InputBoxControl) {
+            return InputBoxControlImpl;
           }
           if (data.payload instanceof ClassicPreset.InputControl) {
             return Presets.classic.Control;
