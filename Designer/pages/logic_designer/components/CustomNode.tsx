@@ -263,9 +263,11 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
                   key={key}
                   data-testid={`output-${key}`}
                 >
-                  <div className="output-title" data-testid="output-title">
-                    {output?.label}
-                  </div>
+                  {output.label?.toLowerCase() !== 'exec' && (
+                    <div className="output-title" data-testid="output-title">
+                      {output?.label}
+                    </div>
+                  )}
                   <RefComponent
                     className="output-socket"
                     init={ref =>
