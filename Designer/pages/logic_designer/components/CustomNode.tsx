@@ -20,7 +20,7 @@ type NodeExtraData = {
 export const NodeStyles = styled.div<
   NodeExtraData & { selected: boolean; styles?: (props: any) => any }
 >`
-  background: black;
+  background: #121212;
   border: 2px solid grey;
   border-radius: 10px;
   cursor: pointer;
@@ -80,7 +80,8 @@ export const NodeStyles = styled.div<
   }
   .control {
     display: block;
-    padding: 5px;
+    padding: 10px;
+    width: 100%;
   }
   ${props => props.styles && props.styles(props)}
 `;
@@ -124,7 +125,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
   function RenderItemm(key: string, itm: ControlOrInputOrOutput) {
     if (itm instanceof ClassicPreset.Control) {
       return (
-        <div className="flex my-3">
+        <div className="flex my-3 w-full">
           <RefComponent
             className="control"
             key={key}

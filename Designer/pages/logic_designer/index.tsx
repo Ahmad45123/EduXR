@@ -1,6 +1,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { createEditor } from "./editor";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
 export function useRete(create: (el: HTMLElement) => Promise<() => void>) {
   const [container, setContainer] = useState(null);
@@ -8,7 +10,7 @@ export function useRete(create: (el: HTMLElement) => Promise<() => void>) {
 
   useEffect(() => {
     if (container) {
-      create(container).then((value) => {
+      create(container).then(value => {
         (editorRef as any).current = value;
       });
     }
@@ -37,7 +39,7 @@ export default function Test() {
 
   return (
     <div>
-      <div ref={ref} style={{ height: "100vh", width: "100vw" }}></div>
+      <div ref={ref} style={{ height: '100vh', width: '100vw' }}></div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { ClassicPreset } from 'rete';
 import { stringSocket, execSocket } from '../sockets';
+import { ComboBoxControl } from '../controls/ComboBoxControl';
 
 export class IfNode extends ClassicPreset.Node {
   width = 250;
@@ -18,7 +19,10 @@ export class IfNode extends ClassicPreset.Node {
     right.addControl(new ClassicPreset.InputControl('text'));
 
     this.addInput('left', left);
-    this.addControl('condition', new ClassicPreset.InputControl('text'));
+    this.addControl(
+      'condition',
+      new ComboBoxControl('Condition', ['Equals', 'Not Equals']),
+    );
     this.addInput('right', right);
 
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec'));
