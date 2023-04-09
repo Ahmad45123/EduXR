@@ -8,12 +8,17 @@ import {
 import { ClassicPreset } from 'rete';
 
 export class InputBoxControl extends ClassicPreset.Control {
+  public value: string = '';
   constructor(public label: string) {
     super();
   }
 }
 
 export function InputBoxControlImpl(props: { data: InputBoxControl }) {
+  function setValue(val: string) {
+    props.data.value = val;
+  }
+
   return (
     <ThemeProvider
       theme={createTheme({
@@ -22,7 +27,12 @@ export function InputBoxControlImpl(props: { data: InputBoxControl }) {
         },
       })}
     >
-      <TextField label={props.data.label} variant="standard" className="w-full" />
+      <TextField
+        label={props.data.label}
+        variant="standard"
+        className="w-full"
+        onChange={e => setValue(e.target.value)}
+      />
     </ThemeProvider>
   );
 }
