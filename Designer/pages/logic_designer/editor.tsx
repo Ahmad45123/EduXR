@@ -13,59 +13,15 @@ import {
 import { CustomNode } from "./components/CustomNode";
 import { execSocket, stringSocket } from "./sockets";
 import { ExecSocket } from "./components/ExecSocket";
+import { GotoSceneNode } from './nodes/GotoSceneNode';
+import { IfNode } from './nodes/IfNode';
+import { OnCollisionNode } from './nodes/OnCollisionNode';
 
 type Schemes = GetSchemes<
   ClassicPreset.Node,
   ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>
 >;
 type AreaExtra = ReactArea2D<Schemes>;
-
-class OnCollisionNode extends ClassicPreset.Node {
-  constructor() {
-    super("OnCollision");
-
-    this.addOutput("objName", new ClassicPreset.Output(stringSocket, "objName"));
-    this.addOutput("exec", new ClassicPreset.Output(execSocket, "Exec"));
-  }
-}
-
-class GotoSceneNode extends ClassicPreset.Node {
-  constructor() {
-    super("GotoScene");
-
-    const sceneName = new ClassicPreset.Input(stringSocket, "sceneName");
-    sceneName.addControl(new ClassicPreset.InputControl("text"));
-    this.addInput("sceneName", sceneName);
-
-    this.addInput("exec", new ClassicPreset.Input(execSocket, "Exec"));
-  }
-}
-
-class IfNode extends ClassicPreset.Node {
-  width = 250;
-  orderIndex = {
-    left: 0,
-    condition: 1,
-    right: 2,
-  };
-
-  constructor() {
-    super('If');
-
-    const left = new ClassicPreset.Input(stringSocket, 'Left');
-    const right = new ClassicPreset.Input(stringSocket, 'Right');
-    left.addControl(new ClassicPreset.InputControl('text'));
-    right.addControl(new ClassicPreset.InputControl('text'));
-
-    this.addInput('left', left);
-    this.addControl('condition', new ClassicPreset.InputControl('text'));
-    this.addInput('right', right);
-
-    this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec'));
-    this.addOutput('then', new ClassicPreset.Output(execSocket, 'Then'));
-    this.addOutput('else', new ClassicPreset.Output(execSocket, 'Else'));
-  }
-}
 
 export async function createEditor(container: HTMLElement) {
 
