@@ -26,8 +26,8 @@ export class IfNode extends ClassicPreset.Node {
     );
     this.addInput('right', right);
 
-    this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec'));
-    this.addOutput('then', new ClassicPreset.Output(execSocket, 'Then'));
-    this.addOutput('else', new ClassicPreset.Output(execSocket, 'Else'));
+    this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
+    this.addOutput('then', new ClassicPreset.Output(execSocket, 'Then', false));
+    this.addOutput('else', new ClassicPreset.Output(execSocket, 'Else', false));
   }
 }

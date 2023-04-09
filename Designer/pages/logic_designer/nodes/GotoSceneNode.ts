@@ -10,6 +10,6 @@ export class GotoSceneNode extends ClassicPreset.Node {
     sceneName.addControl(new InputBoxControl('Scene Name'));
     this.addInput('sceneName', sceneName);
 
-    this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec'));
+    this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
   }
 }

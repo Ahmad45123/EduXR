@@ -6,6 +6,6 @@ export class OnCollisionNode extends ClassicPreset.Node {
     super('OnCollision');
 
     this.addOutput('objName', new ClassicPreset.Output(stringSocket, 'Object Name'));
-    this.addOutput('exec', new ClassicPreset.Output(execSocket, 'Exec'));
+    this.addOutput('exec', new ClassicPreset.Output(execSocket, 'Exec', false));
   }
 }
