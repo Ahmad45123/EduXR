@@ -93,5 +93,10 @@ export async function createEditor(container: HTMLElement) {
   setTimeout(() => {
     AreaExtensions.zoomAt(area, editor.getNodes());
   }, 10);
-  return () => area.destroy();
+  return {
+    getJSON() {
+      return editor.export();
+    },
+    destroy: () => area.destroy(),
+  };
 }
