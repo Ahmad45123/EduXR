@@ -1,8 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { createEditor } from "./editor";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import { createEditor } from './editor';
 
 export function useRete<T extends (el: HTMLElement) => Promise<{ destroy: () => void }>>(
   create: T,
@@ -32,7 +30,7 @@ export function useRete<T extends (el: HTMLElement) => Promise<{ destroy: () => 
   return [setContainer, editor] as const;
 }
 
-export default function Test() {
+export default function LogicDesigner() {
   const [setContainer, editor] = useRete(createEditor);
   const ref = useRef(null);
 
@@ -42,18 +40,5 @@ export default function Test() {
     }
   }, [setContainer]);
 
-  const [jsonData, setJsonData] = useState('');
-
-  function fetchJSON() {
-    const data = editor?.getJSON();
-    setJsonData(data ?? '');
-  }
-
-  return (
-    <div>
-      <div ref={ref} style={{ height: '100vh', width: '100vw' }}></div>
-      <textarea className="w-100" value={jsonData} readOnly></textarea>
-      <button onClick={fetchJSON}>GET DATA</button>
-    </div>
-  );
+  return <div ref={ref} style={{ height: '100%', width: '100%' }}></div>;
 }
