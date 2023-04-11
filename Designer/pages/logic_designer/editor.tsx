@@ -19,6 +19,7 @@ import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 import { getSceneJSON } from './nodeExporter';
+import { SceneLoad } from './nodes/SceneLoad';
 
 type Schemes = GetSchemes<
   ClassicPreset.Node,
@@ -76,6 +77,7 @@ export async function createEditor(container: HTMLElement) {
   await editor.addNode(new GotoSceneNode());
   await editor.addNode(new GotoSceneNode());
   await editor.addNode(new IfNode());
+  await editor.addNode(new SceneLoad());
 
   editor.addPipe(context => {
     if (context.type === 'connectioncreate') {
