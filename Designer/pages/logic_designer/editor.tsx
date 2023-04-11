@@ -18,6 +18,7 @@ import { IfNode } from './nodes/IfNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
+import { getSceneJSON } from './nodeExporter';
 
 type Schemes = GetSchemes<
   ClassicPreset.Node,
@@ -55,9 +56,8 @@ export async function createEditor(container: HTMLElement) {
           if (data.payload instanceof InputBoxControl) {
             return InputBoxControlImpl;
           }
-          if (data.payload instanceof ClassicPreset.InputControl) {
-            return Presets.classic.Control;
-          }
+
+          return Presets.classic.Control;
         },
       },
     }),
@@ -95,7 +95,7 @@ export async function createEditor(container: HTMLElement) {
   }, 10);
   return {
     getJSON() {
-      return editor.export();
+      return JSON.stringify(getSceneJSON(editor.getNodes(), editor.getConnections()));
     },
     destroy: () => area.destroy(),
   };

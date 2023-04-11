@@ -6,8 +6,9 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { ClassicPreset } from 'rete';
+import { BaseCustomControl } from './BaseCustomControl';
 
-export class InputBoxControl extends ClassicPreset.Control {
+export class InputBoxControl extends BaseCustomControl {
   public value: string = '';
   constructor(public label: string) {
     super();

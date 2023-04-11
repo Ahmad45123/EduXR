@@ -8,9 +8,9 @@ import {
   CssBaseline,
 } from '@mui/material';
 import { ClassicPreset } from 'rete';
+import { BaseCustomControl } from './BaseCustomControl';
 
-export class ComboBoxControl extends ClassicPreset.Control {
-  public value: string = '';
+export class ComboBoxControl extends BaseCustomControl {
   constructor(public label: string, public choices: string[]) {
     super();
   }

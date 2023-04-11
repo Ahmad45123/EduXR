@@ -29,7 +29,7 @@
     "rete-area-plugin": "^2.0.0-beta.7",
     "rete-auto-arrange-plugin": "^2.0.0-beta.5",
     "rete-connection-plugin": "^2.0.0-beta.6",
-    "rete-react-render-plugin": "^2.0.0-beta.7",
+    "rete-react-render-plugin": "^2.0.0-beta.8",
     "rete-render-utils": "^2.0.0-beta.7",
     "styled-components": "^5.3.9",
     "tailwindcss": "3.3.1",

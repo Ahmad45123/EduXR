@@ -44,15 +44,15 @@ export default function Test() {
 
   const [jsonData, setJsonData] = useState('');
 
-  async function fetchJSON() {
-    const data = await editor?.getJSON();
-    setJsonData(JSON.stringify(data));
+  function fetchJSON() {
+    const data = editor?.getJSON();
+    setJsonData(data ?? '');
   }
 
   return (
     <div>
       <div ref={ref} style={{ height: '100vh', width: '100vw' }}></div>
-      <textarea className="w-100" value={jsonData}></textarea>
+      <textarea className="w-100" value={jsonData} readOnly></textarea>
       <button onClick={fetchJSON}>GET DATA</button>
     </div>
   );
