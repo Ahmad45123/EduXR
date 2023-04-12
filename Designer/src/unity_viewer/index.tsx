@@ -1,10 +1,11 @@
 import { Unity, useUnityContext } from 'react-unity-webgl';
+import * as React from 'react';
 
 type props = {
-  className?: string;
+  style?: React.CSSProperties | undefined;
 };
 
-export default function UnityViewer({ className }: props) {
+export default function UnityViewer({ style }: props) {
   const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: 'renderer/Build/renderer.loader.js',
     dataUrl: 'renderer/Build/renderer.data',
@@ -16,5 +17,5 @@ export default function UnityViewer({ className }: props) {
     productVersion: '0.1',
   });
 
-  return <Unity unityProvider={unityProvider} className={className} />;
+  return <Unity unityProvider={unityProvider} style={style} />;
 }

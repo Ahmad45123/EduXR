@@ -1,11 +1,8 @@
-import * as React from "react";
-import { ClassicPreset } from "rete";
-import {
-  ClassicScheme,
-  RefComponent,
-  RenderEmit
-} from "rete-react-render-plugin";
-import styled, { css } from "styled-components";
+import { Box } from '@chakra-ui/react';
+import * as React from 'react';
+import { ClassicPreset } from 'rete';
+import { ClassicScheme, RefComponent, RenderEmit } from 'rete-react-render-plugin';
+import styled, { css } from 'styled-components';
 
 const $nodewidth = 200;
 const $socketmargin = 6;
@@ -83,6 +80,38 @@ export const NodeStyles = styled.div<
     padding: 10px;
     width: 100%;
   }
+
+  .self-center {
+    self-align: center;
+  }
+
+  .w-72 {
+    width: 18rem;
+  }
+
+  .mr-2 {
+    margin-right: 0.5rem;
+  }
+
+  .-ml-2 {
+    margin-left: -0.5rem;
+  }
+  .ml-auto {
+    margin-left: auto;
+  }
+  .-mr-2 {
+    margin-right: -0.5rem;
+  }
+  .-mt-2 {
+    margin-top: -0.5rem;
+  }
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  .h-10 {
+    height: 2.5rem;
+  }
   ${props => props.styles && props.styles(props)}
 `;
 
@@ -125,7 +154,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
   function RenderItemm(key: string, itm: ControlOrInputOrOutput) {
     if (itm instanceof ClassicPreset.Control) {
       return (
-        <div className="flex my-3 w-full">
+        <Box display="flex" width="100%" my="0.75rem">
           <RefComponent
             className="control"
             key={key}
@@ -141,13 +170,19 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
             }
             data-testid={`control-${key}`}
           />
-        </div>
+        </Box>
       );
     }
 
     if (itm instanceof ClassicPreset.Input) {
       return (
-        <div className="input ml-2 flex" key={key} data-testid={`input-${key}`}>
+        <Box
+          ml="0.5rem"
+          display="flex"
+          className="input"
+          key={key}
+          data-testid={`input-${key}`}
+        >
           <RefComponent
             className="input-socket self-center"
             init={ref =>
@@ -189,7 +224,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
               />
             </span>
           )}
-        </div>
+        </Box>
       );
     }
 
@@ -233,7 +268,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
       styles={props.styles}
       data-testid="node"
     >
-      <div className="title flex" data-testid="title">
+      <Box display="flex" className="title" data-testid="title">
         {execInpt && (
           <RefComponent
             className="input-socket -ml-2 h-10"
@@ -289,7 +324,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
               ),
           )}
         </div>
-      </div>
+      </Box>
 
       {everythingList
         .filter(([key, obj]) => obj !== undefined)
