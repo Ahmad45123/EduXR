@@ -20,4 +20,9 @@ public class TestScript : MonoBehaviour
     {
         transform.Translate(Vector3.right * 0.1f);
     }
+
+    void Awake()
+    {
+        WebGLInput.captureAllKeyboardInput = false;
+    }
 }
