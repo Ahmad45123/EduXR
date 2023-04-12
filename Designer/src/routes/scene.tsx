@@ -18,57 +18,28 @@ import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { ClassicPreset } from 'rete';
 import { SearchIcon } from '@chakra-ui/icons';
 import * as React from 'react';
-
-type Scene = {
-  name: string;
-  sceneLogic?: {
-    nodes: BaseNode[];
-    connections: BaseConnection[];
-  };
-};
+import { SceneType } from '../eduxr_types';
+import { AppContext } from '../app';
+import { useParams } from 'react-router-dom';
 
 export default function Scene() {
-  const [scenes, setScenes] = useState<Scene[]>([]);
+  const { appdata, setAppdata } = React.useContext(AppContext);
+  const { sceneName } = useParams();
 
-  const addScene = () => {
-    const sceneName = prompt('Enter scene name');
-    setScenes([...scenes, { name: sceneName! }]);
-  };
-
-  const [isLogicEditorVisible, setLogicEditorVisibility] = useState(false);
-
-  const [curScene, setCurScene] = useState<string>('');
-  const showLogicDesigner = async (scene: Scene) => {
-    setLogicEditorVisibility(true);
-    setCurScene(scene.name);
-    await editor?.clearEditor();
-    if (scene.sceneLogic) {
-      await editor?.importSceneState(
-        scene.sceneLogic.nodes,
-        scene.sceneLogic.connections,
-      );
+  const [curScene, setCurScene] = useState<SceneType | undefined>();
+  useEffect(() => {
+    if (sceneName) {
+      setCurScene(appdata.scenes.find(scene => scene.name === sceneName));
     }
-  };
-
-  const closeLogicDesigner = () => {
-    // save scene logic
-    const sceneLogic = editor!.exportSceneState();
-    const scene = scenes.find(scene => scene.name === curScene);
-    if (scene) {
-      scene.sceneLogic = sceneLogic;
-    }
-
-    setScenes([...scenes.filter(scene => scene.name !== curScene), scene!]);
-    setLogicEditorVisibility(false);
-  };
+  }, [sceneName]);
 
   const [setContainer, editor] = useRete(createEditor);
-  const logicDesignerRef = useCallback(
-    (ref: any) => {
-      setContainer(ref);
-    },
-    [setContainer],
-  );
+  const logicDesignerRef = useRef(null);
+  useEffect(() => {
+    if (logicDesignerRef.current) {
+      setContainer(logicDesignerRef.current);
+    }
+  }, [logicDesignerRef.current]);
 
   return (
     <Box
@@ -79,31 +50,8 @@ export default function Scene() {
       justifyContent="space-between"
       padding="1em"
     >
-      <Modal isOpen={isLogicEditorVisible} onClose={closeLogicDesigner}>
-        <ModalOverlay />
-        <ModalContent minW="90%" height="86%">
-          <div ref={logicDesignerRef} style={{ width: '100%', height: '100%' }}></div>
-        </ModalContent>
-      </Modal>
-
       <Box width="50%">
-        <Card height="100%">
-          <CardBody>
-            <Button onClick={addScene}>Create Scene</Button>
-            <List width="100%">
-              {scenes.map(scene => (
-                <ListItem display="flex" gap="1em" mt="1em" key={scene.name}>
-                  <Text alignSelf="center">{scene.name}</Text>
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => showLogicDesigner(scene)}
-                    icon={<SearchIcon />}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </CardBody>
-        </Card>
+        <div ref={logicDesignerRef} style={{ width: '100%', height: '100%' }}></div>
       </Box>
       <Box width="75%" alignSelf="center">
         <UnityViewer style={{ width: '100%' }} />

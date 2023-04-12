@@ -7,10 +7,10 @@ type props = {
 
 export default function UnityViewer({ style }: props) {
   const { unityProvider, sendMessage } = useUnityContext({
-    loaderUrl: 'renderer/Build/renderer.loader.js',
-    dataUrl: 'renderer/Build/renderer.data',
-    frameworkUrl: 'renderer/Build/renderer.framework.js',
-    codeUrl: 'renderer/Build/renderer.wasm',
+    loaderUrl: '/renderer/Build/renderer.loader.js',
+    dataUrl: '/renderer/Build/renderer.data',
+    frameworkUrl: '/renderer/Build/renderer.framework.js',
+    codeUrl: '/renderer/Build/renderer.wasm',
     streamingAssetsUrl: 'StreamingAssets',
     companyName: 'DefaultCompany',
     productName: 'EduXRDesigner',
