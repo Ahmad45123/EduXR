@@ -18,12 +18,12 @@ import { IfNode } from './nodes/IfNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
-import { getSceneJSON } from './nodeExporter';
+import { getSceneJSON } from './node_exporter';
 import { SceneLoad } from './nodes/SceneLoad';
 import { DockPlugin, DockPresets } from 'rete-dock-plugin';
 import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
 import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
-import { BaseConnection, BaseNode } from './baseTypes';
+import { BaseConnection, BaseNode } from './base_types';
 
 type Schemes = GetSchemes<BaseNode, BaseConnection>;
 type AreaExtra = ReactArea2D<Schemes>;

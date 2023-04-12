@@ -2,7 +2,7 @@ import { ClassicPreset } from 'rete';
 import { stringSocket, execSocket } from '../sockets';
 import { ComboBoxControl } from '../controls/ComboBoxControl';
 import { InputBoxControl } from '../controls/InputBoxControl';
-import { BaseNode } from '../baseTypes';
+import { BaseNode } from '../base_types';
 
 export class IfNode extends BaseNode {
   width = 250;

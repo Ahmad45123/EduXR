@@ -1,6 +1,6 @@
 import { ClassicPreset } from 'rete';
 import { stringSocket, execSocket } from '../sockets';
-import { BaseNode } from '../baseTypes';
+import { BaseNode } from '../base_types';
 
 export class OnCollisionNode extends BaseNode {
   constructor() {

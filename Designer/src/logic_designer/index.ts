@@ -30,3 +30,4 @@ export function useRete<T extends (el: HTMLElement) => Promise<{ destroy: () => 
 }
 
 export * from './editor';
+export * from './base_types';

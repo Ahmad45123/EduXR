@@ -12,9 +12,8 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { createEditor, useRete } from './logic_designer';
-import { BaseConnection, BaseNode } from './logic_designer/baseTypes';
-import UnityViewer from './unity_viewer';
+import { createEditor, useRete, BaseConnection, BaseNode } from '../logic_designer';
+import UnityViewer from '../unity_viewer';
 import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { ClassicPreset } from 'rete';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -28,7 +27,7 @@ type Scene = {
   };
 };
 
-export default function App() {
+export default function Scene() {
   const [scenes, setScenes] = useState<Scene[]>([]);
 
   const addScene = () => {

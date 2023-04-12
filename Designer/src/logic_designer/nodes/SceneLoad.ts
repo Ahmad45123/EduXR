@@ -1,6 +1,6 @@
 import { ClassicPreset } from 'rete';
 import { execSocket } from '../sockets';
-import { BaseNode } from '../baseTypes';
+import { BaseNode } from '../base_types';
 
 export class SceneLoad extends BaseNode {
   constructor() {
