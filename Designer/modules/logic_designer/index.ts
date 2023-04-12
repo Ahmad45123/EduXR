@@ -1,6 +1,5 @@
 
-import { useState, useRef, useEffect } from "react";
-import { createEditor } from './editor';
+import { useState, useRef, useEffect } from 'react';
 
 export function useRete<T extends (el: HTMLElement) => Promise<{ destroy: () => void }>>(
   create: T,
@@ -30,15 +29,4 @@ export function useRete<T extends (el: HTMLElement) => Promise<{ destroy: () => 
   return [setContainer, editor] as const;
 }
 
-export default function LogicDesigner() {
-  const [setContainer, editor] = useRete(createEditor);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      setContainer(ref.current);
-    }
-  }, [setContainer]);
-
-  return <div ref={ref} style={{ height: '100%', width: '100%' }}></div>;
-}
+export * from './editor';

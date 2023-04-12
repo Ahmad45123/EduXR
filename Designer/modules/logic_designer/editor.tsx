@@ -96,8 +96,25 @@ export async function createEditor(container: HTMLElement) {
     AreaExtensions.zoomAt(area, editor.getNodes());
   }, 10);
   return {
-    getJSON() {
+    getCompiledJSON() {
       return JSON.stringify(getSceneJSON(editor.getNodes(), editor.getConnections()));
+    },
+    exportSceneState() {
+      return { nodes: editor.getNodes(), connections: editor.getConnections() };
+    },
+    async clearEditor() {
+      await editor.clear();
+    },
+    async importSceneState(
+      nodes: ClassicPreset.Node[],
+      connections: ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>[],
+    ) {
+      for (let node of nodes) {
+        await editor.addNode(node);
+      }
+      for (let connection of connections) {
+        await editor.addConnection(connection);
+      }
     },
     destroy: () => area.destroy(),
   };
