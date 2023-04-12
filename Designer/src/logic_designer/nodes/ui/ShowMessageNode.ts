@@ -4,11 +4,12 @@ import { InputBoxControl } from '../../controls/InputBoxControl';
 import { BaseNode } from '../../baseTypes';
 
 export class ShowMessageNode extends BaseNode {
+  width = 260;
   constructor() {
     super('ShowMessageNode');
 
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
-    this.addControl('message', new InputBoxControl('Message'));
+    this.addControl('message', new InputBoxControl('Message', true));
     this.addOutput('exec', new ClassicPreset.Output(execSocket, 'Exec', false));
   }
 }
