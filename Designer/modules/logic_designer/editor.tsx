@@ -23,11 +23,9 @@ import { SceneLoad } from './nodes/SceneLoad';
 import { DockPlugin, DockPresets } from 'rete-dock-plugin';
 import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
 import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
+import { BaseConnection, BaseNode } from './baseTypes';
 
-type Schemes = GetSchemes<
-  ClassicPreset.Node,
-  ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>
->;
+type Schemes = GetSchemes<BaseNode, BaseConnection>;
 type AreaExtra = ReactArea2D<Schemes>;
 
 export async function createEditor(container: HTMLElement) {
@@ -112,10 +110,7 @@ export async function createEditor(container: HTMLElement) {
     async clearEditor() {
       await editor.clear();
     },
-    async importSceneState(
-      nodes: ClassicPreset.Node[],
-      connections: ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>[],
-    ) {
+    async importSceneState(nodes: BaseNode[], connections: BaseConnection[]) {
       for (let node of nodes) {
         await editor.addNode(node);
       }

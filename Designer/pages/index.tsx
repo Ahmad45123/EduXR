@@ -1,4 +1,5 @@
 import { createEditor, useRete } from '@/modules/logic_designer';
+import { BaseConnection, BaseNode } from '@/modules/logic_designer/baseTypes';
 import UnityViewer from '@/modules/unity_viewer';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -22,8 +23,8 @@ import { ClassicPreset } from 'rete';
 type Scene = {
   name: string;
   sceneLogic?: {
-    nodes: ClassicPreset.Node[];
-    connections: ClassicPreset.Connection<ClassicPreset.Node, ClassicPreset.Node>[];
+    nodes: BaseNode[];
+    connections: BaseConnection[];
   };
 };
 

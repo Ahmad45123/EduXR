@@ -1,7 +1,8 @@
 import { ClassicPreset } from 'rete';
 import { stringSocket, execSocket } from '../sockets';
+import { BaseNode } from '../baseTypes';
 
-export class OnCollisionNode extends ClassicPreset.Node {
+export class OnCollisionNode extends BaseNode {
   constructor() {
     super('OnCollision');
 

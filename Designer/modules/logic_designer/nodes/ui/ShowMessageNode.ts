@@ -1,8 +1,9 @@
 import { ClassicPreset } from 'rete';
 import { stringSocket, execSocket } from '../../sockets';
 import { InputBoxControl } from '../../controls/InputBoxControl';
+import { BaseNode } from '../../baseTypes';
 
-export class ShowMessageNode extends ClassicPreset.Node {
+export class ShowMessageNode extends BaseNode {
   constructor() {
     super('ShowMessageNode');
 
