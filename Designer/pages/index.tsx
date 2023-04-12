@@ -50,11 +50,15 @@ export default function Home() {
   const [isLogicEditorVisible, setLogicEditorVisibility] = useState(false);
 
   const [curScene, setCurScene] = useState<string>('');
-  const showLogicDesigner = (scene: Scene) => {
+  const showLogicDesigner = async (scene: Scene) => {
     setLogicEditorVisibility(true);
     setCurScene(scene.name);
+    await editor?.clearEditor();
     if (scene.sceneLogic) {
-      editor!.importSceneState(scene.sceneLogic.nodes, scene.sceneLogic.connections);
+      await editor?.importSceneState(
+        scene.sceneLogic.nodes,
+        scene.sceneLogic.connections,
+      );
     }
   };
 

@@ -20,6 +20,9 @@ import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 import { getSceneJSON } from './nodeExporter';
 import { SceneLoad } from './nodes/SceneLoad';
+import { DockPlugin, DockPresets } from 'rete-dock-plugin';
+import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
+import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
 
 type Schemes = GetSchemes<
   ClassicPreset.Node,
@@ -32,6 +35,7 @@ export async function createEditor(container: HTMLElement) {
   const area = new AreaPlugin<Schemes, AreaExtra>(container);
   const connection = new ConnectionPlugin<Schemes, AreaExtra>();
   const render = new ReactRenderPlugin<Schemes>({ createRoot });
+  const dock = new DockPlugin<Schemes>();
 
   AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {
     accumulating: AreaExtensions.accumulateOnCtrl(),
@@ -65,19 +69,22 @@ export async function createEditor(container: HTMLElement) {
   );
 
   connection.addPreset(ConnectionPresets.classic.setup());
+  dock.addPreset(DockPresets.classic.setup({ area, size: 100, scale: 0.6 }));
 
   editor.use(area);
   area.use(connection);
   area.use(render);
+  area.use(dock);
 
   AreaExtensions.simpleNodesOrder(area);
   AreaExtensions.showInputControl(area);
 
-  await editor.addNode(new OnCollisionNode());
-  await editor.addNode(new GotoSceneNode());
-  await editor.addNode(new GotoSceneNode());
-  await editor.addNode(new IfNode());
-  await editor.addNode(new SceneLoad());
+  dock.add(() => new OnCollisionNode());
+  dock.add(() => new GotoSceneNode());
+  dock.add(() => new IfNode());
+  dock.add(() => new SceneLoad());
+  dock.add(() => new AskQuestionNode());
+  dock.add(() => new ShowMessageNode());
 
   editor.addPipe(context => {
     if (context.type === 'connectioncreate') {
