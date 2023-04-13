@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  Heading,
   IconButton,
   List,
   ListItem,
@@ -10,6 +11,11 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
 } from '@chakra-ui/react';
 import { createEditor, useRete, BaseConnection, BaseNode } from '../logic_designer';
@@ -51,9 +57,20 @@ export default function Scene() {
       padding="1em"
     >
       <Box width="50%">
-        <div ref={logicDesignerRef} style={{ width: '100%', height: '100%' }}></div>
+        <Tabs width="100%" height="100%">
+          <TabList>
+            <Tab>Scene Objects</Tab>
+            <Tab>Scene Logic</Tab>
+          </TabList>
+          <TabPanels width="100%" height="100%">
+            <TabPanel></TabPanel>
+            <TabPanel width="100%" height="100%">
+              <div ref={logicDesignerRef} style={{ width: '100%', height: '100%' }}></div>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
-      <Box width="75%" alignSelf="center">
+      <Box width="50%" alignSelf="center">
         <UnityViewer style={{ width: '100%' }} />
       </Box>
     </Box>
