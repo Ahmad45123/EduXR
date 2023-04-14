@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import SceneManager from './routes/scene_manager';
 import { Updater, useImmer } from 'use-immer';
 import React from 'react';
-import { ChakraProvider, ColorModeScript, theme } from '@chakra-ui/react';
+import { Box, ChakraProvider, ColorModeScript, Container, theme } from '@chakra-ui/react';
 import Scene from './routes/Scene/scene';
 import { store } from './core/states/root_store';
 import { Provider } from 'react-redux';
@@ -35,13 +35,15 @@ export default function App() {
   });
 
   return (
-    <UnityContext.Provider value={unityContext}>
-      <Provider store={store}>
-        <ColorModeScript />
-        <ChakraProvider theme={theme}>
-          <RouterProvider router={router} />
-        </ChakraProvider>
-      </Provider>
-    </UnityContext.Provider>
+    <Container width="100vw" height="100vh">
+      <UnityContext.Provider value={unityContext}>
+        <Provider store={store}>
+          <ColorModeScript />
+          <ChakraProvider theme={theme}>
+            <RouterProvider router={router} />
+          </ChakraProvider>
+        </Provider>
+      </UnityContext.Provider>
+    </Container>
   );
 }
