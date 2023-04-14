@@ -23,8 +23,13 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import { createEditor, useRete, BaseConnection, BaseNode } from '../../logic_designer';
-import UnityViewer from '../../unity_viewer';
+import {
+  createEditor,
+  useRete,
+  BaseConnection,
+  BaseNode,
+} from '../../components/logic_designer';
+import UnityViewer from '../../components/unity_viewer';
 import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { ClassicPreset } from 'rete';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -32,7 +37,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import Vector3Input from '../../components/vector3_input';
 import SceneObjectComp from './object_comp';
-import useScene from '../../eduxr_core/Scene';
+import useScene from '../../core/hooks/useScene';
 
 export default function Scene() {
   const { sceneName } = useParams();

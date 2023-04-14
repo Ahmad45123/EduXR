@@ -1,6 +1,6 @@
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import * as React from 'react';
-import { UnityContext } from '../app';
+import { UnityContext } from '../../app';
 
 type props = {
   style?: React.CSSProperties | undefined;

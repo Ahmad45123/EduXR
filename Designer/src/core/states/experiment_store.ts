@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { BaseNode, BaseConnection } from '../logic_designer';
+import { BaseNode, BaseConnection } from '../../components/logic_designer';
 
 export interface SceneObjectState {
   objectName: string;

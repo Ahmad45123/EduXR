@@ -10,7 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import useExperiment from '../eduxr_core/Experiment';
+import useExperiment from '../core/hooks/useExperiment';
 
 export default function SceneManager() {
   const { createScene, experiment } = useExperiment();
