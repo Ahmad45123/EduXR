@@ -9,17 +9,15 @@ import {
   IconButton,
   Text,
 } from '@chakra-ui/react';
-import { AppContext } from '../app';
 import { useNavigate } from 'react-router-dom';
+import useExperiment from '../eduxr_core/Experiment';
 
 export default function SceneManager() {
-  const { appdata, setAppdata } = React.useContext(AppContext);
+  const { createScene, experiment } = useExperiment();
 
   const addScene = () => {
     const sceneName = prompt('Enter scene name');
-    setAppdata(draft => {
-      draft.scenes.push({ name: sceneName!, objects: [] });
-    });
+    createScene(sceneName!);
   };
 
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ export default function SceneManager() {
       <CardBody>
         <Button onClick={addScene}>Create Scene</Button>
         <List width="100%">
-          {appdata.scenes.map(scene => (
+          {experiment.scenes.map(scene => (
             <ListItem display="flex" gap="1em" mt="1em" key={scene.name}>
               <Text alignSelf="center">{scene.name}</Text>
               <IconButton

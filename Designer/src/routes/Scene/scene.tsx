@@ -29,22 +29,14 @@ import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import { ClassicPreset } from 'rete';
 import { SearchIcon } from '@chakra-ui/icons';
 import * as React from 'react';
-import { SceneType } from '../../eduxr_types';
-import { AppContext } from '../../app';
 import { useParams } from 'react-router-dom';
 import Vector3Input from '../../components/vector3_input';
 import SceneObjectComp from './object_comp';
+import useScene from '../../eduxr_core/Scene';
 
 export default function Scene() {
-  const { appdata, setAppdata } = React.useContext(AppContext);
   const { sceneName } = useParams();
-
-  const [curScene, setCurScene] = useState<SceneType | undefined>();
-  useEffect(() => {
-    if (sceneName) {
-      setCurScene(appdata.scenes.find(scene => scene.name === sceneName));
-    }
-  }, [sceneName]);
+  const { scene } = useScene(sceneName!);
 
   const [setContainer, editor] = useRete(createEditor);
   const logicDesignerRef = useRef(null);
