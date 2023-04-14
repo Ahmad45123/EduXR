@@ -4,7 +4,7 @@ import { Updater, useImmer } from 'use-immer';
 import { SceneType } from './eduxr_types';
 import React from 'react';
 import { ChakraProvider, ColorModeScript, theme } from '@chakra-ui/react';
-import Scene from './routes/scene';
+import Scene from './routes/Scene/scene';
 
 const router = createBrowserRouter([
   {

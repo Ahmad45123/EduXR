@@ -18,7 +18,7 @@ export default function SceneManager() {
   const addScene = () => {
     const sceneName = prompt('Enter scene name');
     setAppdata(draft => {
-      draft.scenes.push({ name: sceneName! });
+      draft.scenes.push({ name: sceneName!, objects: [] });
     });
   };
 
