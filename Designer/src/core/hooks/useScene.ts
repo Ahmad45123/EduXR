@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../states/root_store';
 import { UnityContext } from '../../app';
 import { useUnityObjectManagement } from './unity/function_hooks';
-import { SceneObjectState, addSceneObject } from '../states/experiment_store';
+import { SceneObjectState } from '../states/types';
+import { addSceneObject } from '../states/experiment_store';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;

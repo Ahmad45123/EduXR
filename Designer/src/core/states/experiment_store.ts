@@ -1,30 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { BaseNode, BaseConnection } from '../../components/logic_designer';
-
-export interface SceneObjectState {
-  objectName: string;
-  objectType: string;
-  position: [number, number, number];
-  rotation: [number, number, number];
-  scale: [number, number, number];
-  hasGravity: boolean;
-  isGrabbable: boolean;
-}
-
-export interface SceneState {
-  name: string;
-  sceneLogic?: {
-    nodes: BaseNode[];
-    connections: BaseConnection[];
-  };
-  objects: SceneObjectState[];
-}
-
-export interface ExperimentState {
-  name: string;
-  scenes: SceneState[];
-}
+import { ExperimentState } from './types';
 
 const initialState: ExperimentState = {
   name: 'My Experiment',

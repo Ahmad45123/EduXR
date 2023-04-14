@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { UnityContext } from '../../../app';
-import { SceneObjectState } from '../../states/experiment_store';
+import { SceneObjectState } from '../../states/types';
 
 export function useUnityObjectManagement() {
   const unityContext = React.useContext(UnityContext);
