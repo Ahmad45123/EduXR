@@ -1,1 +1,1 @@
-export default function onObjectMove() {}
+export function onObjectMove() {}

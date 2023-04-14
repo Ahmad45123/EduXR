@@ -3,6 +3,14 @@ import { useUnityContext } from 'react-unity-webgl';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../states/root_store';
 import { UnityContext } from '../../app';
+import { useUnityObjectManagement } from './unity/function_hooks';
+import { SceneObjectState, addSceneObject } from '../states/experiment_store';
+
+export interface SceneObjectInterface {
+  object: SceneObjectState | undefined;
+  setPosition: (position: [number, number, number]) => void;
+  setRotation: (rotation: [number, number, number]) => void;
+}
 
 export default function useScene(sceneName: string) {
   const scene = useSelector((state: RootState) =>
@@ -10,13 +18,19 @@ export default function useScene(sceneName: string) {
   );
   const dispatch = useDispatch();
 
-  const unityContext = React.useContext(UnityContext);
+  const unityObjectManager = useUnityObjectManagement();
 
-  function addObject() {}
+  function addObject(name: string) {
+    dispatch(addSceneObject({ sceneName: sceneName, objectName: name }));
+    const object = scene?.objects.find(object => object.objectName === name);
+    if (object) {
+      unityObjectManager.createObject(object);
+    }
+  }
 
   function deleteObject() {}
 
-  function getObject(objectName: string) {
+  function getObject(objectName: string): SceneObjectInterface {
     const object = scene?.objects.find(object => object.objectName === objectName);
 
     function setPosition() {}

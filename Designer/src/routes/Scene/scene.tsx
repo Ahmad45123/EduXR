@@ -41,7 +41,7 @@ import useScene from '../../core/hooks/useScene';
 
 export default function Scene() {
   const { sceneName } = useParams();
-  const { scene } = useScene(sceneName!);
+  const sceneCore = useScene(sceneName!);
 
   const [setContainer, editor] = useRete(createEditor);
   const logicDesignerRef = useRef(null);
@@ -50,6 +50,12 @@ export default function Scene() {
       setContainer(logicDesignerRef.current);
     }
   }, [logicDesignerRef.current]);
+
+  const [newObjectName, setNewObjectName] = useState('');
+  const createObject = function () {
+    sceneCore.addObject(newObjectName);
+    setNewObjectName('');
+  };
 
   return (
     <Box
@@ -72,13 +78,24 @@ export default function Scene() {
                 <FormControl border="1px" borderRadius="0.5em" p="1em">
                   <FormLabel>Create New Object</FormLabel>
                   <Flex gap="0.5em">
-                    <Input placeholder="Object Name" />
+                    <Input
+                      value={newObjectName}
+                      onChange={e => setNewObjectName(e.target.value)}
+                      placeholder="Object Name"
+                    />
                     <Select width="20em" placeholder="Object Type" />
-                    <Button width="10em">Create</Button>
+                    <Button width="10em" onClick={createObject}>
+                      Create
+                    </Button>
                   </Flex>
                 </FormControl>
                 <Flex>
-                  <SceneObjectComp />
+                  {sceneCore.scene?.objects.map(obj => (
+                    <SceneObjectComp
+                      key={obj.objectName}
+                      sceneObject={sceneCore.getObject(obj.objectName)}
+                    />
+                  ))}
                 </Flex>
               </Flex>
             </TabPanel>

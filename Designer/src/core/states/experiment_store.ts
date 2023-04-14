@@ -4,7 +4,8 @@ import { BaseNode, BaseConnection } from '../../components/logic_designer';
 
 export interface SceneObjectState {
   objectName: string;
-  positon: [number, number, number];
+  objectType: string;
+  position: [number, number, number];
   rotation: [number, number, number];
   scale: [number, number, number];
   hasGravity: boolean;
@@ -40,9 +41,29 @@ export const experimentSlice = createSlice({
         objects: [],
       });
     },
+    addSceneObject: (
+      state,
+      action: PayloadAction<{
+        sceneName: string;
+        objectName: string;
+      }>,
+    ) => {
+      const scene = state.scenes.find(scene => scene.name === action.payload.sceneName);
+      if (scene) {
+        scene.objects.push({
+          objectName: action.payload.objectName,
+          objectType: 'cube',
+          position: [0, 0, 0],
+          rotation: [0, 0, 0],
+          scale: [1, 1, 1],
+          hasGravity: true,
+          isGrabbable: true,
+        });
+      }
+    },
   },
 });
 
-export const { addScene } = experimentSlice.actions;
+export const { addScene, addSceneObject } = experimentSlice.actions;
 
 export default experimentSlice.reducer;

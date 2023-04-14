@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <SceneManager />,
   },
   {
-    path: '/scene/:name',
+    path: '/scene/:sceneName',
     element: <Scene />,
   },
 ]);
