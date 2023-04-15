@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { useUnityContext } from 'react-unity-webgl';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../states/root_store';
-import { UnityContext } from '../../app';
 import { useUnityObjectManagement } from './unity/function_hooks';
 import { SceneObjectState } from '../states/types';
-import { addSceneObject } from '../states/experiment_store';
+import { addSceneObject, setSceneObjectPosition } from '../states/experiment_store';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
@@ -22,11 +20,18 @@ export default function useScene(sceneName: string) {
   const unityObjectManager = useUnityObjectManagement();
 
   function addObject(name: string) {
-    dispatch(addSceneObject({ sceneName: sceneName, objectName: name }));
-    const object = scene?.objects.find(object => object.objectName === name);
-    if (object) {
-      unityObjectManager.createObject(object);
-    }
+    const obj: SceneObjectState = {
+      objectName: name,
+      objectType: 'cube',
+      position: [0, 0.28, 0],
+      rotation: [0, 0, 0],
+      scale: [0.08, 0.08, 0.08],
+      hasGravity: false,
+      isGrabbable: true,
+    };
+
+    unityObjectManager.createObject(obj);
+    dispatch(addSceneObject({ sceneName: sceneName, object: obj }));
   }
 
   function deleteObject() {}
@@ -34,7 +39,15 @@ export default function useScene(sceneName: string) {
   function getObject(objectName: string): SceneObjectInterface {
     const object = scene?.objects.find(object => object.objectName === objectName);
 
-    function setPosition() {}
+    function setPosition(position: [number, number, number]) {
+      unityObjectManager.setObjectPosition(
+        objectName,
+        position[0],
+        position[1],
+        position[2],
+      );
+      dispatch(setSceneObjectPosition({ sceneName, objectName, position }));
+    }
 
     function setRotation() {}
 

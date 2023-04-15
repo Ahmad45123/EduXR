@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class SessionManager : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,11 +14,6 @@ public class TestScript : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void MoveRight()
-    {
-        transform.Translate(Vector3.right * 0.1f);
     }
 
     void Awake()
