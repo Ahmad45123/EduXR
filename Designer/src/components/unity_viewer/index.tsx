@@ -9,7 +9,9 @@ type props = {
 export default function UnityViewer({ style }: props) {
   const unityContext = React.useContext(UnityContext);
   if (unityContext != null)
-    return <Unity unityProvider={unityContext.unityProvider} style={style} />;
+    return (
+      <Unity tabIndex={2} unityProvider={unityContext.unityProvider} style={style} />
+    );
   else {
     return <div></div>;
   }
