@@ -27,20 +27,39 @@ namespace Assets.Structures
 
         public IEnumerator InitGameobject()
         {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(objectObjPath))
+            switch(objectType)
             {
-                webRequest.downloadHandler = new DownloadHandlerBuffer();
-                yield return webRequest.SendWebRequest();
+                case "cube":
+                    _gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    break;
+                case "sphere":
+                    _gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    break;
+                case "cylinder":
+                    _gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    break;
+                case "capsule":
+                    _gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                    break;
+                case "custom":
+                    using (UnityWebRequest webRequest = UnityWebRequest.Get(objectObjPath))
+                    {
+                        webRequest.downloadHandler = new DownloadHandlerBuffer();
+                        yield return webRequest.SendWebRequest();
 
-                _gameObject = new OBJLoader().Load(new MemoryStream(webRequest.downloadHandler.data));
-            }
+                        _gameObject = new OBJLoader().Load(new MemoryStream(webRequest.downloadHandler.data));
+                    }
 
-            foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
-            {
-                var collider = renderer.gameObject.AddComponent<MeshCollider>();
-                collider.convex = true;
+                    foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
+                    {
+                        var collider = renderer.gameObject.AddComponent<MeshCollider>();
+                        collider.convex = true;
+                    }
+                    _gameObject.AddComponent<Rigidbody>();
+                    break;
+                default:
+                    throw new Exception("Unknown type");
             }
-            _gameObject.AddComponent<Rigidbody>();
 
             UpdateColor();
             UpdateGravity();
@@ -52,9 +71,14 @@ namespace Assets.Structures
         {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
-            foreach(var renderer in _gameObject.GetComponentsInChildren<Renderer>())
-            {
-                renderer.material.color = Color.green;
+            if(objectType == "custom") {
+                foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
+                {
+                    renderer.material.color = Color.green;
+                }
+            }
+            else {
+                _gameObject.GetComponent<Renderer>().material.color = Color.green;
             }
         }
 
