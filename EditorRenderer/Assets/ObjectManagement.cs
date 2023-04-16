@@ -27,4 +27,9 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName].position = new List<float>() { obj.x, obj.y, obj.z };
         sceneObjsDict[obj.objectName].UpdatePosition();
     }
+
+    /*private void Start()
+    {
+        CreateObject("{\"objectName\":\"fhfgh\",\"objectType\":\"custom\",\"objectObjPath\":\"https://firebasestorage.googleapis.com/v0/b/eduvr-fd56d.appspot.com/o/truck.obj?alt=media&token=db8d54fa-640b-4dae-a91a-d4721e2d5e74\",\"objectMtlPath\":\"https://firebasestorage.googleapis.com/v0/b/eduvr-fd56d.appspot.com/o/truck.mtl?alt=media&token=a9f6c96b-d9aa-4169-9d3d-3002afc1f4a0\",\"position\":[0,0.28,0],\"rotation\":[0,0,0],\"scale\":[0.08,0.08,0.08],\"hasGravity\":false,\"isGrabbable\":true}");
+    }*/
 }

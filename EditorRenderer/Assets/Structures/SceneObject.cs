@@ -9,13 +9,12 @@ using UnityEngine.Networking;
 using System.IO;
 using System.Collections;
 
-namespace Assets.Structures
-{
-    public class SceneObject
-    {
+namespace Assets.Structures {
+    public class SceneObject {
         public string objectName;
         public string objectType;
         public string objectObjPath;
+        public string objectMtlPath;
         public List<float> position;
         public List<float> rotation;
         public List<float> scale;
@@ -25,10 +24,8 @@ namespace Assets.Structures
 
         private GameObject _gameObject = null;
 
-        public IEnumerator InitGameobject()
-        {
-            switch(objectType)
-            {
+        public IEnumerator InitGameobject() {
+            switch (objectType) {
                 case "cube":
                     _gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     break;
@@ -42,24 +39,28 @@ namespace Assets.Structures
                     _gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                     break;
                 case "custom":
-                    using (UnityWebRequest webRequest = UnityWebRequest.Get(objectObjPath))
-                    {
-                        webRequest.downloadHandler = new DownloadHandlerBuffer();
-                        yield return webRequest.SendWebRequest();
+                    using (UnityWebRequest objRequest = UnityWebRequest.Get(objectObjPath)) {
+                        yield return objRequest.SendWebRequest();
 
-                        _gameObject = new OBJLoader().Load(new MemoryStream(webRequest.downloadHandler.data));
+                        if (String.IsNullOrWhiteSpace(objectMtlPath))
+                            _gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data));
+                        else {
+                            using UnityWebRequest mtlRequest = UnityWebRequest.Get(objectMtlPath);
+                            yield return mtlRequest.SendWebRequest();
+                            _gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data), new MemoryStream(mtlRequest.downloadHandler.data));
+                        }
                     }
 
-                    foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
-                    {
+                    foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
                         var collider = renderer.gameObject.AddComponent<MeshCollider>();
                         collider.convex = true;
                     }
-                    _gameObject.AddComponent<Rigidbody>();
                     break;
                 default:
                     throw new Exception("Unknown type");
             }
+
+            _gameObject.AddComponent<Rigidbody>();
 
             UpdateColor();
             UpdateGravity();
@@ -67,23 +68,21 @@ namespace Assets.Structures
             UpdateScale();
         }
 
-        public void UpdateColor()
-        {
+        public void UpdateColor() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
-            if(objectType == "custom") {
-                foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
-                {
-                    renderer.material.color = Color.green;
-                }
+            if (objectType == "custom") {
+                if (string.IsNullOrEmpty(objectMtlPath))
+                    foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
+                        renderer.material.color = Color.green;
+                    }
             }
             else {
                 _gameObject.GetComponent<Renderer>().material.color = Color.green;
             }
         }
 
-        public void UpdatePosition()
-        {
+        public void UpdatePosition() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
             float xPos = position[0] / 10.0f * (0.716f - -0.438f) + -0.438f;
@@ -91,15 +90,13 @@ namespace Assets.Structures
             _gameObject.transform.localPosition = new Vector3(xPos, position[1], zPos);
         }
 
-        public void UpdateScale()
-        {
+        public void UpdateScale() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
             _gameObject.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
         }
 
-        public void UpdateGravity()
-        {
+        public void UpdateGravity() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
             var rigidBody = _gameObject.GetComponent<Rigidbody>();
@@ -107,8 +104,7 @@ namespace Assets.Structures
             rigidBody.isKinematic = true;
         }
 
-        ~SceneObject()
-        {
+        ~SceneObject() {
             UnityEngine.Object.Destroy(_gameObject);
         }
     }

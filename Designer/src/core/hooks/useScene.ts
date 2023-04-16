@@ -24,6 +24,7 @@ export default function useScene(sceneName: string) {
       objectName: name,
       objectType: 'cube',
       objectObjPath: '',
+      objectMtlPath: '',
       position: [0, 0.28, 0],
       rotation: [0, 0, 0],
       scale: [0.08, 0.08, 0.08],
