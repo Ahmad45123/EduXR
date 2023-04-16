@@ -4,6 +4,8 @@ import { RootState } from '../states/root_store';
 import { useUnityObjectManagement } from './unity/function_hooks';
 import { SceneObjectState } from '../states/types';
 import { addSceneObject, setSceneObjectPosition } from '../states/experiment_store';
+import { ObjectType } from './useObjectTypesManager';
+import { SceneObjectType } from '../states/types';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
@@ -19,12 +21,12 @@ export default function useScene(sceneName: string) {
 
   const unityObjectManager = useUnityObjectManagement();
 
-  function addObject(name: string) {
+  function addObject(name: string, type: ObjectType) {
     const obj: SceneObjectState = {
       objectName: name,
-      objectType: 'cube',
-      objectObjPath: '',
-      objectMtlPath: '',
+      objectType: type.name as SceneObjectType,
+      objectObjPath: type.objFile ?? '',
+      objectMtlPath: type.mtlFile ?? '',
       position: [0, 0.28, 0],
       rotation: [0, 0, 0],
       scale: [0.08, 0.08, 0.08],

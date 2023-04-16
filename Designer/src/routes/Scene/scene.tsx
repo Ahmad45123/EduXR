@@ -39,6 +39,7 @@ import Vector3Input from '../../components/vector3_input';
 import SceneObjectComp from './object_comp';
 import useScene from '../../core/hooks/useScene';
 import { Navigate } from 'react-router-dom';
+import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
 
 export default function Scene() {
   const { sceneName } = useParams();
@@ -52,9 +53,26 @@ export default function Scene() {
     }
   }, [logicDesignerRef.current]);
 
+  const objectTypesManager = useObjectTypesManager('mainuser');
+  const [selectedObjectType, setSelectedObjectType] = useState<string>('cube');
+
   const [newObjectName, setNewObjectName] = useState('');
   const createObject = function () {
-    sceneCore.addObject(newObjectName);
+    const objType = objectTypesManager.objects.find(
+      type => type.name === selectedObjectType,
+    );
+    if (objType) {
+      sceneCore.addObject(newObjectName, {
+        name: 'custom',
+        objFile: objType.objFile,
+        mtlFile: objType.mtlFile,
+      });
+    } else {
+      sceneCore.addObject(newObjectName, {
+        name: selectedObjectType,
+      });
+    }
+
     setNewObjectName('');
   };
 
@@ -86,7 +104,21 @@ export default function Scene() {
                       onChange={e => setNewObjectName(e.target.value)}
                       placeholder="Object Name"
                     />
-                    <Select width="20em" placeholder="Object Type" />
+                    <Select
+                      value={selectedObjectType}
+                      onChange={e => setSelectedObjectType(e.target.value)}
+                      width="20em"
+                    >
+                      <option value="cube">Cube</option>
+                      <option value="sphere">Sphere</option>
+                      <option value="capsule">Capsule</option>
+                      <option value="cylinder">Cylinder</option>
+                      {objectTypesManager.objects.map(type => (
+                        <option key={type.name} value={type.name}>
+                          {type.name}
+                        </option>
+                      ))}
+                    </Select>
                     <Button width="10em" onClick={createObject}>
                       Create
                     </Button>

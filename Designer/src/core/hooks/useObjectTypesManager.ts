@@ -8,9 +8,9 @@ import {
   StorageReference,
 } from 'firebase/storage';
 
-type ObjectType = {
+export type ObjectType = {
   name: string;
-  objFile: string;
+  objFile?: string;
   mtlFile?: string;
 };
 
