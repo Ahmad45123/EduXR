@@ -1,10 +1,17 @@
 import { BaseNode, BaseConnection } from '../../components/logic_designer';
 
-export type SceneObjectType = 'cube' | 'sphere' | 'cylinder' | 'plane' | 'capsule';
+export type SceneObjectType =
+  | 'cube'
+  | 'sphere'
+  | 'cylinder'
+  | 'plane'
+  | 'capsule'
+  | 'custom';
 
 export interface SceneObjectState {
   objectName: string;
   objectType: SceneObjectType;
+  objectObjPath: string;
   position: [number, number, number];
   rotation: [number, number, number];
   scale: [number, number, number];

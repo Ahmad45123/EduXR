@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class SessionManager : MonoBehaviour
 {
@@ -18,6 +21,8 @@ public class SessionManager : MonoBehaviour
 
     void Awake()
     {
+        #if !UNITY_EDITOR
         WebGLInput.captureAllKeyboardInput = false;
+        #endif
     }
 }

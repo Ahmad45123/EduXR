@@ -5,17 +5,14 @@ using UnityEngine;
 
 public class ObjectManagement : MonoBehaviour
 {
-    public GameObject rootGameObject;
-
     Dictionary<string, SceneObject> sceneObjsDict = new Dictionary<string, SceneObject>();
 
     void CreateObject(string objectJson)
     {
         var obj = JsonUtility.FromJson<SceneObject>(objectJson);
-        obj.InitGameobject(rootGameObject);
+        StartCoroutine(obj.InitGameobject());
         sceneObjsDict[obj.objectName] = obj;
     }
-
 
     class ObjectPositionParams
     {

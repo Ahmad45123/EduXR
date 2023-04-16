@@ -23,6 +23,7 @@ export default function useScene(sceneName: string) {
     const obj: SceneObjectState = {
       objectName: name,
       objectType: 'cube',
+      objectObjPath: '',
       position: [0, 0.28, 0],
       rotation: [0, 0, 0],
       scale: [0.08, 0.08, 0.08],

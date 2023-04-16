@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Dummiesman;
+using UnityEngine.Networking;
+using System.IO;
+using System.Collections;
 
 namespace Assets.Structures
 {
@@ -11,6 +15,7 @@ namespace Assets.Structures
     {
         public string objectName;
         public string objectType;
+        public string objectObjPath;
         public List<float> position;
         public List<float> rotation;
         public List<float> scale;
@@ -20,38 +25,37 @@ namespace Assets.Structures
 
         private GameObject _gameObject = null;
 
-        public void InitGameobject(GameObject parent)
+        public IEnumerator InitGameobject()
         {
-            _gameObject = new GameObject(objectName);
-            // _gameObject.transform.parent = parent.transform;
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(objectObjPath))
+            {
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                yield return webRequest.SendWebRequest();
 
-            _gameObject.AddComponent<MeshFilter>();
-            var collider = _gameObject.AddComponent<MeshCollider>();
-            _gameObject.AddComponent<MeshRenderer>();
+                _gameObject = new OBJLoader().Load(new MemoryStream(webRequest.downloadHandler.data));
+            }
+
+            foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>())
+            {
+                var collider = renderer.gameObject.AddComponent<MeshCollider>();
+                collider.convex = true;
+            }
             _gameObject.AddComponent<Rigidbody>();
 
-            collider.convex = true;
-
-            UpdateModel();
+            UpdateColor();
             UpdateGravity();
             UpdatePosition();
             UpdateScale();
         }
 
-        public void UpdateModel()
+        public void UpdateColor()
         {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
-            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Mesh cubeMesh = cube.GetComponent<MeshFilter>().mesh;
-
-            MeshFilter filter = _gameObject.GetComponent<MeshFilter>();
-            MeshCollider collider = _gameObject.GetComponent<MeshCollider>();
-            filter.mesh = cubeMesh;
-            collider.sharedMesh = cubeMesh;
-            _gameObject.GetComponent<Renderer>().material.color = Color.green;
-
-            GameObject.Destroy(cube);
+            foreach(var renderer in _gameObject.GetComponentsInChildren<Renderer>())
+            {
+                renderer.material.color = Color.green;
+            }
         }
 
         public void UpdatePosition()
