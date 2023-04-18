@@ -11,10 +11,10 @@ import {
   Button,
 } from '@chakra-ui/react';
 import React from 'react';
-import { useObjectTypesManager } from '../core/hooks/useObjectTypesManager';
+import { ObjectTypesManagerContext } from './experiment_root';
 
 export default function ObjectModelManager() {
-  const objectTypesManager = useObjectTypesManager('mainuser');
+  const objectTypesManager = React.useContext(ObjectTypesManagerContext);
 
   const [name, setName] = React.useState('');
   const [objFile, setObjFile] = React.useState<Blob | undefined>(undefined);

@@ -21,6 +21,7 @@ import {
 } from 'reactfire';
 import { getFirestore } from '@firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import ExperimentRoot from './routes/experiment_root';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const EduXRContext = React.createContext<{
+  username: string;
+}>(null!);
+
 export default function App() {
   const firebaseApp = useFirebaseApp();
   const firestoreInstance = getFirestore(firebaseApp);
@@ -40,16 +45,20 @@ export default function App() {
 
   return (
     <Container width="100vw" height="100vh">
-      <StorageProvider sdk={storageInstance}>
-        <FirestoreProvider sdk={firestoreInstance}>
-          <ColorModeScript />
-          <ChakraProvider theme={theme}>
-            <React.Suspense fallback={<Skeleton />}>
-              <RouterProvider router={router} />
-            </React.Suspense>
-          </ChakraProvider>
-        </FirestoreProvider>
-      </StorageProvider>
+      <EduXRContext.Provider value={{ username: 'mainuser' }}>
+        <StorageProvider sdk={storageInstance}>
+          <FirestoreProvider sdk={firestoreInstance}>
+            <ExperimentRoot>
+              <ColorModeScript />
+              <ChakraProvider theme={theme}>
+                <React.Suspense fallback={<Skeleton />}>
+                  <RouterProvider router={router} />
+                </React.Suspense>
+              </ChakraProvider>
+            </ExperimentRoot>
+          </FirestoreProvider>
+        </StorageProvider>
+      </EduXRContext.Provider>
     </Container>
   );
 }

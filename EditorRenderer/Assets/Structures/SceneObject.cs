@@ -13,8 +13,6 @@ namespace Assets.Structures {
     public class SceneObject {
         public string objectName;
         public string objectType;
-        public string objectObjPath;
-        public string objectMtlPath;
         public List<float> position;
         public List<float> rotation;
         public List<float> scale;
@@ -23,6 +21,11 @@ namespace Assets.Structures {
 
 
         private GameObject _gameObject = null;
+
+        private bool IsPrimitiveObject() {
+            if (objectType == "cube" || objectType == "sphere" || objectType == "cylinder" || objectType == "capsule") return true;
+            return false;
+        }
 
         public IEnumerator InitGameobject() {
             switch (objectType) {
@@ -38,26 +41,14 @@ namespace Assets.Structures {
                 case "capsule":
                     _gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                     break;
-                case "custom":
-                    using (UnityWebRequest objRequest = UnityWebRequest.Get(objectObjPath)) {
-                        yield return objRequest.SendWebRequest();
-
-                        if (String.IsNullOrWhiteSpace(objectMtlPath))
-                            _gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data));
-                        else {
-                            using UnityWebRequest mtlRequest = UnityWebRequest.Get(objectMtlPath);
-                            yield return mtlRequest.SendWebRequest();
-                            _gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data), new MemoryStream(mtlRequest.downloadHandler.data));
-                        }
-                    }
+                default:
+                    yield return ModelDownloader.CreateObjectFromModel(objectType, (obj) => _gameObject = obj);
 
                     foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
                         var collider = renderer.gameObject.AddComponent<MeshCollider>();
                         collider.convex = true;
                     }
                     break;
-                default:
-                    throw new Exception("Unknown type");
             }
 
             _gameObject.AddComponent<Rigidbody>();
@@ -71,8 +62,8 @@ namespace Assets.Structures {
         public void UpdateColor() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
-            if (objectType == "custom") {
-                if (string.IsNullOrEmpty(objectMtlPath))
+            if (!IsPrimitiveObject()) {
+                if (!ModelDownloader.mtlLinks.ContainsKey(objectType))
                     foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
                         renderer.material.color = Color.green;
                     }

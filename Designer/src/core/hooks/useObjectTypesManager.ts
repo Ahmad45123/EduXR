@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useStorage } from 'reactfire';
 import {
   ref,
@@ -7,10 +7,11 @@ import {
   getDownloadURL,
   StorageReference,
 } from 'firebase/storage';
+import { EduXRContext } from '../../app';
 
 export type ObjectType = {
   name: string;
-  objFile?: string;
+  objFile: string;
   mtlFile?: string;
 };
 
@@ -23,8 +24,18 @@ async function checkIfFileExists(ref: StorageReference) {
   }
 }
 
-export function useObjectTypesManager(username: string) {
+export type ObjectTypesManager = {
+  objects: ObjectType[];
+  uploadObject: (
+    objName: string,
+    objFile: Blob,
+    mtlFile: Blob | undefined,
+  ) => Promise<boolean>;
+};
+
+export function useObjectTypesManager(): ObjectTypesManager {
   const firebaseStorage = useStorage();
+  const { username } = useContext(EduXRContext);
 
   const listRef = ref(firebaseStorage, 'objectTypes/' + username);
 

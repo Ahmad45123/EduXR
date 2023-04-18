@@ -14,6 +14,17 @@ export function useUnityObjectManagement({
     [unityContext],
   );
 
+  const setObjectModelURL = React.useCallback(
+    (objectModelName: string, objURL: string, mtlURL: string | undefined) => {
+      unityContext.sendMessage(
+        'SceneController',
+        'SetModelObject',
+        JSON.stringify({ objectModelName, objURL, mtlURL }),
+      );
+    },
+    [unityContext],
+  );
+
   const setObjectPosition = React.useCallback(
     (objectName: string, x: number, y: number, z: number) => {
       unityContext.sendMessage(
@@ -34,6 +45,7 @@ export function useUnityObjectManagement({
 
   return {
     createObject,
+    setObjectModelURL,
     deleteObject,
     setObjectPosition,
   };

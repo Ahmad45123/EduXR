@@ -1,9 +1,10 @@
 import { useFirestore, useFirestoreCollection } from 'reactfire';
 import { getSceneObjectsCollectionRef } from '../states/references';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useUnityObjectManagement } from './unity/function_hooks';
 import { SceneObjectState } from '../states/types';
 import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
+import { ObjectTypesManagerContext } from '../../routes/experiment_root';
 
 type props = {
   unityContext: UnityContextHook;
@@ -21,6 +22,8 @@ export default function useUnityAndDbSync({ unityContext, expName, sceneName }: 
     unityContext,
   });
 
+  const objectTypeManager = useContext(ObjectTypesManagerContext);
+
   const [objectsList, setObjectsList] = useState<SceneObjectState[]>([]);
 
   useEffect(() => {
@@ -28,6 +31,14 @@ export default function useUnityAndDbSync({ unityContext, expName, sceneName }: 
       switch (change.type) {
         case 'added':
           const obj = change.doc.data();
+          const model = objectTypeManager.objects.find(o => o.name === obj.objectType);
+          if (model) {
+            unityObjectManager.setObjectModelURL(
+              obj.objectType,
+              model.objFile,
+              model.mtlFile,
+            );
+          }
           unityObjectManager.createObject(obj);
           break;
         case 'removed':

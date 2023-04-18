@@ -6,8 +6,6 @@ import {
   getSceneObjectDocRef,
   getSceneObjectsCollectionRef,
 } from '../states/references';
-import { ObjectType } from './useObjectTypesManager';
-import { SceneObjectType } from '../states/types';
 import {
   useFirestore,
   useFirestoreCollection,
@@ -29,12 +27,10 @@ export default function useScene(expName: string, sceneName: string) {
     getSceneObjectsCollectionRef(fsapp, expName, sceneName),
   );
 
-  function addObject(name: string, type: ObjectType) {
+  function addObject(name: string, type: string) {
     const obj: SceneObjectState = {
       objectName: name,
-      objectType: type.name as SceneObjectType,
-      objectObjPath: type.objFile ?? '',
-      objectMtlPath: type.mtlFile ?? '',
+      objectType: type,
       position: [0, 0.28, 0],
       rotation: [0, 0, 0],
       scale: [0.08, 0.08, 0.08],

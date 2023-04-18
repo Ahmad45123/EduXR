@@ -31,7 +31,14 @@ import {
   BaseNode,
 } from '../../components/logic_designer';
 import UnityViewer from '../../components/unity_viewer';
-import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+} from 'react';
 import { ClassicPreset } from 'rete';
 import { SearchIcon } from '@chakra-ui/icons';
 import * as React from 'react';
@@ -41,6 +48,7 @@ import SceneObjectComp from './object_comp';
 import useScene from '../../core/hooks/useScene';
 import { Navigate } from 'react-router-dom';
 import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
+import { ObjectTypesManagerContext } from '../experiment_root';
 
 export default function Scene() {
   const { sceneName, expName } = useParams();
@@ -58,26 +66,12 @@ export default function Scene() {
     }
   }, [logicDesignerRef.current]);
 
-  const objectTypesManager = useObjectTypesManager('mainuser');
+  const objectTypesManager = useContext(ObjectTypesManagerContext);
   const [selectedObjectType, setSelectedObjectType] = useState<string>('cube');
 
   const [newObjectName, setNewObjectName] = useState('');
   const createObject = function () {
-    const objType = objectTypesManager.objects.find(
-      type => type.name === selectedObjectType,
-    );
-    if (objType) {
-      sceneCore.addObject(newObjectName, {
-        name: 'custom',
-        objFile: objType.objFile,
-        mtlFile: objType.mtlFile,
-      });
-    } else {
-      sceneCore.addObject(newObjectName, {
-        name: selectedObjectType,
-      });
-    }
-
+    sceneCore.addObject(newObjectName, selectedObjectType);
     setNewObjectName('');
   };
 

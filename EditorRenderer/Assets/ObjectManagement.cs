@@ -7,6 +7,20 @@ public class ObjectManagement : MonoBehaviour
 {
     Dictionary<string, SceneObject> sceneObjsDict = new Dictionary<string, SceneObject>();
 
+    class SetModelObjectParams {
+        public string objectModelName;
+        public string objURL;
+        public string mtlURL = null;
+    }
+    void SetModelObject(string input) {
+        var obj = JsonUtility.FromJson<SetModelObjectParams>(input);
+        ModelDownloader.objLinks[obj.objectModelName] = obj.objURL;
+        if(obj.mtlURL != null) {
+            ModelDownloader.mtlLinks[obj.objectModelName] = obj.mtlURL;
+        }
+        Debug.Log($"Set model of type {obj.objectModelName} to {obj.objURL}.");
+    }
+
     void CreateObject(string objectJson)
     {
         var obj = JsonUtility.FromJson<SceneObject>(objectJson);
@@ -27,6 +41,7 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName].position = new List<float>() { obj.x, obj.y, obj.z };
         sceneObjsDict[obj.objectName].UpdatePosition();
     }
+
 
     /*private void Start()
     {
