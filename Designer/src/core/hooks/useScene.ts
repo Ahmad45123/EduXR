@@ -1,11 +1,20 @@
 import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../states/root_store';
 import { useUnityObjectManagement } from './unity/function_hooks';
 import { SceneObjectState } from '../states/types';
-import { addSceneObject, setSceneObjectPosition } from '../states/experiment_store';
+import {
+  getSceneDocRef,
+  getSceneObjectDocRef,
+  getSceneObjectsCollectionRef,
+} from '../states/references';
 import { ObjectType } from './useObjectTypesManager';
 import { SceneObjectType } from '../states/types';
+import {
+  useFirestore,
+  useFirestoreCollection,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from 'reactfire';
+import { setDoc, updateDoc } from 'firebase/firestore';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
@@ -13,13 +22,12 @@ export interface SceneObjectInterface {
   setRotation: (rotation: [number, number, number]) => void;
 }
 
-export default function useScene(sceneName: string) {
-  const scene = useSelector((state: RootState) =>
-    state.experiment.scenes.find(scene => scene.name === sceneName),
+export default function useScene(expName: string, sceneName: string) {
+  const fsapp = useFirestore();
+  const { data: scene } = useFirestoreDocData(getSceneDocRef(fsapp, expName, sceneName));
+  const { data: objects } = useFirestoreCollectionData(
+    getSceneObjectsCollectionRef(fsapp, expName, sceneName),
   );
-  const dispatch = useDispatch();
-
-  const unityObjectManager = useUnityObjectManagement();
 
   function addObject(name: string, type: ObjectType) {
     const obj: SceneObjectState = {
@@ -34,23 +42,18 @@ export default function useScene(sceneName: string) {
       isGrabbable: true,
     };
 
-    unityObjectManager.createObject(obj);
-    dispatch(addSceneObject({ sceneName: sceneName, object: obj }));
+    setDoc(getSceneObjectDocRef(fsapp, expName, sceneName, name), obj);
   }
 
   function deleteObject() {}
 
   function getObject(objectName: string): SceneObjectInterface {
-    const object = scene?.objects.find(object => object.objectName === objectName);
+    const object = objects.find(object => object.objectName === objectName);
 
     function setPosition(position: [number, number, number]) {
-      unityObjectManager.setObjectPosition(
-        objectName,
-        position[0],
-        position[1],
-        position[2],
-      );
-      dispatch(setSceneObjectPosition({ sceneName, objectName, position }));
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        position: position,
+      });
     }
 
     function setRotation() {}
@@ -64,6 +67,7 @@ export default function useScene(sceneName: string) {
 
   return {
     scene,
+    objects,
     addObject,
     deleteObject,
     getObject,

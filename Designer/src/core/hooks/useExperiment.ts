@@ -1,19 +1,30 @@
 import * as React from 'react';
 import { useUnityContext } from 'react-unity-webgl';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../states/root_store';
-import { addScene } from '../states/experiment_store';
+import {
+  getExperimentDocRef,
+  getSceneDocRef,
+  getScenesCollectionRef,
+} from '../states/references';
+import { useFirestore, useFirestoreCollectionData, useFirestoreDocData } from 'reactfire';
+import { setDoc } from '@firebase/firestore';
 
-export default function useExperiment() {
-  const experiment = useSelector((state: RootState) => state.experiment);
-  const dispatch = useDispatch();
+export default function useExperiment(expName: string) {
+  const fsapp = useFirestore();
+  const { data: experiment } = useFirestoreDocData(getExperimentDocRef(fsapp, expName));
+  const { data: scenes } = useFirestoreCollectionData(
+    getScenesCollectionRef(fsapp, expName),
+  );
 
   function createScene(name: string) {
-    dispatch(addScene(name));
+    const sceneRef = getSceneDocRef(fsapp, expName, name);
+    setDoc(sceneRef, {
+      name,
+    });
   }
 
   return {
     experiment,
+    scenes,
     createScene,
   };
 }

@@ -16,6 +16,7 @@ import {
   ModalContent,
   ModalOverlay,
   Select,
+  Skeleton,
   Tab,
   TabList,
   TabPanel,
@@ -42,9 +43,13 @@ import { Navigate } from 'react-router-dom';
 import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
 
 export default function Scene() {
-  const { sceneName } = useParams();
-  const sceneCore = useScene(sceneName!);
+  const { sceneName, expName } = useParams();
 
+  if (!sceneName || !expName) {
+    return <Navigate to="/" />;
+  }
+
+  const sceneCore = useScene(expName, sceneName);
   const [setContainer, editor] = useRete(createEditor);
   const logicDesignerRef = useRef(null);
   useEffect(() => {
@@ -76,18 +81,16 @@ export default function Scene() {
     setNewObjectName('');
   };
 
-  if (!sceneCore.scene) {
-    return <Navigate to="/" />;
-  } else {
-    return (
-      <Box
-        display="flex"
-        gap="4"
-        width="100%"
-        height="100%"
-        justifyContent="space-between"
-        padding="1em"
-      >
+  return (
+    <Box
+      display="flex"
+      gap="4"
+      width="100%"
+      height="100%"
+      justifyContent="space-between"
+      padding="1em"
+    >
+      <React.Suspense fallback={<Skeleton />}>
         <Box width="50%" height="100%">
           <Tabs display="flex" flexDir="column" height="100%">
             <TabList>
@@ -126,7 +129,7 @@ export default function Scene() {
                 </FormControl>
                 <Box flexGrow="1" flexShrink="1" flexBasis="0" overflow="auto">
                   <Flex gap="1em" wrap="wrap">
-                    {sceneCore.scene?.objects.map(obj => (
+                    {sceneCore.objects.map(obj => (
                       <SceneObjectComp
                         key={obj.objectName}
                         sceneObject={sceneCore.getObject(obj.objectName)}
@@ -145,9 +148,13 @@ export default function Scene() {
           </Tabs>
         </Box>
         <Box width="50%" alignSelf="center">
-          <UnityViewer style={{ width: '100%' }} />
+          <UnityViewer
+            style={{ width: '100%' }}
+            expName={expName}
+            sceneName={sceneName}
+          />
         </Box>
-      </Box>
-    );
-  }
+      </React.Suspense>
+    </Box>
+  );
 }

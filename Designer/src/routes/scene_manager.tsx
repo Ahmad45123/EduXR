@@ -15,7 +15,7 @@ import useExperiment from '../core/hooks/useExperiment';
 import ObjectModelManager from './object_model_manager';
 
 export default function SceneManager() {
-  const { createScene, experiment } = useExperiment();
+  const { createScene, experiment, scenes } = useExperiment('myexp');
 
   const addScene = () => {
     const sceneName = prompt('Enter scene name');
@@ -35,12 +35,12 @@ export default function SceneManager() {
         <CardBody>
           <Button onClick={addScene}>Create Scene</Button>
           <List width="100%">
-            {experiment.scenes.map(scene => (
+            {scenes.map(scene => (
               <ListItem display="flex" gap="1em" mt="1em" key={scene.name}>
                 <Text alignSelf="center">{scene.name}</Text>
                 <IconButton
                   aria-label="delete"
-                  onClick={() => navigate('scene/' + scene.name)}
+                  onClick={() => navigate('experiment/myexp/' + scene.name)}
                   icon={<SearchIcon />}
                 />
               </ListItem>

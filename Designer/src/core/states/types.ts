@@ -20,10 +20,8 @@ export interface SceneState {
     nodes: BaseNode[];
     connections: BaseConnection[];
   };
-  objects: SceneObjectState[];
 }
 
 export interface ExperimentState {
   name: string;
-  scenes: SceneState[];
 }

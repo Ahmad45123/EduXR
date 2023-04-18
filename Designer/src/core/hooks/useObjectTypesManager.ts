@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { firebaseStorage } from '../../app';
+import { useStorage } from 'reactfire';
 import {
   ref,
   listAll,
@@ -24,6 +24,8 @@ async function checkIfFileExists(ref: StorageReference) {
 }
 
 export function useObjectTypesManager(username: string) {
+  const firebaseStorage = useStorage();
+
   const listRef = ref(firebaseStorage, 'objectTypes/' + username);
 
   const [objects, setObjects] = useState<ObjectType[]>([]);
