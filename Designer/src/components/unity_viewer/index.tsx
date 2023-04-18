@@ -1,7 +1,7 @@
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import * as React from 'react';
-import { UnityContext } from '../../app';
 import useUnityAndDbSync from '../../core/hooks/useUnityAndDbSync';
+import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
 
 type props = {
   style?: React.CSSProperties | undefined;
@@ -10,24 +10,43 @@ type props = {
 };
 
 function UnityAndDbSyncComp({
+  unityContext,
   expName,
   sceneName,
 }: {
+  unityContext: UnityContextHook;
   expName: string;
   sceneName: string;
 }) {
-  useUnityAndDbSync(expName, sceneName);
+  useUnityAndDbSync({
+    unityContext,
+    expName,
+    sceneName,
+  });
   return <></>;
 }
 
 export default function UnityViewer({ style, expName, sceneName }: props) {
-  const unityContext = React.useContext(UnityContext);
+  const unityContext = useUnityContext({
+    loaderUrl: '/renderer/Build/renderer.loader.js',
+    dataUrl: '/renderer/Build/renderer.data',
+    frameworkUrl: '/renderer/Build/renderer.framework.js',
+    codeUrl: '/renderer/Build/renderer.wasm',
+    streamingAssetsUrl: 'StreamingAssets',
+    companyName: 'DefaultCompany',
+    productName: 'EduXRDesigner',
+    productVersion: '0.1',
+  });
 
   return (
     <>
       <Unity tabIndex={2} unityProvider={unityContext.unityProvider} style={style} />
       {unityContext.isLoaded && (
-        <UnityAndDbSyncComp expName={expName} sceneName={sceneName} />
+        <UnityAndDbSyncComp
+          unityContext={unityContext}
+          expName={expName}
+          sceneName={sceneName}
+        />
       )}
     </>
   );

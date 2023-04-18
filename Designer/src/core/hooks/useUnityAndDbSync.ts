@@ -3,14 +3,23 @@ import { getSceneObjectsCollectionRef } from '../states/references';
 import { useEffect, useState } from 'react';
 import { useUnityObjectManagement } from './unity/function_hooks';
 import { SceneObjectState } from '../states/types';
+import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
 
-export default function useUnityAndDbSync(expName: string, sceneName: string) {
+type props = {
+  unityContext: UnityContextHook;
+  expName: string;
+  sceneName: string;
+};
+
+export default function useUnityAndDbSync({ unityContext, expName, sceneName }: props) {
   const fsapp = useFirestore();
   const dataStore = useFirestoreCollection(
     getSceneObjectsCollectionRef(fsapp, expName, sceneName),
   );
 
-  const unityObjectManager = useUnityObjectManagement();
+  const unityObjectManager = useUnityObjectManagement({
+    unityContext,
+  });
 
   const [objectsList, setObjectsList] = useState<SceneObjectState[]>([]);
 

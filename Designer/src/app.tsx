@@ -33,38 +33,23 @@ const router = createBrowserRouter([
   },
 ]);
 
-export const UnityContext = React.createContext<UnityContextHook>(null!);
-
 export default function App() {
-  const unityContext = useUnityContext({
-    loaderUrl: '/renderer/Build/renderer.loader.js',
-    dataUrl: '/renderer/Build/renderer.data',
-    frameworkUrl: '/renderer/Build/renderer.framework.js',
-    codeUrl: '/renderer/Build/renderer.wasm',
-    streamingAssetsUrl: 'StreamingAssets',
-    companyName: 'DefaultCompany',
-    productName: 'EduXRDesigner',
-    productVersion: '0.1',
-  });
-
   const firebaseApp = useFirebaseApp();
   const firestoreInstance = getFirestore(firebaseApp);
   const storageInstance = getStorage(firebaseApp);
 
   return (
     <Container width="100vw" height="100vh">
-      <UnityContext.Provider value={unityContext}>
-        <StorageProvider sdk={storageInstance}>
-          <FirestoreProvider sdk={firestoreInstance}>
-            <ColorModeScript />
-            <ChakraProvider theme={theme}>
-              <React.Suspense fallback={<Skeleton />}>
-                <RouterProvider router={router} />
-              </React.Suspense>
-            </ChakraProvider>
-          </FirestoreProvider>
-        </StorageProvider>
-      </UnityContext.Provider>
+      <StorageProvider sdk={storageInstance}>
+        <FirestoreProvider sdk={firestoreInstance}>
+          <ColorModeScript />
+          <ChakraProvider theme={theme}>
+            <React.Suspense fallback={<Skeleton />}>
+              <RouterProvider router={router} />
+            </React.Suspense>
+          </ChakraProvider>
+        </FirestoreProvider>
+      </StorageProvider>
     </Container>
   );
 }

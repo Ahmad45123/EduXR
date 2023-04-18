@@ -1,33 +1,36 @@
 import * as React from 'react';
-import { UnityContext } from '../../../app';
 import { SceneObjectState } from '../../states/types';
+import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
 
-export function useUnityObjectManagement() {
-  const unityContext = React.useContext(UnityContext);
+export function useUnityObjectManagement({
+  unityContext,
+}: {
+  unityContext: UnityContextHook;
+}) {
+  const createObject = React.useCallback(
+    (object: SceneObjectState) => {
+      unityContext.sendMessage('SceneController', 'CreateObject', JSON.stringify(object));
+    },
+    [unityContext],
+  );
 
-  function createObject(object: SceneObjectState) {
-    if (!unityContext) {
-      console.error('Creating new object without unity context.');
-      return;
-    }
-    unityContext.sendMessage('SceneController', 'CreateObject', JSON.stringify(object));
-  }
+  const setObjectPosition = React.useCallback(
+    (objectName: string, x: number, y: number, z: number) => {
+      unityContext.sendMessage(
+        'SceneController',
+        'SetObjectPosition',
+        JSON.stringify({ objectName, x, y, z }),
+      );
+    },
+    [unityContext],
+  );
 
-  function setObjectPosition(objectName: string, x: number, y: number, z: number) {
-    if (!unityContext) {
-      console.error('Setting position without unity context.');
-      return;
-    }
-    unityContext.sendMessage(
-      'SceneController',
-      'SetObjectPosition',
-      JSON.stringify({ objectName, x, y, z }),
-    );
-  }
-
-  function deleteObject(objectName: string) {
-    unityContext?.sendMessage('SceneController', 'DeleteObject', objectName);
-  }
+  const deleteObject = React.useCallback(
+    (objectName: string) => {
+      unityContext.sendMessage('SceneController', 'DeleteObject', objectName);
+    },
+    [unityContext],
+  );
 
   return {
     createObject,
