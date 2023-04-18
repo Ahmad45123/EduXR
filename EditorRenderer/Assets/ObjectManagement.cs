@@ -28,6 +28,11 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName] = obj;
     }
 
+    void DeleteObject(string objectName) {
+        sceneObjsDict[objectName].Dispose();
+        sceneObjsDict.Remove(objectName);
+    }
+
     class PositionParams
     {
         public string objectName;

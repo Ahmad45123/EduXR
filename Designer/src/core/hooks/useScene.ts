@@ -12,7 +12,7 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from 'reactfire';
-import { setDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
@@ -22,6 +22,7 @@ export interface SceneObjectInterface {
   setHasGravity: (hasGravity: boolean) => void;
   setGrabbable: (isGrabbable: boolean) => void;
   setColor: (color: string) => void;
+  deleteSelf: () => void;
 }
 
 export default function useScene(expName: string, sceneName: string) {
@@ -87,6 +88,10 @@ export default function useScene(expName: string, sceneName: string) {
       });
     }
 
+    function deleteSelf() {
+      deleteDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName));
+    }
+
     return {
       object,
       setPosition,
@@ -95,6 +100,7 @@ export default function useScene(expName: string, sceneName: string) {
       setHasGravity,
       setGrabbable,
       setColor,
+      deleteSelf,
     };
   }
 

@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
   Checkbox,
+  Button,
 } from '@chakra-ui/react';
 import Vector3Input from '../../components/vector3_input';
 import { SceneObjectInterface } from '../../core/hooks/useScene';
@@ -36,7 +37,7 @@ export default function SceneObjectComp({ sceneObject }: CompProps) {
     <Card>
       <CardBody>
         <Heading size="md" textAlign="center">
-          {sceneObject.object?.objectName}
+          {sceneObject.object?.objectName} ({sceneObject.object?.objectType})
         </Heading>
         <Flex direction="column" gap="1em">
           <FormControl>
@@ -84,6 +85,9 @@ export default function SceneObjectComp({ sceneObject }: CompProps) {
               Is Grabable
             </Checkbox>
           </FormControl>
+          <Button color="red" onClick={sceneObject.deleteSelf}>
+            Delete
+          </Button>
         </Flex>
       </CardBody>
     </Card>

@@ -56,8 +56,8 @@ public static class ModelDownloader
             yield break;
         }
 
-        string objPath = objLinks[modelName];
-        string mtlPath = mtlLinks[modelName];
+        string objPath = objLinks.GetValueOrDefault(modelName);
+        string mtlPath = mtlLinks.GetValueOrDefault(modelName);
 
         using (UnityWebRequest objRequest = UnityWebRequest.Get(objPath)) {
             yield return objRequest.SendWebRequest();

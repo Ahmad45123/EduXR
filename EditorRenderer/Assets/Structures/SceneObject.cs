@@ -105,7 +105,7 @@ namespace Assets.Structures {
             rigidBody.isKinematic = true;
         }
 
-        ~SceneObject() {
+        public void Dispose() {
             UnityEngine.Object.Destroy(_gameObject);
         }
     }
