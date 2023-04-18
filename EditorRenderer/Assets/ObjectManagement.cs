@@ -52,6 +52,16 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName].UpdateScale();
     }
 
+    class SetObjectCollorParams {
+        public string objectName;
+        public string color;
+    }
+    void SetObjectColor(string input) {
+        var obj = JsonUtility.FromJson<SetObjectCollorParams>(input);
+        sceneObjsDict[obj.objectName].color = obj.color;
+        sceneObjsDict[obj.objectName].UpdateColor();
+    }
+
 
     /*private void Start()
     {

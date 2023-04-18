@@ -74,6 +74,10 @@ export default function useUnityAndDbSync({ unityContext, expName, sceneName }: 
               newObj.scale[2],
             );
           }
+
+          if (newObj.color !== oldObj.color) {
+            unityObjectManager.setObjectColor(newObj.objectName, newObj.color);
+          }
           
           break;
       }

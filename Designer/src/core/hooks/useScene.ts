@@ -21,6 +21,7 @@ export interface SceneObjectInterface {
   setScale: (scale: [number, number, number]) => void;
   setHasGravity: (hasGravity: boolean) => void;
   setGrabbable: (isGrabbable: boolean) => void;
+  setColor: (color: string) => void;
 }
 
 export default function useScene(expName: string, sceneName: string) {
@@ -34,6 +35,7 @@ export default function useScene(expName: string, sceneName: string) {
     const obj: SceneObjectState = {
       objectName: name,
       objectType: type,
+      color: '#00FF00',
       position: [0, 0.28, 0],
       rotation: [0, 0, 0],
       scale: [0.08, 0.08, 0.08],
@@ -79,6 +81,12 @@ export default function useScene(expName: string, sceneName: string) {
       });
     }
 
+    function setColor(color: string) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        color: color,
+      });
+    }
+
     return {
       object,
       setPosition,
@@ -86,6 +94,7 @@ export default function useScene(expName: string, sceneName: string) {
       setScale,
       setHasGravity,
       setGrabbable,
+      setColor,
     };
   }
 

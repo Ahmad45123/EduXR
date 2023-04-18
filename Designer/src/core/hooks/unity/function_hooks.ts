@@ -58,6 +58,17 @@ export function useUnityObjectManagement({
     [unityContext],
   );
 
+  const setObjectColor = React.useCallback(
+    (objectName: string, color: string) => {
+      unityContext.sendMessage(
+        'SceneController',
+        'SetObjectColor',
+        JSON.stringify({ objectName, color }),
+      );
+    },
+    [unityContext],
+  );
+
   const deleteObject = React.useCallback(
     (objectName: string) => {
       unityContext.sendMessage('SceneController', 'DeleteObject', objectName);
@@ -72,5 +83,6 @@ export function useUnityObjectManagement({
     setObjectPosition,
     setObjectRotation,
     setObjectScale,
+    setObjectColor,
   };
 }

@@ -10,12 +10,28 @@ import {
 } from '@chakra-ui/react';
 import Vector3Input from '../../components/vector3_input';
 import { SceneObjectInterface } from '../../core/hooks/useScene';
+import { ObjectTypesManagerContext } from '../experiment_root';
+import { CompactPicker } from 'react-color';
 
 type CompProps = {
   sceneObject: SceneObjectInterface;
 };
 
 export default function SceneObjectComp({ sceneObject }: CompProps) {
+  const objectTypesManager = React.useContext(ObjectTypesManagerContext);
+  const [hasColor, setHasColor] = React.useState(false);
+
+  React.useEffect(() => {
+    const type = objectTypesManager.objects.find(
+      o => o.name === sceneObject.object?.objectType,
+    );
+    if (type && type.mtlFile) {
+      setHasColor(false);
+    } else {
+      setHasColor(true);
+    }
+  }, [objectTypesManager, sceneObject]);
+
   return (
     <Card>
       <CardBody>
@@ -44,6 +60,15 @@ export default function SceneObjectComp({ sceneObject }: CompProps) {
               onChange={sceneObject.setScale}
             />
           </FormControl>
+          {hasColor && (
+            <FormControl>
+              <FormLabel>Color</FormLabel>
+              <CompactPicker
+                color={sceneObject.object?.color}
+                onChange={e => sceneObject.setColor(e.hex)}
+              />
+            </FormControl>
+          )}
           <FormControl display="flex" gap="0.1em" flexDir="column">
             <FormLabel>Others</FormLabel>
             <Checkbox

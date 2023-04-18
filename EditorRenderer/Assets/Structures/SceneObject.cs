@@ -13,6 +13,7 @@ namespace Assets.Structures {
     public class SceneObject {
         public string objectName;
         public string objectType;
+        public string color;
         public List<float> position;
         public List<float> rotation;
         public List<float> scale;
@@ -63,14 +64,16 @@ namespace Assets.Structures {
         public void UpdateColor() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
+            ColorUtility.TryParseHtmlString(color, out Color clr);
+
             if (!IsPrimitiveObject()) {
                 if (!ModelDownloader.mtlLinks.ContainsKey(objectType))
                     foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
-                        renderer.material.color = Color.green;
+                        renderer.material.color = clr;
                     }
             }
             else {
-                _gameObject.GetComponent<Renderer>().material.color = Color.green;
+                _gameObject.GetComponent<Renderer>().material.color = clr;
             }
         }
 
