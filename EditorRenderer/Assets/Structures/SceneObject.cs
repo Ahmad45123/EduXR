@@ -57,6 +57,7 @@ namespace Assets.Structures {
             UpdateGravity();
             UpdatePosition();
             UpdateScale();
+            UpdateRotation();
         }
 
         public void UpdateColor() {
@@ -85,6 +86,12 @@ namespace Assets.Structures {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
             _gameObject.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
+        }
+
+        public void UpdateRotation() {
+            if (!_gameObject) throw new Exception("InitGameobject first!");
+
+            _gameObject.transform.rotation = Quaternion.Euler(rotation[0], rotation[1], rotation[2]);
         }
 
         public void UpdateGravity() {

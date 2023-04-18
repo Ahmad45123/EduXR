@@ -56,6 +56,25 @@ export default function useUnityAndDbSync({ unityContext, expName, sceneName }: 
               newObj.position[2],
             );
           }
+
+          if (newObj.rotation !== oldObj.rotation) {
+            unityObjectManager.setObjectRotation(
+              newObj.objectName,
+              newObj.rotation[0],
+              newObj.rotation[1],
+              newObj.rotation[2],
+            );
+          }
+
+          if (newObj.scale !== oldObj.scale) {
+            unityObjectManager.setObjectScale(
+              newObj.objectName,
+              newObj.scale[0],
+              newObj.scale[1],
+              newObj.scale[2],
+            );
+          }
+          
           break;
       }
     }

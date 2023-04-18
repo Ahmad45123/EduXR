@@ -18,6 +18,9 @@ export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
   setPosition: (position: [number, number, number]) => void;
   setRotation: (rotation: [number, number, number]) => void;
+  setScale: (scale: [number, number, number]) => void;
+  setHasGravity: (hasGravity: boolean) => void;
+  setGrabbable: (isGrabbable: boolean) => void;
 }
 
 export default function useScene(expName: string, sceneName: string) {
@@ -52,12 +55,37 @@ export default function useScene(expName: string, sceneName: string) {
       });
     }
 
-    function setRotation() {}
+    function setScale(scale: [number, number, number]) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        scale: scale,
+      });
+    }
+
+    function setRotation(rotation: [number, number, number]) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        rotation: rotation,
+      });
+    }
+
+    function setHasGravity(hasGravity: boolean) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        hasGravity: hasGravity,
+      });
+    }
+
+    function setGrabbable(isGrabbable: boolean) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        isGrabbable: isGrabbable,
+      });
+    }
 
     return {
       object,
       setPosition,
       setRotation,
+      setScale,
+      setHasGravity,
+      setGrabbable,
     };
   }
 

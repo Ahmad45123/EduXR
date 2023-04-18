@@ -28,7 +28,7 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName] = obj;
     }
 
-    class ObjectPositionParams
+    class PositionParams
     {
         public string objectName;
         public float x;
@@ -37,9 +37,19 @@ public class ObjectManagement : MonoBehaviour
     }
     void SetObjectPosition(string input)
     {
-        var obj = JsonUtility.FromJson<ObjectPositionParams>(input);
+        var obj = JsonUtility.FromJson<PositionParams>(input);
         sceneObjsDict[obj.objectName].position = new List<float>() { obj.x, obj.y, obj.z };
         sceneObjsDict[obj.objectName].UpdatePosition();
+    }
+    void SetObjectRotation(string input) {
+        var obj = JsonUtility.FromJson<PositionParams>(input);
+        sceneObjsDict[obj.objectName].rotation = new List<float>() { obj.x, obj.y, obj.z };
+        sceneObjsDict[obj.objectName].UpdateRotation();
+    }
+    void SetObjectScale(string input) {
+        var obj = JsonUtility.FromJson<PositionParams>(input);
+        sceneObjsDict[obj.objectName].scale = new List<float>() { obj.x, obj.y, obj.z };
+        sceneObjsDict[obj.objectName].UpdateScale();
     }
 
 

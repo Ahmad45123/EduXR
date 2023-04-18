@@ -36,6 +36,28 @@ export function useUnityObjectManagement({
     [unityContext],
   );
 
+  const setObjectRotation = React.useCallback(
+    (objectName: string, x: number, y: number, z: number) => {
+      unityContext.sendMessage(
+        'SceneController',
+        'SetObjectRotation',
+        JSON.stringify({ objectName, x, y, z }),
+      );
+    },
+    [unityContext],
+  );
+
+  const setObjectScale = React.useCallback(
+    (objectName: string, x: number, y: number, z: number) => {
+      unityContext.sendMessage(
+        'SceneController',
+        'SetObjectScale',
+        JSON.stringify({ objectName, x, y, z }),
+      );
+    },
+    [unityContext],
+  );
+
   const deleteObject = React.useCallback(
     (objectName: string) => {
       unityContext.sendMessage('SceneController', 'DeleteObject', objectName);
@@ -48,5 +70,7 @@ export function useUnityObjectManagement({
     setObjectModelURL,
     deleteObject,
     setObjectPosition,
+    setObjectRotation,
+    setObjectScale,
   };
 }
