@@ -13,13 +13,6 @@ public class SceneLoader : MonoBehaviour
     public GameObject thePrefab;
     public GameObject childrenNode;
 
-    public TextMeshPro theCollisionPlace;
-
-    public static Color ToColor(string color)
-    {
-        return (Color)typeof(Color).GetProperty(color.ToLowerInvariant()).GetValue(null, null);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
