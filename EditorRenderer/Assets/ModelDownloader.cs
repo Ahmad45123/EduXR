@@ -1,10 +1,13 @@
-using Dummiesman;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using Assets.Extensions;
+using GLTFast;
 
 
 public static class ModelDownloader
@@ -25,55 +28,38 @@ public static class ModelDownloader
         Debug.Log($"Stored {Path.Combine(Application.persistentDataPath, fileName)} in cache!");
     }
 
-    private static GameObject tryGetFromCache(string name) {
-        byte[] objFile = getFileFromCache(name + ".obj");
-        if (objFile == null) return null;
-        byte[] mtlFile = getFileFromCache(name + ".mtl");
-        if(mtlFile != null) {
-            return new OBJLoader().Load(new MemoryStream(objFile), new MemoryStream(mtlFile));
-        }
-
-        return new OBJLoader().Load(new MemoryStream(objFile));
-    }
-
-    private static void trySaveInCache(string name, byte[] objFile, byte[] mtlFile = null) {
-        putFileInCache(name + ".obj", objFile);
-        if(mtlFile != null) {
-            putFileInCache(name + ".mtl", mtlFile);
-        }
+    private static void trySaveInCache(string name, byte[] objFile) {
+        putFileInCache(name + ".glb", objFile);
+#if !UNITY_EDITOR
         syncDB();
+#endif
     }
 
     public static Dictionary<string, string> objLinks = new();
-    public static Dictionary<string, string> mtlLinks = new();
 
-    public static IEnumerator CreateObjectFromModel(string modelName, System.Action<GameObject> onComplete) {
-        GameObject gameObject = tryGetFromCache(modelName);
+    public static async Task ApplyModelToObject(string modelName, GameObject objectToApplyOn) {
+        var cachedData = getFileFromCache(modelName + ".glb");
 
-        if (gameObject != null) {
+        if (cachedData != null) {
             Debug.Log($"Found object {modelName} in cache and used it.");
-            onComplete(gameObject);
-            yield break;
+        }
+        else {
+            var objPath = objLinks[modelName];
+
+            using var objRequest = UnityWebRequest.Get(objPath);
+            await objRequest.SendWebRequest();
+
+            cachedData = objRequest.downloadHandler.data;
+            trySaveInCache(modelName, objRequest.downloadHandler.data);
         }
 
-        string objPath = objLinks.GetValueOrDefault(modelName);
-        string mtlPath = mtlLinks.GetValueOrDefault(modelName);
-
-        using (UnityWebRequest objRequest = UnityWebRequest.Get(objPath)) {
-            yield return objRequest.SendWebRequest();
-
-            if (string.IsNullOrWhiteSpace(mtlPath)) {
-                gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data));
-                trySaveInCache(modelName, objRequest.downloadHandler.data);
-            } 
-            else {
-                using UnityWebRequest mtlRequest = UnityWebRequest.Get(mtlPath);
-                yield return mtlRequest.SendWebRequest();
-                gameObject = new OBJLoader().Load(new MemoryStream(objRequest.downloadHandler.data), new MemoryStream(mtlRequest.downloadHandler.data));
-                trySaveInCache(modelName, objRequest.downloadHandler.data, mtlRequest.downloadHandler.data);
+        var gltf = new GltfImport();
+        var success = await gltf.LoadGltfBinary(cachedData);
+        if (success) {
+            success = await gltf.InstantiateMainSceneAsync(objectToApplyOn.transform);
+            if (success) {
+                Debug.Log($"Model {modelName} loaded successfully.");
             }
         }
-
-        onComplete(gameObject);
     }
 }

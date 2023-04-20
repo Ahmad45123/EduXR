@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using Dummiesman;
 using UnityEngine.Networking;
 using System.IO;
 using System.Collections;
@@ -24,11 +23,10 @@ namespace Assets.Structures {
         private GameObject _gameObject = null;
 
         private bool IsPrimitiveObject() {
-            if (objectType == "cube" || objectType == "sphere" || objectType == "cylinder" || objectType == "capsule") return true;
-            return false;
+            return objectType is "cube" or "sphere" or "cylinder" or "capsule";
         }
 
-        public IEnumerator InitGameobject() {
+        public async void InitGameobject() {
             switch (objectType) {
                 case "cube":
                     _gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -43,7 +41,8 @@ namespace Assets.Structures {
                     _gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                     break;
                 default:
-                    yield return ModelDownloader.CreateObjectFromModel(objectType, (obj) => _gameObject = obj);
+                    _gameObject = new GameObject(objectName);
+                    await ModelDownloader.ApplyModelToObject(objectType, _gameObject);
 
                     foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
                         var collider = renderer.gameObject.AddComponent<MeshCollider>();
@@ -64,17 +63,9 @@ namespace Assets.Structures {
         public void UpdateColor() {
             if (!_gameObject) throw new Exception("InitGameobject first!");
 
+            if (!IsPrimitiveObject()) return;
             ColorUtility.TryParseHtmlString(color, out Color clr);
-
-            if (!IsPrimitiveObject()) {
-                if (!ModelDownloader.mtlLinks.ContainsKey(objectType))
-                    foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
-                        renderer.material.color = clr;
-                    }
-            }
-            else {
-                _gameObject.GetComponent<Renderer>().material.color = clr;
-            }
+            _gameObject.GetComponent<Renderer>().material.color = clr;
         }
 
         public void UpdatePosition() {
