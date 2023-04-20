@@ -5,50 +5,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.SceneManagement.Core;
+using Assets.SceneManagement.Misc;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
+using GLTFast;
 
 namespace Assets.SceneManagement.Builders {
     public class ObjectBuilder : MonoBehaviour {
-        /*public Core.Object CreateObjectFromData(Models.ObjectData objectData) {
-            GameObject gameObject;
+        public ModelManager modelManager;
+
+        public async Task<Core.Object> CreateObjectFromData(Models.ObjectData objectData) {
+            GameObject gameObj;
             switch (objectData.objectType) {
                 case "cube":
-                    gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     break;
                 case "sphere":
-                    gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     break;
                 case "cylinder":
-                    gameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                     break;
                 case "capsule":
-                    gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                     break;
                 default:
-                    yield return ModelDownloader.CreateObjectFromModel(objectType, (obj) => _gameObject = obj);
+                    gameObj = new GameObject();
 
-                    foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>()) {
+                    var cachedData = await modelManager.GetModelBytes(objectData.objectType);
+                    Assert.IsNotNull(cachedData);
+
+                    var gltf = new GltfImport();
+                    var success = await gltf.LoadGltfBinary(cachedData);
+                    if (success) {
+                        await gltf.InstantiateMainSceneAsync(gameObj.transform);
+                    }
+
+                    foreach (var renderer in gameObj.GetComponentsInChildren<Renderer>()) {
                         var collider = renderer.gameObject.AddComponent<MeshCollider>();
                         collider.convex = true;
                     }
                     break;
             }
 
-            gameObject.AddComponent<Rigidbody>();
+            gameObj.name = objectData.objectName;
+            gameObj.AddComponent<Rigidbody>();
             
-            return new Core.Object(gameObject, false);
+            return new Core.Object(gameObj, false);
         }
-
-        private static GameObject TryCreateFromCache(string modelName) {
-            byte[] objFile = getFileFromCache(modelName + ".obj");
-            if (objFile == null) return null;
-            byte[] mtlFile = getFileFromCache(modelName + ".mtl");
-            if (mtlFile != null) {
-                return new OBJLoader().Load(new MemoryStream(objFile), new MemoryStream(mtlFile));
-            }
-
-            return new OBJLoader().Load(new MemoryStream(objFile));
-        }*/
     }
 }

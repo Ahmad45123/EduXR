@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18034227, g: 0.22578427, b: 0.3069886, a: 1}
+  m_IndirectSpecularColor: {r: 0.18033743, g: 0.22578046, b: 0.30695534, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,11 +217,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!20 &74337375 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2037080, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
-  m_PrefabInstance: {fileID: 144863263}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &82172083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -662,17 +657,6 @@ MonoBehaviour:
   edgeRenderingEnabled_: 1
   edgeColor_: {r: 1, g: 0.8495522, b: 0.496, a: 1}
   colorMapType: 1
---- !u!114 &144863268 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
-  m_PrefabInstance: {fileID: 144863263}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144863266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &166270606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6952,8 +6936,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1168948296}
-  - component: {fileID: 1168948297}
   - component: {fileID: 1168948298}
+  - component: {fileID: 1168948301}
+  - component: {fileID: 1168948300}
+  - component: {fileID: 1168948299}
+  - component: {fileID: 1168948302}
   m_Layer: 0
   m_Name: CoreGameObject
   m_TagString: Untagged
@@ -6976,21 +6963,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1168948297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168948295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73b5ea995730fa9498514bfee5dbd708, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 144863268}
-  camera: {fileID: 74337375}
-  envirnoment: {fileID: 613209588}
 --- !u!114 &1168948298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7003,9 +6975,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abeba81e6587bac469ae716fffc8f36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thePrefab: {fileID: 1800035862963762113, guid: 42ebd583d49a00c42b29b1a85f118a81, type: 3}
-  childrenNode: {fileID: 841210492}
-  theCollisionPlace: {fileID: 447999105}
+  experimentName: myexp
+--- !u!114 &1168948299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168948295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3946386c3f6e64d9aa731726177c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelManager: {fileID: 0}
+--- !u!114 &1168948300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168948295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a11e691088bc4d4bad41b2da97ea335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectBuilder: {fileID: 0}
+--- !u!114 &1168948301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168948295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8aceb192b1c445458d4cd81763922a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneLoader: {fileID: 0}
+  _sceneBuilder: {fileID: 0}
+--- !u!114 &1168948302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168948295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c419536c682b6840963455d898a81bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  username: mainuser
 --- !u!1001 &1170286541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13895,7 +13918,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1168948297}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InteractionManager, Assembly-CSharp
         m_MethodName: ToggleAR
         m_Mode: 1

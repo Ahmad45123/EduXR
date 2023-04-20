@@ -10,24 +10,23 @@ using Firebase.Extensions;
 
 namespace Assets.SceneManagement {
     class SceneManager : MonoBehaviour {
-        private SceneLoader _sceneLoader;
-        private SceneBuilder _sceneBuilder;
+        public SceneLoader _sceneLoader;
+        public SceneBuilder _sceneBuilder;
 
         private Core.Scene _currentScene;
 
-        void SetCurrentScene(SceneData sceneData) {
+        async void SetCurrentScene(SceneData sceneData) {
             // Delete old scene
             if (_currentScene != null)
                 _currentScene.Destroy();
 
             // Load new one.
-            _currentScene = _sceneBuilder.CreateSceneFromData(sceneData);
+            _currentScene = await _sceneBuilder.CreateSceneFromData(sceneData);
         }
 
-        void Start() {
-            _sceneLoader.LoadAllScenes().ContinueWithOnMainThread(task => {
-                SetCurrentScene(_sceneLoader.GetSceneIndex(0));
-            });
+        async void Start() {
+            await _sceneLoader.LoadAllScenes();
+            SetCurrentScene(_sceneLoader.GetSceneIndex(0));
         }
     }
 }

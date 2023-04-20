@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace Assets.SceneManagement.Misc {
     public static class CacheManager {
-        public static byte[] getFileFromCache(string fileName) {
+        public static byte[] GetFileFromCache(string fileName) {
             Debug.Log($"Checking file {Path.Combine(Application.persistentDataPath, fileName)} in cache..");
             return File.Exists(Path.Combine(Application.persistentDataPath, fileName))
                 ? File.ReadAllBytes(Path.Combine(Application.persistentDataPath, fileName))
                 : null;
         }
 
-        public static void putFileInCache(string fileName, byte[] file) {
+        public static void PutFileInCache(string fileName, byte[] file) {
             File.WriteAllBytes(Path.Combine(Application.persistentDataPath, fileName), file);
             Debug.Log($"Stored {Path.Combine(Application.persistentDataPath, fileName)} in cache!");
         }
