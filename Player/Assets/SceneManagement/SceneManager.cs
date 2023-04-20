@@ -4,21 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.SceneManagement.Builders;
 using UnityEngine;
+using Firebase.Extensions;
 
 namespace Assets.SceneManagement {
     class SceneManager : MonoBehaviour {
-        Builders.SceneBuilder sceneBuilder;
+        private SceneLoader _sceneLoader;
+        private SceneBuilder _sceneBuilder;
 
-        private Core.Scene currentScene;
+        private Core.Scene _currentScene;
 
         void SetCurrentScene(SceneData sceneData) {
             // Delete old scene
-            if (currentScene != null)
-                currentScene.Destroy();
+            if (_currentScene != null)
+                _currentScene.Destroy();
 
             // Load new one.
-            currentScene = sceneBuilder.CreateSceneFromData(sceneData);
+            _currentScene = _sceneBuilder.CreateSceneFromData(sceneData);
+        }
+
+        void Start() {
+            _sceneLoader.LoadAllScenes().ContinueWithOnMainThread(task => {
+                SetCurrentScene(_sceneLoader.GetSceneIndex(0));
+            });
         }
     }
 }

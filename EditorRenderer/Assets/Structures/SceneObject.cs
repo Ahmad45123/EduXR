@@ -108,5 +108,9 @@ namespace Assets.Structures {
         public void Dispose() {
             UnityEngine.Object.Destroy(_gameObject);
         }
+
+        ~SceneObject() {
+            Dispose();
+        }
     }
 }

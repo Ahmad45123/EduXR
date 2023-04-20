@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.SceneManagement.Models {
-    class SceneData {
+    public class SceneData {
         public string name;
-        public ObjectData[] objects;
+        public List<ObjectData> objects;
     }
 }
