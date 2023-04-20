@@ -26,11 +26,7 @@ async function checkIfFileExists(ref: StorageReference) {
 
 export type ObjectTypesManager = {
   objects: ObjectType[];
-  uploadObject: (
-    objName: string,
-    objFile: Blob,
-    mtlFile: Blob | undefined,
-  ) => Promise<boolean>;
+  uploadObject: (objName: string, objFile: Blob) => Promise<boolean>;
 };
 
 export function useObjectTypesManager(): ObjectTypesManager {
@@ -47,16 +43,11 @@ export function useObjectTypesManager(): ObjectTypesManager {
     for (const itemRef of res.items) {
       const name = itemRef.name.split('.')[0];
       const ext = itemRef.name.split('.')[1];
-      if (!ret[name]) {
-        ret[name] = {
-          name: name,
-        } as ObjectType;
-      }
-      if (ext == 'obj') {
-        ret[name].objFile = await getDownloadURL(itemRef);
-      } else if (ext == 'mtl') {
-        ret[name].mtlFile = await getDownloadURL(itemRef);
-      }
+      if (ext !== 'glb') continue; // Only support GLB for now.
+      ret[name] = {
+        name: name,
+        objFile: await getDownloadURL(itemRef),
+      } as ObjectType;
     }
 
     return ret;
@@ -75,10 +66,10 @@ export function useObjectTypesManager(): ObjectTypesManager {
     updateObjectsList();
   }, []);
 
-  async function uploadObject(objName: string, objFile: Blob, mtlFile: Blob | undefined) {
+  async function uploadObject(objName: string, objFile: Blob) {
     const objRef = ref(
       firebaseStorage,
-      'objectTypes/' + username + '/' + objName + '.obj',
+      'objectTypes/' + username + '/' + objName + '.glb',
     );
 
     if (await checkIfFileExists(objRef)) {
@@ -86,14 +77,6 @@ export function useObjectTypesManager(): ObjectTypesManager {
     }
 
     await uploadBytes(objRef, objFile);
-
-    if (mtlFile) {
-      const mtlRef = ref(
-        firebaseStorage,
-        'objectTypes/' + username + '/' + objName + '.mtl',
-      );
-      await uploadBytes(mtlRef, mtlFile);
-    }
 
     updateObjectsList();
     return true;

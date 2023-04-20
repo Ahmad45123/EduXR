@@ -20,6 +20,10 @@ public class ObjectManagement : MonoBehaviour
     void CreateObject(string objectJson)
     {
         var obj = JsonUtility.FromJson<SceneObject>(objectJson);
+        if (sceneObjsDict.ContainsKey(obj.objectName)) {
+            Debug.Log($"Created duplicate object with name: ${obj.objectName}");
+            return;
+        }
         obj.InitGameobject();
         sceneObjsDict[obj.objectName] = obj;
     }
@@ -62,7 +66,6 @@ public class ObjectManagement : MonoBehaviour
         sceneObjsDict[obj.objectName].color = obj.color;
         sceneObjsDict[obj.objectName].UpdateColor();
     }
-
 
     /*private void Start()
     {

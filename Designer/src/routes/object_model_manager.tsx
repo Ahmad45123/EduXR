@@ -18,7 +18,6 @@ export default function ObjectModelManager() {
 
   const [name, setName] = React.useState('');
   const [objFile, setObjFile] = React.useState<Blob | undefined>(undefined);
-  const [mtlFile, setMtlFile] = React.useState<Blob | undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   const toast = useToast();
 
@@ -35,7 +34,7 @@ export default function ObjectModelManager() {
       return;
     }
     setIsLoading(true);
-    if (!(await objectTypesManager.uploadObject(name, objFile, mtlFile))) {
+    if (!(await objectTypesManager.uploadObject(name, objFile))) {
       toast({
         title: 'Error',
         description:
@@ -73,19 +72,11 @@ export default function ObjectModelManager() {
             </Heading>
             <form onSubmit={handleSubmit}>
               <FormControl mb={4}>
-                <FormLabel>Object File (.obj)</FormLabel>
+                <FormLabel>Object File (.glb)</FormLabel>
                 <Input
                   type="file"
-                  accept=".obj"
+                  accept=".glb"
                   onChange={e => setObjFile(e.target.files?.[0])}
-                />
-              </FormControl>
-              <FormControl mb={4}>
-                <FormLabel>Material File (.mtl)</FormLabel>
-                <Input
-                  type="file"
-                  accept=".mtl"
-                  onChange={e => setMtlFile(e.target.files?.[0])}
                 />
               </FormControl>
               <FormControl mb={4}>

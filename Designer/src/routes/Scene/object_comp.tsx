@@ -13,6 +13,7 @@ import Vector3Input from '../../components/vector3_input';
 import { SceneObjectInterface } from '../../core/hooks/useScene';
 import { ObjectTypesManagerContext } from '../experiment_root';
 import { CompactPicker } from 'react-color';
+import { IsPrimitiveObject } from '../../core/misc';
 
 type CompProps = {
   sceneObject: SceneObjectInterface;
@@ -23,15 +24,8 @@ export default function SceneObjectComp({ sceneObject }: CompProps) {
   const [hasColor, setHasColor] = React.useState(false);
 
   React.useEffect(() => {
-    const type = objectTypesManager.objects.find(
-      o => o.name === sceneObject.object?.objectType,
-    );
-    if (type && type.mtlFile) {
-      setHasColor(false);
-    } else {
-      setHasColor(true);
-    }
-  }, [objectTypesManager, sceneObject]);
+    setHasColor(IsPrimitiveObject(sceneObject.object!));
+  }, [sceneObject]);
 
   return (
     <Card>

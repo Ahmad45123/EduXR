@@ -97,6 +97,9 @@ namespace Assets.Structures {
         }
 
         public void Dispose() {
+            foreach (Transform child in _gameObject.transform) {
+                UnityEngine.Object.Destroy(child.gameObject);
+            }
             UnityEngine.Object.Destroy(_gameObject);
         }
 
