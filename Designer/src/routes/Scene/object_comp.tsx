@@ -20,7 +20,6 @@ type CompProps = {
 };
 
 export default function SceneObjectComp({ sceneObject }: CompProps) {
-  const objectTypesManager = React.useContext(ObjectTypesManagerContext);
   const [hasColor, setHasColor] = React.useState(false);
 
   React.useEffect(() => {
