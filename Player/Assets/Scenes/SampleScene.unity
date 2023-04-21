@@ -6989,6 +6989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelManager: {fileID: 1168948302}
+  bigParent: {fileID: 841210492}
 --- !u!114 &1168948300
 MonoBehaviour:
   m_ObjectHideFlags: 0
