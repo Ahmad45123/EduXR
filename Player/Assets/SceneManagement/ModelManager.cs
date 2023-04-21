@@ -14,7 +14,11 @@ namespace Assets.SceneManagement {
 
         public string username;
 
-        private readonly FirebaseStorage _storage = FirebaseStorage.DefaultInstance;
+        private FirebaseStorage _storage;
+
+        void Start() {
+            _storage = FirebaseStorage.DefaultInstance;
+        }
 
         public async Task<byte[]> GetModelBytes(string modelName) {
             var bytes = CacheManager.GetFileFromCache(modelName + ".glb");

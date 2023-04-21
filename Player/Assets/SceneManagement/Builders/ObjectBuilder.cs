@@ -14,9 +14,11 @@ using GLTFast;
 namespace Assets.SceneManagement.Builders {
     public class ObjectBuilder : MonoBehaviour {
         public ModelManager modelManager;
+        public GameObject bigParent;
 
         public async Task<Core.Object> CreateObjectFromData(Models.ObjectData objectData) {
             GameObject gameObj;
+            bool isCustomObj = false;
             switch (objectData.objectType) {
                 case "cube":
                     gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -46,13 +48,24 @@ namespace Assets.SceneManagement.Builders {
                         var collider = renderer.gameObject.AddComponent<MeshCollider>();
                         collider.convex = true;
                     }
+
+                    isCustomObj = true;
                     break;
             }
 
             gameObj.name = objectData.objectName;
             gameObj.AddComponent<Rigidbody>();
-            
-            return new Core.Object(gameObj, false);
+            gameObj.transform.parent = bigParent.transform;
+
+            var obj = new Core.Object(gameObj, isCustomObj);
+
+            obj.UpdateScale(objectData.scale);
+            obj.UpdateGravity(objectData.hasGravity);
+            obj.UpdateColor(objectData.color);
+            obj.UpdatePosition(objectData.position);
+            obj.UpdateRotation(objectData.rotation);
+
+            return obj;
         }
     }
 }

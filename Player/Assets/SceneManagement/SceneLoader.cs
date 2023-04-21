@@ -16,7 +16,7 @@ namespace Assets.SceneManagement {
 
         public async Task LoadAllScenes() {
             _scenes = new List<SceneData>();
-            var scenesRef = _db.Collection($"experiments/{experimentName}/_scenes");
+            var scenesRef = _db.Collection($"experiments/{experimentName}/scenes");
             var snapshot = await scenesRef.GetSnapshotAsync();
             foreach (var documentSnapshot in snapshot.Documents) {
                 var scene = documentSnapshot.ConvertTo<SceneData>();
@@ -26,8 +26,9 @@ namespace Assets.SceneManagement {
         }
 
         public async Task<SceneData> LoadScene(SceneData scene) {
-            var objectsRef = _db.Collection($"experiments/{experimentName}/_scenes/{scene.name}");
+            var objectsRef = _db.Collection($"experiments/{experimentName}/scenes/{scene.name}/objects");
             var snapshot = await objectsRef.GetSnapshotAsync();
+            scene.objects = new List<ObjectData>();
             foreach (var documentSnapshot in snapshot.Documents) {
                 var obj = documentSnapshot.ConvertTo<ObjectData>();
                 scene.objects.Add(obj);

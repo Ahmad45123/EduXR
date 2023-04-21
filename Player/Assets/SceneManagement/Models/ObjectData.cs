@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Firebase.Firestore;
 
 namespace Assets.SceneManagement.Models {
+
+    [FirestoreData]
     public class ObjectData {
-        public string objectName;
-        public string objectType;
-        public string color;
-        public List<float> position;
-        public List<float> rotation;
-        public List<float> scale;
-        public bool hasGravity;
-        public bool isGrabbable;
+        [FirestoreProperty] public string objectName { get; set; }
+        [FirestoreProperty] public string objectType { get; set; }
+        [FirestoreProperty] public string color { get; set; }
+        [FirestoreProperty] public List<float> position { get; set; }
+        [FirestoreProperty] public List<float> rotation { get; set; }
+        [FirestoreProperty] public List<float> scale { get; set; }
+        [FirestoreProperty] public bool hasGravity { get; set; }
+        [FirestoreProperty] public bool isGrabbable { get; set; }
     }
 }

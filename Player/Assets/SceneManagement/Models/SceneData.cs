@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Firebase.Firestore;
 
 namespace Assets.SceneManagement.Models {
+    [Serializable]
+    [FirestoreData]
     public class SceneData {
-        public string name;
+        [FirestoreProperty] public string name { get; set; }
         public List<ObjectData> objects;
     }
 }

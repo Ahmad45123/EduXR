@@ -6988,7 +6988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3946386c3f6e64d9aa731726177c70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelManager: {fileID: 0}
+  modelManager: {fileID: 1168948302}
 --- !u!114 &1168948300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7001,7 +7001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a11e691088bc4d4bad41b2da97ea335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectBuilder: {fileID: 0}
+  objectBuilder: {fileID: 1168948299}
 --- !u!114 &1168948301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7014,8 +7014,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8aceb192b1c445458d4cd81763922a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneLoader: {fileID: 0}
-  _sceneBuilder: {fileID: 0}
+  _sceneLoader: {fileID: 1168948298}
+  _sceneBuilder: {fileID: 1168948300}
 --- !u!114 &1168948302
 MonoBehaviour:
   m_ObjectHideFlags: 0

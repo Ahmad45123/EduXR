@@ -20,11 +20,6 @@ namespace Assets.SceneManagement.Core {
             ColorUtility.TryParseHtmlString(color, out Color clr);
 
             if (!_hasCustomMaterial) {
-                foreach (var renderer in _gameObject.GetComponentsInChildren<Renderer>()) {
-                    renderer.material.color = clr;
-                }
-            }
-            else {
                 _gameObject.GetComponent<Renderer>().material.color = clr;
             }
         }
@@ -46,6 +41,7 @@ namespace Assets.SceneManagement.Core {
         public void UpdateGravity(bool hasGravity) {
             var rigidBody = _gameObject.GetComponent<Rigidbody>();
             rigidBody.useGravity = hasGravity;
+            rigidBody.isKinematic = true;
         }
     }
 }
