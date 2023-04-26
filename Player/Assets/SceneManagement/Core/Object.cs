@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.SceneManagement.Models;
+using Oculus.Interaction;
+using Oculus.Interaction.Grab.GrabSurfaces;
+using Oculus.Interaction.HandGrab;
 using UnityEngine;
 
 namespace Assets.SceneManagement.Core {
@@ -41,7 +44,30 @@ namespace Assets.SceneManagement.Core {
         public void UpdateGravity(bool hasGravity) {
             var rigidBody = _gameObject.GetComponent<Rigidbody>();
             rigidBody.useGravity = hasGravity;
-            rigidBody.isKinematic = true;
+            rigidBody.isKinematic = !hasGravity;
+        }
+
+        public void UpdateGrabable(bool isGrabable) {
+            if (!isGrabable) {
+                UnityEngine.Object.Destroy(_gameObject.GetComponent<HandGrabInteractable>());
+                UnityEngine.Object.Destroy(_gameObject.GetComponent<PhysicsGrabbable>());
+                UnityEngine.Object.Destroy(_gameObject.GetComponent<Grabbable>());
+                return;
+            }
+
+            var rigidbody = _gameObject.GetComponent<Rigidbody>();
+            
+            var grabable = _gameObject.AddComponent<Grabbable>();
+            grabable.TransferOnSecondSelection = true;
+
+            var physicsGrabable = _gameObject.AddComponent<PhysicsGrabbable>();
+            physicsGrabable.InjectAllPhysicsGrabbable(grabable, rigidbody);
+            physicsGrabable.InjectOptionalScaleMassWithSize(true);
+                
+            var handGrabInteractable = _gameObject.AddComponent<HandGrabInteractable>();
+            handGrabInteractable.InjectPointableElement(grabable);
+            handGrabInteractable.InjectRigidbody(rigidbody);
+            handGrabInteractable.InjectOptionalPhysicsGrabbable(physicsGrabable);
         }
     }
 }

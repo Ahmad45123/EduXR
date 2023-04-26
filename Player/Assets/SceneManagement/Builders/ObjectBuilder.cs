@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
 using GLTFast;
+using Oculus.Interaction.Samples;
 
 namespace Assets.SceneManagement.Builders {
     public class ObjectBuilder : MonoBehaviour {
@@ -64,6 +65,9 @@ namespace Assets.SceneManagement.Builders {
             obj.UpdateColor(objectData.color);
             obj.UpdatePosition(objectData.position);
             obj.UpdateRotation(objectData.rotation);
+            obj.UpdateGrabable(objectData.isGrabbable);
+
+            gameObj.AddComponent<RespawnOnDrop>();
 
             return obj;
         }

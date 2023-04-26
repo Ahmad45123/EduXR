@@ -26,7 +26,7 @@ namespace Oculus.Interaction.Samples
     public class RespawnOnDrop : MonoBehaviour
     {
         [SerializeField]
-        private float _yThresholdForRespawn;
+        private float _yThresholdForRespawn = 0.7f;
 
         [SerializeField]
         private UnityEvent _whenRespawned = new UnityEvent();
