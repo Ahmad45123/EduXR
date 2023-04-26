@@ -133,10 +133,10 @@ export default function Scene() {
                 </Box>
               </TabPanel>
               <TabPanel height="100%">
-                <div
+                <Box
                   ref={logicDesignerRef}
                   style={{ width: '100%', height: '100%' }}
-                ></div>
+                ></Box>
               </TabPanel>
             </TabPanels>
           </Tabs>
