@@ -79,7 +79,6 @@ export async function createEditor(container: HTMLElement) {
 
   dock.add(() => new OnCollisionNode());
   dock.add(() => new GotoSceneNode());
-  dock.add(() => new IfNode());
   dock.add(() => new SceneLoad());
   dock.add(() => new AskQuestionNode());
   dock.add(() => new ShowMessageNode());
