@@ -46,6 +46,11 @@ import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
 import { ObjectTypesManagerContext } from '../experiment_root';
 import { useRete } from 'rete-react-render-plugin';
 
+function Rete() {
+  const [ref] = useRete(createEditor);
+  return <Box ref={ref} style={{ width: '100%', height: '100%' }}></Box>;
+}
+
 export default function Scene() {
   const { sceneName, expName } = useParams();
 
@@ -54,7 +59,6 @@ export default function Scene() {
   }
 
   const sceneCore = useScene(expName, sceneName);
-  const [logicDesignerRef, editor] = useRete(createEditor);
 
   const objectTypesManager = useContext(ObjectTypesManagerContext);
   const [selectedObjectType, setSelectedObjectType] = useState<string>('cube');
@@ -64,6 +68,8 @@ export default function Scene() {
     sceneCore.addObject(newObjectName, selectedObjectType);
     setNewObjectName('');
   };
+
+  const [tabIndex, setTabIndex] = useState(0);
 
   return (
     <Box
@@ -76,7 +82,13 @@ export default function Scene() {
     >
       <React.Suspense fallback={<Skeleton />}>
         <Box width="50%" height="100%">
-          <Tabs display="flex" flexDir="column" height="100%">
+          <Tabs
+            index={tabIndex}
+            onChange={setTabIndex}
+            display="flex"
+            flexDir="column"
+            height="100%"
+          >
             <TabList>
               <Tab>Scene Objects</Tab>
               <Tab>Scene Logic</Tab>
@@ -122,12 +134,7 @@ export default function Scene() {
                   </Flex>
                 </Box>
               </TabPanel>
-              <TabPanel height="100%">
-                <Box
-                  ref={logicDesignerRef}
-                  style={{ width: '100%', height: '100%' }}
-                ></Box>
-              </TabPanel>
+              <TabPanel height="100%">{tabIndex === 1 && <Rete />}</TabPanel>
             </TabPanels>
           </Tabs>
         </Box>
