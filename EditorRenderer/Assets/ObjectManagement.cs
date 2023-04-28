@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ObjectManagement : MonoBehaviour
 {
-    Dictionary<string, SceneObject> sceneObjsDict = new Dictionary<string, SceneObject>();
+    Dictionary<string, SceneObject> sceneObjsDict = new();
 
     class SetModelObjectParams {
         public string objectModelName;
@@ -20,10 +20,10 @@ public class ObjectManagement : MonoBehaviour
     void CreateObject(string objectJson)
     {
         var obj = JsonUtility.FromJson<SceneObject>(objectJson);
-        if (sceneObjsDict.ContainsKey(obj.objectName)) {
+        /*if (sceneObjsDict.ContainsKey(obj.objectName)) {
             Debug.Log($"Created duplicate object with name: ${obj.objectName}");
             return;
-        }
+        }*/
         obj.InitGameobject();
         sceneObjsDict[obj.objectName] = obj;
     }
