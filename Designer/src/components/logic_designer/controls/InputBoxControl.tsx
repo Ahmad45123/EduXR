@@ -1,6 +1,6 @@
 import { ClassicPreset } from 'rete';
 import { BaseCustomControl } from './BaseCustomControl';
-import { Box, Input, Textarea } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import * as React from 'react';
 
 export class InputBoxControl extends BaseCustomControl {
@@ -11,21 +11,39 @@ export class InputBoxControl extends BaseCustomControl {
 }
 
 export function InputBoxControlImpl(props: { data: InputBoxControl }) {
-  function setValue(val: string) {
-    props.data.value = val;
-  }
+  const [value, setValue] = React.useState(props.data.value);
+
+  React.useEffect(() => {
+    setValue(props.data.value);
+  }, [props.data.value]);
 
   return (
     <Box width="100%">
-      {props.data.isMultiline ? (
-        <Textarea height="6em" width="100%" onChange={e => setValue(e.target.value)} />
-      ) : (
-        <Input
-          placeholder={props.data.label}
-          width="100%"
-          onChange={e => setValue(e.target.value)}
-        />
-      )}
+      <FormControl>
+        <FormLabel color={'white'}>{props.data.label}</FormLabel>
+        {props.data.isMultiline ? (
+          <Textarea
+            height="6em"
+            width="100%"
+            value={value}
+            onPointerDown={e => e.stopPropagation()}
+            onChange={e => {
+              setValue(e.target.value);
+              props.data.value = e.target.value;
+            }}
+          />
+        ) : (
+          <Input
+            value={value}
+            width="100%"
+            onPointerDown={e => e.stopPropagation()}
+            onChange={e => {
+              setValue(e.target.value);
+              props.data.value = e.target.value;
+            }}
+          />
+        )}
+      </FormControl>
     </Box>
   );
 }
