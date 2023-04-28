@@ -24,12 +24,7 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
-import {
-  createEditor,
-  useRete,
-  BaseConnection,
-  BaseNode,
-} from '../../components/logic_designer';
+import { createEditor, BaseConnection, BaseNode } from '../../components/logic_designer';
 import UnityViewer from '../../components/unity_viewer';
 import {
   SetStateAction,
@@ -49,6 +44,7 @@ import useScene from '../../core/hooks/useScene';
 import { Navigate } from 'react-router-dom';
 import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
 import { ObjectTypesManagerContext } from '../experiment_root';
+import { useRete } from 'rete-react-render-plugin';
 
 export default function Scene() {
   const { sceneName, expName } = useParams();
@@ -58,13 +54,7 @@ export default function Scene() {
   }
 
   const sceneCore = useScene(expName, sceneName);
-  const [setContainer, editor] = useRete(createEditor);
-  const logicDesignerRef = useRef(null);
-  useEffect(() => {
-    if (logicDesignerRef.current) {
-      setContainer(logicDesignerRef.current);
-    }
-  }, [logicDesignerRef.current]);
+  const [logicDesignerRef, editor] = useRete(createEditor);
 
   const objectTypesManager = useContext(ObjectTypesManagerContext);
   const [selectedObjectType, setSelectedObjectType] = useState<string>('cube');

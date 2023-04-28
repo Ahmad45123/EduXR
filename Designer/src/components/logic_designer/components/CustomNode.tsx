@@ -3,6 +3,8 @@ import * as React from 'react';
 import { ClassicPreset } from 'rete';
 import { ClassicScheme, RefComponent, RenderEmit } from 'rete-react-render-plugin';
 import styled, { css } from 'styled-components';
+import { RefControl } from '../refs/RefControl';
+import { RefSocket } from '../refs/RefSocket';
 
 const $nodewidth = 200;
 const $socketmargin = 6;
@@ -155,19 +157,11 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
     if (itm instanceof ClassicPreset.Control) {
       return (
         <Box display="flex" width="100%" my="0.75rem">
-          <RefComponent
-            className="control"
+          <RefControl
             key={key}
-            init={ref =>
-              props.emit({
-                type: 'render',
-                data: {
-                  type: 'control',
-                  element: ref,
-                  payload: itm as any,
-                },
-              })
-            }
+            name="control"
+            emit={props.emit}
+            payload={itm}
             data-testid={`control-${key}`}
           />
         </Box>
@@ -183,44 +177,29 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
           key={key}
           data-testid={`input-${key}`}
         >
-          <RefComponent
-            className="input-socket self-center"
-            init={ref =>
-              props.emit({
-                type: 'render',
-                data: {
-                  type: 'socket',
-                  side: 'input',
-                  key: key,
-                  nodeId: id,
-                  element: ref,
-                  payload: itm.socket as any,
-                },
-              })
-            }
-            data-testid="input-socket"
-          />
+          <Box alignSelf={'center'}>
+            <RefSocket
+              name="input-socket"
+              side="input"
+              socketKey={key}
+              nodeId={id}
+              emit={props.emit}
+              payload={itm.socket}
+              data-testid="input-socket"
+            />
+          </Box>
           {!itm.control || !itm.showControl ? (
             <div className="input-title self-center" data-testid="input-title">
               {itm?.label}
             </div>
           ) : (
             <span className="input-control self-center w-72">
-              <RefComponent
-                className="input-control"
+              <RefControl
                 key={key}
-                init={ref =>
-                  itm.control &&
-                  props.emit({
-                    type: 'render',
-                    data: {
-                      type: 'control',
-                      element: ref,
-                      payload: itm.control as any,
-                    },
-                  })
-                }
-                data-testid="input-control"
+                name="control"
+                emit={props.emit}
+                payload={itm.control}
+                data-testid={`control-${key}`}
               />
             </span>
           )}
@@ -238,21 +217,13 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
           <div className="output-title" data-testid="output-title">
             {itm?.label}
           </div>
-          <RefComponent
-            className="output-socket"
-            init={ref =>
-              props.emit({
-                type: 'render',
-                data: {
-                  type: 'socket',
-                  side: 'output',
-                  key: key,
-                  nodeId: id,
-                  element: ref,
-                  payload: itm.socket as any,
-                },
-              })
-            }
+          <RefSocket
+            name="output-socket"
+            side="output"
+            socketKey={key}
+            nodeId={id}
+            emit={props.emit}
+            payload={itm.socket}
             data-testid="output-socket"
           />
         </div>
@@ -270,23 +241,17 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
     >
       <Box display="flex" className="title" data-testid="title">
         {execInpt && (
-          <RefComponent
-            className="input-socket -ml-2 h-10"
-            init={ref =>
-              props.emit({
-                type: 'render',
-                data: {
-                  type: 'socket',
-                  side: 'input',
-                  key: execInpt[0],
-                  nodeId: id,
-                  element: ref,
-                  payload: execInpt[1]?.socket as any,
-                },
-              })
-            }
-            data-testid="input-socket"
-          />
+          <Box ml={'-0.5rem'} h="2.5rem">
+            <RefSocket
+              name="input-socket"
+              side="input"
+              socketKey={execInpt[0]}
+              nodeId={id}
+              emit={props.emit}
+              payload={execInpt[1]?.socket as any}
+              data-testid="input-socket"
+            />
+          </Box>
         )}
         <span className="mt-2">{label}</span>
         <div className="ml-auto -mr-2 -mt-2">
@@ -303,21 +268,13 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
                       {output?.label}
                     </div>
                   )}
-                  <RefComponent
-                    className="output-socket"
-                    init={ref =>
-                      props.emit({
-                        type: 'render',
-                        data: {
-                          type: 'socket',
-                          side: 'output',
-                          key: key,
-                          nodeId: id,
-                          element: ref,
-                          payload: output.socket as any,
-                        },
-                      })
-                    }
+                  <RefSocket
+                    name="output-socket"
+                    side="output"
+                    socketKey={key}
+                    nodeId={id}
+                    emit={props.emit}
+                    payload={output.socket}
                     data-testid="output-socket"
                   />
                 </div>
