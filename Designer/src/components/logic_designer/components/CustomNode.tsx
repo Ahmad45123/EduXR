@@ -156,7 +156,7 @@ export function CustomNode<Scheme extends ClassicScheme>(props: Props<Scheme>) {
   function RenderItemm(key: string, itm: ControlOrInputOrOutput) {
     if (itm instanceof ClassicPreset.Control) {
       return (
-        <Box display="flex" width="100%" my="0.75rem">
+        <Box display="flex" width="100%">
           <RefControl
             key={key}
             name="control"
