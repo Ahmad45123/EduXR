@@ -8,6 +8,7 @@ namespace Assets.SceneManagement.Core {
     public class Scene {
         public List<Object> sceneObjects;
 
+
         public void Destroy() {
 
         }
