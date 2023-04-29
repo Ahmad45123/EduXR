@@ -136,6 +136,22 @@ export async function importIntoEditor(
         new BaseConnection(nodeMap[from.nodeId], from.outputName, nodeMap[nodeId], key),
       );
     }
+
+    // Set the input control values
+    for (let key in node.inputValues) {
+      const input = nodeMap[nodeId].inputs[key];
+      if (input?.control && input?.control instanceof BaseCustomControl) {
+        input.control.value = node.inputValues[key];
+      }
+    }
+
+    // Set the control values
+    for (let key in node.controls) {
+      const control = nodeMap[nodeId].controls[key];
+      if (control instanceof BaseCustomControl) {
+        control.value = node.controls[key];
+      }
+    }
   }
 
   AreaExtensions.zoomAt(areaPlugin, editor.getNodes());
