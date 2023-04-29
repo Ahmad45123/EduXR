@@ -1,6 +1,4 @@
-import { useFirebaseApp, useFirestore } from 'reactfire';
-import { ExperimentState, SceneObjectState, SceneState } from './types';
-import { doc, collection, Firestore } from 'firebase/firestore';
+import { collection, doc, Firestore } from 'firebase/firestore';
 import { experimentConverter, sceneConverter, sceneObjectConverter } from './converters';
 
 export function getExperimentDocRef(fs: Firestore, expName: string) {

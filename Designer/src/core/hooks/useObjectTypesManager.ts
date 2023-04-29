@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from 'react';
-import { useStorage } from 'reactfire';
 import {
-  ref,
-  listAll,
-  uploadBytes,
   getDownloadURL,
+  listAll,
+  ref,
   StorageReference,
+  uploadBytes,
 } from 'firebase/storage';
+import { useContext, useEffect, useState } from 'react';
+import { useStorage } from 'reactfire';
 import { EduXRContext } from '../../app';
 
 export type ObjectType = {

@@ -1,7 +1,7 @@
 import { ClassicPreset, GetSchemes } from 'rete';
+import { ReactArea2D } from 'rete-react-render-plugin';
 import { ComboBoxControl } from './controls/ComboBoxControl';
 import { InputBoxControl } from './controls/InputBoxControl';
-import { ReactArea2D } from 'rete-react-render-plugin';
 
 export class BaseNode extends ClassicPreset.Node<
   { [key in string]?: ClassicPreset.Socket },

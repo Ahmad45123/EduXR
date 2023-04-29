@@ -1,7 +1,7 @@
 import { ClassicPreset } from 'rete';
-import { stringSocket, execSocket } from '../../sockets';
+import { BaseNode } from '../../base_types';
 import { InputBoxControl } from '../../controls/InputBoxControl';
-import { BaseConnection, BaseNode } from '../../base_types';
+import { execSocket, stringSocket } from '../../sockets';
 
 export class AskQuestionNode extends BaseNode {
   width = 260;

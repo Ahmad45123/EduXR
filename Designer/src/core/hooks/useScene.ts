@@ -1,22 +1,12 @@
-import * as React from 'react';
-import { useUnityObjectManagement } from './unity/function_hooks';
-import { SceneObjectState } from '../states/types';
+import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { useFirestore, useFirestoreCollectionData, useFirestoreDocData } from 'reactfire';
+import { ExportedNodes } from '../../components/logic_designer/node_exporter';
 import {
   getSceneDocRef,
   getSceneObjectDocRef,
   getSceneObjectsCollectionRef,
 } from '../states/references';
-import {
-  useFirestore,
-  useFirestoreCollection,
-  useFirestoreCollectionData,
-  useFirestoreDocData,
-} from 'reactfire';
-import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
-import {
-  ExportedNode,
-  ExportedNodes,
-} from '../../components/logic_designer/node_exporter';
+import { SceneObjectState } from '../states/types';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;

@@ -1,4 +1,4 @@
-import { ClassicPreset } from "rete";
+import { ClassicPreset } from 'rete';
 
-export const execSocket = new ClassicPreset.Socket("exec");
-export const stringSocket = new ClassicPreset.Socket("string");
+export const execSocket = new ClassicPreset.Socket('exec');
+export const stringSocket = new ClassicPreset.Socket('string');

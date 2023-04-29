@@ -1,12 +1,10 @@
-import * as React from 'react';
-import { useUnityContext } from 'react-unity-webgl';
+import { setDoc } from '@firebase/firestore';
+import { useFirestore, useFirestoreCollectionData, useFirestoreDocData } from 'reactfire';
 import {
   getExperimentDocRef,
   getSceneDocRef,
   getScenesCollectionRef,
 } from '../states/references';
-import { useFirestore, useFirestoreCollectionData, useFirestoreDocData } from 'reactfire';
-import { setDoc } from '@firebase/firestore';
 
 export default function useExperiment(expName: string) {
   const fsapp = useFirestore();

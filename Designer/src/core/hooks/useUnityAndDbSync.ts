@@ -1,10 +1,10 @@
-import { useFirestore, useFirestoreCollection } from 'reactfire';
-import { getSceneObjectsCollectionRef } from '../states/references';
-import { useEffect, useState, useContext } from 'react';
-import { useUnityObjectManagement } from './unity/function_hooks';
-import { SceneObjectState } from '../states/types';
+import { useContext, useEffect, useState } from 'react';
 import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
+import { useFirestore, useFirestoreCollection } from 'reactfire';
 import { ObjectTypesManagerContext } from '../../routes/experiment_root';
+import { getSceneObjectsCollectionRef } from '../states/references';
+import { SceneObjectState } from '../states/types';
+import { useUnityObjectManagement } from './unity/function_hooks';
 
 type props = {
   unityContext: UnityContextHook;
@@ -78,7 +78,7 @@ export default function useUnityAndDbSync({ unityContext, expName, sceneName }: 
           if (newObj.color !== oldObj.color) {
             unityObjectManager.setObjectColor(newObj.objectName, newObj.color);
           }
-          
+
           break;
       }
     }

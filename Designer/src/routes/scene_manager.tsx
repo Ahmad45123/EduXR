@@ -1,14 +1,13 @@
-import * as React from 'react';
 import { SearchIcon } from '@chakra-ui/icons';
 import {
+  Button,
   Card,
   CardBody,
-  Button,
+  Flex,
+  IconButton,
   List,
   ListItem,
-  IconButton,
   Text,
-  Flex,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import useExperiment from '../core/hooks/useExperiment';

@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import * as React from 'react';
 import { ClassicPreset } from 'rete';
-import { ClassicScheme, RefComponent, RenderEmit } from 'rete-react-render-plugin';
+import { ClassicScheme, RenderEmit } from 'rete-react-render-plugin';
 import styled, { css } from 'styled-components';
 import { RefControl } from '../refs/RefControl';
 import { RefSocket } from '../refs/RefSocket';

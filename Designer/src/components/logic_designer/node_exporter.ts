@@ -1,13 +1,13 @@
 import { ClassicPreset, NodeEditor } from 'rete';
-import { execSocket } from './sockets';
-import { BaseCustomControl } from './controls/BaseCustomControl';
 import { AreaExtensions, AreaPlugin, NodeView } from 'rete-area-plugin';
 import { AreaExtra, BaseConnection, BaseNode, NodeType, Schemes } from './base_types';
+import { BaseCustomControl } from './controls/BaseCustomControl';
+import { GotoSceneNode } from './nodes/GotoSceneNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { SceneLoadNode } from './nodes/SceneLoadNode';
-import { GotoSceneNode } from './nodes/GotoSceneNode';
 import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
 import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
+import { execSocket } from './sockets';
 
 export type ExportedNode = {
   name: NodeType;

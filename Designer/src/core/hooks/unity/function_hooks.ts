@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SceneObjectState } from '../../states/types';
 import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
+import { SceneObjectState } from '../../states/types';
 
 export function useUnityObjectManagement({
   unityContext,

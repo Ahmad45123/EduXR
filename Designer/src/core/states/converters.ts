@@ -1,4 +1,4 @@
-import { QueryDocumentSnapshot, DocumentData, SnapshotOptions } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot, SnapshotOptions } from 'firebase/firestore';
 import { ExperimentState, SceneObjectState, SceneState } from './types';
 
 export const experimentConverter = {

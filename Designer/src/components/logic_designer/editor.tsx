@@ -1,35 +1,22 @@
-import { createRoot } from "react-dom/client";
-import { NodeEditor, GetSchemes, ClassicPreset } from "rete";
-import { AreaPlugin, AreaExtensions } from "rete-area-plugin";
-import {
-  ConnectionPlugin,
-  Presets as ConnectionPresets
-} from "rete-connection-plugin";
-import {
-  ReactRenderPlugin,
-  Presets,
-  ReactArea2D
-} from "rete-react-render-plugin";
-import { CustomNode } from "./components/CustomNode";
-import { execSocket, stringSocket } from "./sockets";
-import { ExecSocket } from "./components/ExecSocket";
-import { GotoSceneNode } from './nodes/GotoSceneNode';
-import { IfNode } from './nodes/IfNode';
-import { OnCollisionNode } from './nodes/OnCollisionNode';
+import { debounce } from 'debounce';
+import { createRoot } from 'react-dom/client';
+import { NodeEditor } from 'rete';
+import { AreaExtensions, AreaPlugin } from 'rete-area-plugin';
+import { ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
+import { DockPlugin, DockPresets } from 'rete-dock-plugin';
+import { Presets, ReactRenderPlugin } from 'rete-react-render-plugin';
+import { AreaExtra, Schemes } from './base_types';
+import { CustomNode } from './components/CustomNode';
+import { ExecSocket } from './components/ExecSocket';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
-import {
-  ExportedNode,
-  ExportedNodes,
-  getSceneJSON,
-  importIntoEditor,
-} from './node_exporter';
+import { GotoSceneNode } from './nodes/GotoSceneNode';
+import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { SceneLoadNode } from './nodes/SceneLoadNode';
-import { DockPlugin, DockPresets } from 'rete-dock-plugin';
 import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
 import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
-import { Schemes, AreaExtra } from './base_types';
-import { debounce } from 'debounce';
+import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
+import { execSocket } from './sockets';
 
 export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();

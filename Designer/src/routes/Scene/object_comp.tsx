@@ -1,18 +1,17 @@
-import * as React from 'react';
 import {
+  Button,
   Card,
   CardBody,
-  Heading,
+  Checkbox,
   Flex,
   FormControl,
   FormLabel,
-  Checkbox,
-  Button,
+  Heading,
 } from '@chakra-ui/react';
+import * as React from 'react';
+import { CompactPicker } from 'react-color';
 import Vector3Input from '../../components/vector3_input';
 import { SceneObjectInterface } from '../../core/hooks/useScene';
-import { ObjectTypesManagerContext } from '../experiment_root';
-import { CompactPicker } from 'react-color';
 import { IsPrimitiveObject } from '../../core/misc';
 
 type CompProps = {

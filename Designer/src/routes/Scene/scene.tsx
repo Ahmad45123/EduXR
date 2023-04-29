@@ -1,20 +1,10 @@
 import {
   Box,
   Button,
-  Card,
-  CardBody,
   Flex,
   FormControl,
   FormLabel,
-  Heading,
-  IconButton,
   Input,
-  List,
-  ListItem,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
   Select,
   Skeleton,
   Tab,
@@ -22,31 +12,18 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from '@chakra-ui/react';
-import { createEditor, BaseConnection, BaseNode } from '../../components/logic_designer';
-import UnityViewer from '../../components/unity_viewer';
-import {
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-} from 'react';
-import { ClassicPreset } from 'rete';
-import { SearchIcon } from '@chakra-ui/icons';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
-import Vector3Input from '../../components/vector3_input';
-import SceneObjectComp from './object_comp';
-import useScene from '../../core/hooks/useScene';
-import { Navigate } from 'react-router-dom';
-import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
-import { ObjectTypesManagerContext } from '../experiment_root';
+import { useContext, useEffect, useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import { useRete } from 'rete-react-render-plugin';
-import { SceneState } from '../../core/states/types';
+import { createEditor } from '../../components/logic_designer';
 import { ExportedNodes } from '../../components/logic_designer/node_exporter';
+import UnityViewer from '../../components/unity_viewer';
+import useScene from '../../core/hooks/useScene';
+import { SceneState } from '../../core/states/types';
+import { ObjectTypesManagerContext } from '../experiment_root';
+import SceneObjectComp from './object_comp';
 
 function Rete({
   sceneState,

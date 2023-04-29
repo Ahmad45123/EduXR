@@ -1,7 +1,5 @@
-import * as React from 'react';
-import { ClassicPreset } from 'rete';
-import { BaseCustomControl } from './BaseCustomControl';
 import { Select } from '@chakra-ui/react';
+import { BaseCustomControl } from './BaseCustomControl';
 
 export class ComboBoxControl extends BaseCustomControl {
   constructor(public label: string, public choices: string[]) {

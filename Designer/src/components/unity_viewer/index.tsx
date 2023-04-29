@@ -1,7 +1,7 @@
-import { Unity, useUnityContext } from 'react-unity-webgl';
 import * as React from 'react';
-import useUnityAndDbSync from '../../core/hooks/useUnityAndDbSync';
+import { Unity, useUnityContext } from 'react-unity-webgl';
 import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
+import useUnityAndDbSync from '../../core/hooks/useUnityAndDbSync';
 
 type props = {
   style?: React.CSSProperties | undefined;

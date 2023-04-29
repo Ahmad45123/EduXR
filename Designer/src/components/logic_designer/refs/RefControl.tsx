@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { ClassicPreset } from 'rete';
 import {
   ClassicScheme,
+  GetControls,
   ReactArea2D,
   RefComponent,
-  GetControls,
 } from 'rete-react-render-plugin';
 
 type Props<Scheme extends ClassicScheme> = {

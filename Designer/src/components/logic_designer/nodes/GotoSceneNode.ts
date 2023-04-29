@@ -1,7 +1,7 @@
 import { ClassicPreset } from 'rete';
-import { stringSocket, execSocket } from '../sockets';
-import { InputBoxControl } from '../controls/InputBoxControl';
 import { BaseNode } from '../base_types';
+import { InputBoxControl } from '../controls/InputBoxControl';
+import { execSocket, stringSocket } from '../sockets';
 
 export class GotoSceneNode extends BaseNode {
   constructor() {

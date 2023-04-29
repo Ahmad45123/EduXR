@@ -1,7 +1,6 @@
-import { ClassicPreset } from 'rete';
-import { BaseCustomControl } from './BaseCustomControl';
 import { Box, FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import * as React from 'react';
+import { BaseCustomControl } from './BaseCustomControl';
 
 export class InputBoxControl extends BaseCustomControl {
   public value: string = '';

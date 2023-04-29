@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Flex, Input, Text } from '@chakra-ui/react';
 
 type Vector3InputProps = {

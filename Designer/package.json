@@ -59,6 +59,7 @@
     "@types/debounce": "^1.2.1",
     "@types/react-color": "^3.0.6",
     "@types/styled-components": "^5.1.26",
-    "eslint-plugin-react": "^7.32.2"
+    "eslint-plugin-react": "^7.32.2",
+    "prettier-plugin-organize-imports": "^3.2.2"
   }
 }

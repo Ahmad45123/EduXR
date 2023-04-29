@@ -1,7 +1,7 @@
 import { ClassicPreset } from 'rete';
-import { stringSocket, execSocket } from '../sockets';
 import { BaseNode } from '../base_types';
 import { InputBoxControl } from '../controls/InputBoxControl';
+import { execSocket } from '../sockets';
 
 export class OnCollisionNode extends BaseNode {
   constructor() {

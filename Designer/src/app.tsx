@@ -1,27 +1,18 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import SceneManager from './routes/scene_manager';
-import { initializeApp } from '@firebase/app';
-import React from 'react';
 import {
-  Box,
   ChakraProvider,
   ColorModeScript,
   Container,
   Skeleton,
   theme,
 } from '@chakra-ui/react';
-import Scene from './routes/Scene/scene';
-import { useUnityContext } from 'react-unity-webgl';
-import { UnityContextHook } from 'react-unity-webgl/distribution/types/unity-context-hook';
-import {
-  FirebaseAppProvider,
-  FirestoreProvider,
-  StorageProvider,
-  useFirebaseApp,
-} from 'reactfire';
 import { getFirestore } from '@firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { FirestoreProvider, StorageProvider, useFirebaseApp } from 'reactfire';
 import ExperimentRoot from './routes/experiment_root';
+import Scene from './routes/Scene/scene';
+import SceneManager from './routes/scene_manager';
 
 const router = createBrowserRouter([
   {
