@@ -18,15 +18,18 @@ import { IfNode } from './nodes/IfNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
-import { getSceneJSON } from './node_exporter';
-import { SceneLoad } from './nodes/SceneLoad';
+import {
+  ExportedNode,
+  ExportedNodes,
+  getSceneJSON,
+  importIntoEditor,
+} from './node_exporter';
+import { SceneLoadNode } from './nodes/SceneLoadNode';
 import { DockPlugin, DockPresets } from 'rete-dock-plugin';
 import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
 import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
-import { BaseConnection, BaseNode } from './base_types';
-
-type Schemes = GetSchemes<BaseNode, BaseConnection>;
-type AreaExtra = ReactArea2D<Schemes>;
+import { Schemes, AreaExtra } from './base_types';
+import { debounce } from 'debounce';
 
 export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();
@@ -79,11 +82,13 @@ export async function createEditor(container: HTMLElement) {
 
   dock.add(() => new OnCollisionNode());
   dock.add(() => new GotoSceneNode());
-  dock.add(() => new SceneLoad());
+  dock.add(() => new SceneLoadNode());
   dock.add(() => new AskQuestionNode());
   dock.add(() => new ShowMessageNode());
 
-  editor.addPipe(context => {
+  let onChangeCallback: (nodes: ExportedNodes) => void;
+
+  area.addPipe(context => {
     if (context.type === 'connectioncreate') {
       const { sourceOutput, targetInput } = context.data;
       const source = editor.getNode(context.data.source);
@@ -93,6 +98,20 @@ export async function createEditor(container: HTMLElement) {
 
       if (sourceSocket != targetSocket) return;
     }
+
+    if (
+      onChangeCallback &&
+      (context.type == 'connectioncreated' ||
+        context.type == 'connectionremoved' ||
+        context.type == 'nodecreated' ||
+        context.type == 'noderemoved' ||
+        context.type == 'nodetranslated')
+    ) {
+      onChangeCallback(
+        getSceneJSON(editor.getNodes(), editor.getConnections(), area.nodeViews),
+      );
+    }
+
     return context;
   });
 
@@ -100,22 +119,12 @@ export async function createEditor(container: HTMLElement) {
     AreaExtensions.zoomAt(area, editor.getNodes());
   }, 10);
   return {
-    getCompiledJSON() {
-      return JSON.stringify(getSceneJSON(editor.getNodes(), editor.getConnections()));
+    onSceneStateChange(callback: (nodes: ExportedNodes) => void) {
+      onChangeCallback = debounce(callback, 500);
     },
-    exportSceneState() {
-      return { nodes: editor.getNodes(), connections: editor.getConnections() };
-    },
-    async clearEditor() {
+    async importSceneState(nodes: ExportedNodes) {
       await editor.clear();
-    },
-    async importSceneState(nodes: BaseNode[], connections: BaseConnection[]) {
-      for (let node of nodes) {
-        await editor.addNode(node);
-      }
-      for (let connection of connections) {
-        await editor.addConnection(connection);
-      }
+      await importIntoEditor(editor, area, nodes);
     },
     destroy: () => area.destroy(),
   };

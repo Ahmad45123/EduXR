@@ -13,6 +13,10 @@ import {
   useFirestoreDocData,
 } from 'reactfire';
 import { deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  ExportedNode,
+  ExportedNodes,
+} from '../../components/logic_designer/node_exporter';
 
 export interface SceneObjectInterface {
   object: SceneObjectState | undefined;
@@ -47,7 +51,13 @@ export default function useScene(expName: string, sceneName: string) {
     setDoc(getSceneObjectDocRef(fsapp, expName, sceneName, name), obj);
   }
 
-  function deleteObject() {}
+  function setSceneLogic(nodes: ExportedNodes) {
+    console.dir(nodes);
+    updateDoc(getSceneDocRef(fsapp, expName, sceneName), {
+      // @ts-ignore
+      sceneLogic: nodes,
+    });
+  }
 
   function getObject(objectName: string): SceneObjectInterface {
     const object = objects.find(object => object.objectName === objectName);
@@ -108,7 +118,7 @@ export default function useScene(expName: string, sceneName: string) {
     scene,
     objects,
     addObject,
-    deleteObject,
+    setSceneLogic,
     getObject,
   };
 }

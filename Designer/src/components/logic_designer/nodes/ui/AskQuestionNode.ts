@@ -6,7 +6,7 @@ import { BaseConnection, BaseNode } from '../../base_types';
 export class AskQuestionNode extends BaseNode {
   width = 260;
   constructor() {
-    super('AskQuestionNode');
+    super('AskQuestion');
 
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
     this.addControl('message', new InputBoxControl('Message', true));

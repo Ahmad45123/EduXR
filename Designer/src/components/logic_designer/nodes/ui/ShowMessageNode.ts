@@ -6,7 +6,7 @@ import { BaseNode } from '../../base_types';
 export class ShowMessageNode extends BaseNode {
   width = 260;
   constructor() {
-    super('ShowMessageNode');
+    super('ShowMessage');
 
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
     this.addControl('message', new InputBoxControl('Message', true));

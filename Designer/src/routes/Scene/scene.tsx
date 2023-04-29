@@ -45,9 +45,26 @@ import { Navigate } from 'react-router-dom';
 import { useObjectTypesManager } from '../../core/hooks/useObjectTypesManager';
 import { ObjectTypesManagerContext } from '../experiment_root';
 import { useRete } from 'rete-react-render-plugin';
+import { SceneState } from '../../core/states/types';
+import { ExportedNodes } from '../../components/logic_designer/node_exporter';
 
-function Rete() {
-  const [ref] = useRete(createEditor);
+function Rete({
+  sceneState,
+  setSceneLogicInFirebase,
+}: {
+  sceneState: SceneState;
+  setSceneLogicInFirebase: (nodes: ExportedNodes) => void;
+}) {
+  const [ref, editor] = useRete(createEditor);
+  useEffect(() => {
+    let asyncFunc = async () => {
+      await editor?.importSceneState(sceneState.sceneLogic ?? {});
+      editor?.onSceneStateChange(nodes => {
+        setSceneLogicInFirebase(nodes);
+      });
+    };
+    asyncFunc();
+  }, [editor]);
   return <Box ref={ref} style={{ width: '100%', height: '100%' }}></Box>;
 }
 
@@ -134,7 +151,14 @@ export default function Scene() {
                   </Flex>
                 </Box>
               </TabPanel>
-              <TabPanel height="100%">{tabIndex === 1 && <Rete />}</TabPanel>
+              <TabPanel height="100%">
+                {tabIndex === 1 && (
+                  <Rete
+                    sceneState={sceneCore.scene}
+                    setSceneLogicInFirebase={sceneCore.setSceneLogic}
+                  />
+                )}
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>

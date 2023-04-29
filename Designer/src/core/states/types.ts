@@ -1,4 +1,4 @@
-import { BaseNode, BaseConnection } from '../../components/logic_designer';
+import { ExportedNodes } from '../../components/logic_designer/node_exporter';
 
 export interface SceneObjectState {
   objectName: string;
@@ -13,10 +13,7 @@ export interface SceneObjectState {
 
 export interface SceneState {
   name: string;
-  sceneLogic?: {
-    nodes: BaseNode[];
-    connections: BaseConnection[];
-  };
+  sceneLogic?: ExportedNodes;
 }
 
 export interface ExperimentState {
