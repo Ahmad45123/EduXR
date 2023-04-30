@@ -1,7 +1,9 @@
 import { ClassicPreset, GetSchemes } from 'rete';
+import { ContextMenuExtra } from 'rete-context-menu-plugin';
 import { ReactArea2D } from 'rete-react-render-plugin';
 import { ComboBoxControl } from './controls/ComboBoxControl';
 import { InputBoxControl } from './controls/InputBoxControl';
+
 
 export class BaseNode extends ClassicPreset.Node<
   { [key in string]?: ClassicPreset.Socket },
@@ -17,11 +19,13 @@ export class BaseConnection extends ClassicPreset.Connection<
 > {}
 
 export type Schemes = GetSchemes<BaseNode, BaseConnection>;
-export type AreaExtra = ReactArea2D<Schemes>;
+export type AreaExtra = ReactArea2D<Schemes> | ContextMenuExtra<Schemes>;
 
 export type NodeType =
   | 'SceneLoad'
+  | 'SceneLoop'
   | 'GotoScene'
   | 'OnCollision'
   | 'AskQuestion'
-  | 'ShowMessage';
+  | 'ShowMessage'
+  | 'If';

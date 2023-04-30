@@ -2,8 +2,12 @@ import { debounce } from 'debounce';
 import { createRoot } from 'react-dom/client';
 import { NodeEditor } from 'rete';
 import { AreaExtensions, AreaPlugin } from 'rete-area-plugin';
+
 import { ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
-import { DockPlugin, DockPresets } from 'rete-dock-plugin';
+import {
+  ContextMenuPlugin,
+  Presets as ContextMenuPresets,
+} from 'rete-context-menu-plugin';
 import { Presets, ReactRenderPlugin } from 'rete-react-render-plugin';
 import { AreaExtra, Schemes } from './base_types';
 import { CustomNode } from './components/CustomNode';
@@ -11,10 +15,10 @@ import { ExecSocket } from './components/ExecSocket';
 import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 import { GotoSceneNode } from './nodes/GotoSceneNode';
+import { IfNode } from './nodes/IfNode';
 import { OnCollisionNode } from './nodes/OnCollisionNode';
 import { SceneLoadNode } from './nodes/SceneLoadNode';
-import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
-import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
+import { SceneLoopNode } from './nodes/SceneLoopNode';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
 import { execSocket } from './sockets';
 
@@ -23,7 +27,15 @@ export async function createEditor(container: HTMLElement) {
   const area = new AreaPlugin<Schemes, AreaExtra>(container);
   const connection = new ConnectionPlugin<Schemes, AreaExtra>();
   const render = new ReactRenderPlugin<Schemes>({ createRoot });
-  const dock = new DockPlugin<Schemes>();
+  const contextMenu = new ContextMenuPlugin<Schemes, AreaExtra>({
+    items: ContextMenuPresets.classic.setup([
+      ['SceneLoad', () => new SceneLoadNode()],
+      ['SceneLoop', () => new SceneLoopNode()],
+      ['If', () => new IfNode()],
+      ['OnCollision', () => new OnCollisionNode()],
+      ['GotoScene', () => new GotoSceneNode()],
+    ]),
+  });
 
   AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {
     accumulating: AreaExtensions.accumulateOnCtrl(),
@@ -57,21 +69,15 @@ export async function createEditor(container: HTMLElement) {
   );
 
   connection.addPreset(ConnectionPresets.classic.setup());
-  dock.addPreset(DockPresets.classic.setup({ area, size: 100, scale: 0.6 }));
+  render.addPreset(Presets.contextMenu.setup());
 
   editor.use(area);
   area.use(connection);
   area.use(render);
-  area.use(dock);
+  area.use(contextMenu);
 
   AreaExtensions.simpleNodesOrder(area);
   AreaExtensions.showInputControl(area);
-
-  dock.add(() => new OnCollisionNode());
-  dock.add(() => new GotoSceneNode());
-  dock.add(() => new SceneLoadNode());
-  dock.add(() => new AskQuestionNode());
-  dock.add(() => new ShowMessageNode());
 
   let onChangeCallback: (nodes: ExportedNodes) => void;
 

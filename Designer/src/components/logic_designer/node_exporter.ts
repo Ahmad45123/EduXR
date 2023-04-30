@@ -1,12 +1,16 @@
-import { ClassicPreset, NodeEditor } from 'rete';
-import { AreaExtensions, AreaPlugin, NodeView } from 'rete-area-plugin';
-import { AreaExtra, BaseConnection, BaseNode, NodeType, Schemes } from './base_types';
+import { ClassicPreset,NodeEditor } from 'rete';
+import { AreaExtensions,AreaPlugin,NodeView } from 'rete-area-plugin';
+import { AreaExtra,BaseConnection,BaseNode,NodeType,Schemes } from './base_types';
 import { BaseCustomControl } from './controls/BaseCustomControl';
-import { GotoSceneNode } from './nodes/GotoSceneNode';
-import { OnCollisionNode } from './nodes/OnCollisionNode';
-import { SceneLoadNode } from './nodes/SceneLoadNode';
-import { AskQuestionNode } from './nodes/ui/AskQuestionNode';
-import { ShowMessageNode } from './nodes/ui/ShowMessageNode';
+import {
+  AskQuestionNode,
+  GotoSceneNode,
+  IfNode,
+  OnCollisionNode,
+  SceneLoadNode,
+  SceneLoopNode,
+  ShowMessageNode,
+} from './nodes';
 import { execSocket } from './sockets';
 
 export type ExportedNode = {
@@ -97,6 +101,9 @@ export async function importIntoEditor(
       case 'SceneLoad':
         actualNode = new SceneLoadNode();
         break;
+      case 'SceneLoop':
+        actualNode = new SceneLoopNode();
+        break;
       case 'GotoScene':
         actualNode = new GotoSceneNode();
         break;
@@ -105,6 +112,9 @@ export async function importIntoEditor(
         break;
       case 'ShowMessage':
         actualNode = new ShowMessageNode();
+        break;
+      case 'If':
+        actualNode = new IfNode();
         break;
       default:
         throw new Error(`Unknown node type: ${node.name}`);
