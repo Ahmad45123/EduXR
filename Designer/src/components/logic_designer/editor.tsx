@@ -1,24 +1,35 @@
 import { debounce } from 'debounce';
 import { createRoot } from 'react-dom/client';
 import { NodeEditor } from 'rete';
-import { AreaExtensions, AreaPlugin } from 'rete-area-plugin';
+import { AreaExtensions,AreaPlugin } from 'rete-area-plugin';
 
-import { ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
+import { ConnectionPlugin,Presets as ConnectionPresets } from 'rete-connection-plugin';
 import {
-  ContextMenuPlugin,
-  Presets as ContextMenuPresets,
+ContextMenuPlugin,
+Presets as ContextMenuPresets
 } from 'rete-context-menu-plugin';
-import { Presets, ReactRenderPlugin } from 'rete-react-render-plugin';
-import { AreaExtra, Schemes } from './base_types';
+import { Presets,ReactRenderPlugin } from 'rete-react-render-plugin';
+import { AreaExtra,Schemes } from './base_types';
 import { CustomNode } from './components/CustomNode';
 import { ExecSocket } from './components/ExecSocket';
-import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
+import { ComboBoxControl,ComboBoxControlImpl } from './controls/ComboBoxControl';
+
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
-import { GotoSceneNode } from './nodes/GotoSceneNode';
-import { IfNode } from './nodes/IfNode';
-import { OnCollisionNode } from './nodes/OnCollisionNode';
-import { SceneLoadNode } from './nodes/SceneLoadNode';
-import { SceneLoopNode } from './nodes/SceneLoopNode';
+import {
+  CompareNode,
+  EvalNode,
+  GetPositionNode,
+  GetRotationNode,
+  GetScaleNode,
+  GotoSceneNode,
+  OnCollisionNode,
+  SceneLoadNode,
+  SceneLoopNode,
+  SetPositionNode,
+  SetRotationNode,
+  SetScaleNode,
+  SetVisibleNode,
+} from './nodes';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
 import { execSocket } from './sockets';
 
@@ -31,9 +42,17 @@ export async function createEditor(container: HTMLElement) {
     items: ContextMenuPresets.classic.setup([
       ['SceneLoad', () => new SceneLoadNode()],
       ['SceneLoop', () => new SceneLoopNode()],
-      ['If', () => new IfNode()],
+      ['Eval', () => new EvalNode()],
+      ['Compare', () => new CompareNode()],
       ['OnCollision', () => new OnCollisionNode()],
       ['GotoScene', () => new GotoSceneNode()],
+      ['GetPosition', () => new GetPositionNode()],
+      ['GetRotation', () => new GetRotationNode()],
+      ['GetScale', () => new GetScaleNode()],
+      ['SetPosition', () => new SetPositionNode()],
+      ['SetRotation', () => new SetRotationNode()],
+      ['SetScale', () => new SetScaleNode()],
+      ['SetVisible', () => new SetVisibleNode()],
     ]),
   });
 
@@ -88,6 +107,32 @@ export async function createEditor(container: HTMLElement) {
       const sourceSocket = source.outputs[sourceOutput]?.socket;
       const target = editor.getNode(context.data.target);
       const targetSocket = target.inputs[targetInput]?.socket;
+
+      if (target instanceof CompareNode) {
+        if (targetSocket?.name == 'exec') return context;
+        const conns = editor
+          .getConnections()
+          .filter(con => con.target == target.id && con.targetInput != 'exec');
+        for (let conn of conns) {
+          if (conn.targetInput == targetInput) {
+            conn.source = context.data.source;
+            conn.sourceOutput = context.data.sourceOutput;
+          }
+        }
+        if (conns.length != 2) conns.push(context.data);
+
+        if (conns.length == 2) {
+          // ensure both connections are connected to the same socket.
+          if (
+            editor.getNode(conns[0].source).outputs[conns[0].sourceOutput]?.socket !=
+            editor.getNode(conns[1].source).outputs[conns[1].sourceOutput]?.socket
+          ) {
+            return;
+          }
+        }
+
+        return context;
+      }
 
       if (sourceSocket != targetSocket) return;
     }

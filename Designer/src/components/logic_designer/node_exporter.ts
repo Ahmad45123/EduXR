@@ -1,14 +1,27 @@
 import { ClassicPreset,NodeEditor } from 'rete';
 import { AreaExtensions,AreaPlugin,NodeView } from 'rete-area-plugin';
-import { AreaExtra,BaseConnection,BaseNode,NodeType,Schemes } from './base_types';
+
+
+import { AreaExtra, BaseConnection, BaseNode, Schemes } from './base_types';
+
 import { BaseCustomControl } from './controls/BaseCustomControl';
+
 import {
   AskQuestionNode,
+  CompareNode,
+  EvalNode,
+  GetPositionNode,
+  GetRotationNode,
+  GetScaleNode,
   GotoSceneNode,
-  IfNode,
+  NodeType,
   OnCollisionNode,
   SceneLoadNode,
   SceneLoopNode,
+  SetPositionNode,
+  SetRotationNode,
+  SetScaleNode,
+  SetVisibleNode,
   ShowMessageNode,
 } from './nodes';
 import { execSocket } from './sockets';
@@ -113,11 +126,33 @@ export async function importIntoEditor(
       case 'ShowMessage':
         actualNode = new ShowMessageNode();
         break;
-      case 'If':
-        actualNode = new IfNode();
+      case 'Compare':
+        actualNode = new CompareNode();
         break;
-      default:
-        throw new Error(`Unknown node type: ${node.name}`);
+      case 'Eval':
+        actualNode = new EvalNode();
+        break;
+      case 'GetPosition':
+        actualNode = new GetPositionNode();
+        break;
+      case 'GetRotation':
+        actualNode = new GetRotationNode();
+        break;
+      case 'GetScale':
+        actualNode = new GetScaleNode();
+        break;
+      case 'SetPosition':
+        actualNode = new SetPositionNode();
+        break;
+      case 'SetRotation':
+        actualNode = new SetRotationNode();
+        break;
+      case 'SetScale':
+        actualNode = new SetScaleNode();
+        break;
+      case 'SetVisible':
+        actualNode = new SetVisibleNode();
+        break;
     }
     actualNode.id = nodeId;
     nodeMap[nodeId] = actualNode;
@@ -135,7 +170,7 @@ export async function importIntoEditor(
     for (let key in node.execOutputs) {
       const toId = node.execOutputs[key];
       await editor.addConnection(
-        new BaseConnection(nodeMap[nodeId], 'exec', nodeMap[toId], 'exec'),
+        new BaseConnection(nodeMap[nodeId], key, nodeMap[toId], 'exec'),
       );
     }
 
