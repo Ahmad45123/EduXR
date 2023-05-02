@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Misc;
+using Assets.SceneManagement.Misc;
 using UnityEngine;
 
 namespace Assets.Logic.Instructions.Properties {
@@ -14,7 +15,7 @@ namespace Assets.Logic.Instructions.Properties {
             var y = (float)inputs["y"].GetValue();
             var z = (float)inputs["z"].GetValue();
 
-            gameObject.transform.localPosition = new Vector3(x, y, z);
+            gameObject.transform.localPosition = PositionConverter.FromDesigner(x, y, z);
         }
 
         public override object GetOutput(string outputName) {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Misc;
+using Assets.SceneManagement.Misc;
 using UnityEngine;
 
 namespace Assets.Logic.Instructions.Properties {
@@ -15,10 +16,13 @@ namespace Assets.Logic.Instructions.Properties {
             string objectName = this.controls["object"];
             GameObject gameObject = GameObject.Find(objectName);
 
+            var returnedPos = PositionConverter.ToDesigner(gameObject.transform.localPosition.x,
+                gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+
             return outputName switch {
-                "x" => gameObject.transform.localPosition.x,
-                "y" => gameObject.transform.localPosition.y,
-                "z" => gameObject.transform.localPosition.z,
+                "x" => returnedPos.x,
+                "y" => returnedPos.y,
+                "z" => returnedPos.z,
                 _ => throw new Exception("Unknown output passed!"),
             };
         }

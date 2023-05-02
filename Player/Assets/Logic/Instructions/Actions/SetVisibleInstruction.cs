@@ -18,7 +18,10 @@ namespace Assets.Logic.Instructions.Actions {
         protected override void ExecuteImpl() {
             var gameObject = GameObject.Find(controls["object"]);
             var isVisible = controls["visible"] == "True";
-            gameObject.SetActive(isVisible);
+            var renderers = gameObject.GetComponentsInChildren<Renderer>();
+            foreach (var renderer in renderers) {
+                renderer.enabled = isVisible;
+            }
         }
     }
 }
