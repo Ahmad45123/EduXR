@@ -6941,6 +6941,7 @@ GameObject:
   - component: {fileID: 1168948300}
   - component: {fileID: 1168948299}
   - component: {fileID: 1168948302}
+  - component: {fileID: 1168948303}
   m_Layer: 0
   m_Name: CoreGameObject
   m_TagString: Untagged
@@ -7015,8 +7016,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8aceb192b1c445458d4cd81763922a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneLoader: {fileID: 1168948298}
-  _sceneBuilder: {fileID: 1168948300}
+  sceneLoader: {fileID: 1168948298}
+  sceneBuilder: {fileID: 1168948300}
+  logicManager: {fileID: 1168948303}
 --- !u!114 &1168948302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7030,6 +7032,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: mainuser
+--- !u!114 &1168948303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168948295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0857bdd1d491cb141b1b8c3acf1144af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1170286541
 PrefabInstance:
   m_ObjectHideFlags: 0
