@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.SceneManagement.Misc;
 using Assets.SceneManagement.Models;
 using Oculus.Interaction;
 using Oculus.Interaction.Grab.GrabSurfaces;
@@ -28,9 +29,7 @@ namespace Assets.SceneManagement.Core {
         }
 
         public void UpdatePosition(List<float> position) {
-            float xPos = position[0] / 10.0f * (0.716f - -0.438f) + -0.438f;
-            float zPos = position[2] / 10.0f * (-0.579f - -0.017f) + -0.017f;
-            _gameObject.transform.localPosition = new Vector3(xPos, position[1], zPos);
+            _gameObject.transform.localPosition = PositionConverter.FromDesigner(position[0], position[1], position[2]);
         }
 
         public void UpdateScale(List<float> scale) {
