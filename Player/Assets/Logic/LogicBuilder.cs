@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Instructions;
+using Assets.Logic.Instructions.Actions;
+using Assets.Logic.Instructions.Core;
+using Assets.Logic.Instructions.Deciders;
+using Assets.Logic.Instructions.Mutators;
 using Assets.Logic.Instructions.Properties;
 using Assets.Logic.Misc;
 using Assets.SceneManagement.Models;
@@ -19,11 +23,20 @@ namespace Assets.Logic {
             _cache = new Dictionary<string, DataInstruction>();
         }
 
-        private DataInstruction CreateInstruction(string type, ref Dictionary<string, string> controls,
+        private static DataInstruction CreateInstruction(string type, ref Dictionary<string, string> controls,
             ref Dictionary<string, InputParam> inputs, ref Dictionary<string, ExecInstruction> nextInstructs) {
             return type switch {
                 "SetPosition" => new SetPositionInstruction(inputs, controls, nextInstructs),
+                "SetRotation" => new SetRotationInstruction(inputs, controls, nextInstructs),
+                "SetScale" => new SetScaleInstruction(inputs, controls, nextInstructs),
+                "SceneLoop" => new SceneLoopInstruction(inputs, controls, nextInstructs),
+                "SceneLoad" => new SceneLoadInstruction(inputs, controls, nextInstructs),
+                "Compare" => new CompareInstruction(inputs, controls, nextInstructs),
+                "SetVisible" => new SetVisibleInstruction(inputs, controls, nextInstructs),
                 "GetPosition" => new GetPositionInstruction(inputs, controls),
+                "GetRotation" => new GetRotationInstruction(inputs, controls),
+                "GetScale" => new GetScaleInstruction(inputs, controls),
+                "Eval" => new EvalInstruction(inputs, controls),
                 _ => throw new Exception("Unknown node type")
             };
         }

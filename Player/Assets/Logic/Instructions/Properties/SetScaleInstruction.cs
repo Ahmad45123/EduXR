@@ -7,21 +7,21 @@ using Assets.Logic.Misc;
 using UnityEngine;
 
 namespace Assets.Logic.Instructions.Properties {
-    public class SetPositionInstruction : ExecInstruction {
+    class SetScaleInstruction : ExecInstruction {
         protected override void ExecuteImpl() {
             var gameObject = GameObject.Find(controls["object"]);
             var x = (float)inputs["x"].GetValue();
             var y = (float)inputs["y"].GetValue();
             var z = (float)inputs["z"].GetValue();
 
-            gameObject.transform.localPosition = new Vector3(x, y, z);
+            gameObject.transform.localScale = new Vector3(x, y, z);
         }
 
         public override object GetOutput(string outputName) {
             throw new NotImplementedException();
         }
 
-        public SetPositionInstruction(Dictionary<string, InputParam> inputs, Dictionary<string, string> parms,
+        public SetScaleInstruction(Dictionary<string, InputParam> inputs, Dictionary<string, string> parms,
             Dictionary<string, ExecInstruction> nxtInstructions) : base(inputs, parms, nxtInstructions) { }
     }
 }

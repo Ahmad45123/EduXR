@@ -7,8 +7,8 @@ using Assets.Logic.Misc;
 using UnityEngine;
 
 namespace Assets.Logic.Instructions.Properties {
-    public class GetPositionInstruction : DataInstruction {
-        public GetPositionInstruction(Dictionary<string, InputParam> inputs, Dictionary<string, string> parms) :
+    class GetScaleInstruction : DataInstruction {
+        public GetScaleInstruction(Dictionary<string, InputParam> inputs, Dictionary<string, string> parms) :
             base(inputs, parms) { }
 
         public override object GetOutput(string outputName) {
@@ -16,9 +16,9 @@ namespace Assets.Logic.Instructions.Properties {
             GameObject gameObject = GameObject.Find(objectName);
 
             return outputName switch {
-                "x" => gameObject.transform.localPosition.x,
-                "y" => gameObject.transform.localPosition.y,
-                "z" => gameObject.transform.localPosition.z,
+                "x" => gameObject.transform.localScale.x,
+                "y" => gameObject.transform.localScale.y,
+                "z" => gameObject.transform.localScale.z,
                 _ => throw new Exception("Unknown output passed!"),
             };
         }

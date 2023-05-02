@@ -9,8 +9,8 @@ using UnityEngine;
 namespace Assets.Logic.Instructions {
     public abstract class ExecInstruction : DataInstruction {
 
-        public abstract bool IsStartInstruction { get; }
-        public abstract bool IsLoopInstruction { get; }
+        public virtual bool IsStartInstruction => false;
+        public virtual bool IsLoopInstruction => false;
 
         protected readonly Dictionary<string, ExecInstruction> nextInstructions = null;
 
@@ -19,6 +19,11 @@ namespace Assets.Logic.Instructions {
             nextInstructions = nxtInstructions;
         }
 
-        public abstract void Execute();
+        protected abstract void ExecuteImpl();
+
+        public virtual void Execute() {
+            ExecuteImpl();
+            nextInstructions.GetValueOrDefault("exec")?.Execute();
+        }
     }
 }
