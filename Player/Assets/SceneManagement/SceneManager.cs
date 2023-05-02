@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Logic;
 using Assets.SceneManagement.Builders;
 using UnityEngine;
 using Firebase.Extensions;
 
 namespace Assets.SceneManagement {
     class SceneManager : MonoBehaviour {
-        public SceneLoader _sceneLoader;
-        public SceneBuilder _sceneBuilder;
+        public SceneLoader sceneLoader;
+        public SceneBuilder sceneBuilder;
+        public LogicManager logicManager;
 
         private Core.Scene _currentScene;
 
@@ -21,12 +23,15 @@ namespace Assets.SceneManagement {
                 _currentScene.Destroy();
 
             // Load new one.
-            _currentScene = await _sceneBuilder.CreateSceneFromData(sceneData);
+            _currentScene = await sceneBuilder.CreateSceneFromData(sceneData);
+
+            // Start Scene
+            _currentScene.StartExecution(logicManager);
         }
 
         async void Start() {
-            await _sceneLoader.LoadAllScenes();
-            SetCurrentScene(_sceneLoader.GetSceneIndex(0));
+            await sceneLoader.LoadAllScenes();
+            SetCurrentScene(sceneLoader.GetSceneIndex(0));
         }
     }
 }
