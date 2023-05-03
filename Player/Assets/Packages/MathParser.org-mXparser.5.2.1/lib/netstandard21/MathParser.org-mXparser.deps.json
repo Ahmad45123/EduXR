@@ -1,0 +1,24 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "MathParser.org-mXparser/5.2.1": {
+        "runtime": {
+          "MathParser.org-mXparser.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MathParser.org-mXparser/5.2.1": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
