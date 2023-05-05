@@ -1,0 +1,18 @@
+.fill-area {
+  display: table;
+  z-index: -1;
+  position: absolute;
+  top: -320000px;
+  left: -320000px;
+  width: 640000px;
+  height: 640000px;
+}
+
+.background {
+  background-color: #f7f6ff;
+  opacity: 1;
+  background-image: radial-gradient(#7b81ff 3px, transparent 3px),
+    radial-gradient(#7b81ff 3px, #f7f6ff 3px);
+  background-size: 62px 62px;
+  background-position: 0 0, 31px 31px;
+}

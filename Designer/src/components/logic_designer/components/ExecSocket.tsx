@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const $socketsize = 24;
 const $socketmargin = 6;
-const $socketcolor = '#FFA500';
+const $socketcolor = '#ffffff66';
 
 const Styles = styled.div`
   display: inline-block;

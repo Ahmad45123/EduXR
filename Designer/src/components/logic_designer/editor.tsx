@@ -14,6 +14,7 @@ import { CustomNode } from './components/CustomNode';
 import { ExecSocket } from './components/ExecSocket';
 import { ComboBoxControl,ComboBoxControlImpl } from './controls/ComboBoxControl';
 
+import { addCustomBackground } from './components/Background';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 import {
   CompareNode,
@@ -32,6 +33,7 @@ import {
 } from './nodes';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
 import { execSocket } from './sockets';
+import { ExecConnectionComponent } from './components/ExecConnection';
 
 export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();
@@ -67,6 +69,25 @@ export async function createEditor(container: HTMLElement) {
         node(context) {
           return CustomNode;
         },
+        connection(context) {
+          const source = editor.getNode(context.payload.source);
+          const target = editor.getNode(context.payload.target);
+
+          const output = source && source.outputs[context.payload.sourceOutput];
+          const input = target && target.inputs[context.payload.targetInput];
+
+          const sourceSocket = output?.socket;
+          const targetStocket = input?.socket;
+
+          if (
+            sourceSocket?.name == execSocket.name &&
+            targetStocket?.name == execSocket.name
+          ) {
+            return ExecConnectionComponent;
+          }
+
+          return Presets.classic.Connection;
+        },
         socket(context) {
           if (context.payload.name == execSocket.name) {
             return ExecSocket;
@@ -94,6 +115,8 @@ export async function createEditor(container: HTMLElement) {
   area.use(connection);
   area.use(render);
   area.use(contextMenu);
+
+  addCustomBackground(area);
 
   AreaExtensions.simpleNodesOrder(area);
   AreaExtensions.showInputControl(area);

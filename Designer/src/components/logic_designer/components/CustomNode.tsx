@@ -8,6 +8,8 @@ import { RefSocket } from '../refs/RefSocket';
 const $nodewidth = 200;
 const $socketmargin = 6;
 const $socketsize = 16;
+const $fontfamily =
+  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'";
 
 type NodeExtraData = {
   width?: number;
@@ -18,9 +20,10 @@ type NodeExtraData = {
 export const NodeStyles = styled.div<
   NodeExtraData & { selected: boolean; styles?: (props: any) => any }
 >`
-  background: #121212;
-  border: 2px solid grey;
-  border-radius: 10px;
+  background: #191c46dd;
+  border: 5px #cfc7ff solid;
+  border-radius: 25px;
+  transition: background 0.4s;
   cursor: pointer;
   box-sizing: border-box;
   width: ${props =>
@@ -39,7 +42,7 @@ export const NodeStyles = styled.div<
     `}
   .title {
     color: white;
-    font-family: sans-serif;
+    font-family: ${$fontfamily};
     font-size: 18px;
     padding: 8px;
   }
@@ -65,7 +68,7 @@ export const NodeStyles = styled.div<
     vertical-align: middle;
     color: white;
     display: inline-block;
-    font-family: sans-serif;
+    font-family: ${$fontfamily};
     font-size: 14px;
     margin: ${$socketmargin}px;
     line-height: ${$socketsize}px;
