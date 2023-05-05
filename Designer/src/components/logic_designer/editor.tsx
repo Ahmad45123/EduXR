@@ -82,7 +82,7 @@ export async function createEditor(container: HTMLElement) {
           const targetStocket = input?.socket;
 
           if (
-            sourceSocket?.name == execSocket.name &&
+            sourceSocket?.name == execSocket.name ||
             targetStocket?.name == execSocket.name
           ) {
             return ExecConnectionComponent;
