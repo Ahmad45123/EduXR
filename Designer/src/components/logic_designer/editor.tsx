@@ -34,6 +34,8 @@ import {
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
 import { execSocket } from './sockets';
 import { ExecConnectionComponent } from './components/ExecConnection';
+import { DataSocket } from './components/DataSocket';
+import { DataConnectionComponent } from './components/DataConnection';
 
 export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();
@@ -86,13 +88,13 @@ export async function createEditor(container: HTMLElement) {
             return ExecConnectionComponent;
           }
 
-          return Presets.classic.Connection;
+          return DataConnectionComponent;
         },
         socket(context) {
           if (context.payload.name == execSocket.name) {
             return ExecSocket;
           }
-          return Presets.classic.Socket;
+          return DataSocket;
         },
         control(data) {
           if (data.payload instanceof ComboBoxControl) {
