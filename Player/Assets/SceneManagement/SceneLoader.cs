@@ -44,5 +44,9 @@ namespace Assets.SceneManagement {
         void Start() {
             _db = FirebaseFirestore.DefaultInstance;
         }
+
+        void Awake() {
+            experimentName = PlayerPrefs.GetString("expname");
+        }
     }
 }

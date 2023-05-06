@@ -9,12 +9,14 @@ import {
   ListItem,
   Text,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useExperiment from '../core/hooks/useExperiment';
 import ObjectModelManager from './object_model_manager';
 
 export default function SceneManager() {
-  const { createScene, experiment, scenes } = useExperiment('myexp');
+  const { expName } = useParams();
+
+  const { createScene, scenes } = useExperiment(expName!);
 
   const addScene = () => {
     const sceneName = prompt('Enter scene name');
@@ -39,7 +41,7 @@ export default function SceneManager() {
                 <Text alignSelf="center">{scene.name}</Text>
                 <IconButton
                   aria-label="delete"
-                  onClick={() => navigate('experiment/myexp/' + scene.name)}
+                  onClick={() => navigate('scene/' + scene.name)}
                   icon={<SearchIcon />}
                 />
               </ListItem>

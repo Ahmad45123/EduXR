@@ -16,11 +16,11 @@ import SceneManager from './routes/scene_manager';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/experiment/:expName',
     element: <SceneManager />,
   },
   {
-    path: '/experiment/:expName/:sceneName',
+    path: '/experiment/:expName/scene/:sceneName',
     element: <Scene />,
   },
 ]);
