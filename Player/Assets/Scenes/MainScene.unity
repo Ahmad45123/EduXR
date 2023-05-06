@@ -10062,6 +10062,7 @@ GameObject:
   - component: {fileID: 1810998447}
   - component: {fileID: 1810998449}
   - component: {fileID: 1810998450}
+  - component: {fileID: 1810998451}
   m_Layer: 0
   m_Name: Playground
   m_TagString: Untagged
@@ -10145,7 +10146,7 @@ MonoBehaviour:
   _addNewPointsToFront: 0
   _forwardElement: {fileID: 0}
   _oneGrabTransformer: {fileID: 1810998449}
-  _twoGrabTransformer: {fileID: 0}
+  _twoGrabTransformer: {fileID: 1810998451}
   _targetTransform: {fileID: 0}
   _maxGrabPoints: -1
 --- !u!114 &1810998449
@@ -10192,6 +10193,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabebe23209c5af4a857e78cb6280927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1810998451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810998445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b80644816ce922468d6e1dc8c12daff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pivotTransform: {fileID: 1451636436}
+  _rotationAxis: 1
+  _constraints:
+    MinAngle:
+      Constrain: 0
+      Value: 0
+    MaxAngle:
+      Constrain: 0
+      Value: 0
 --- !u!1001 &1819048045
 PrefabInstance:
   m_ObjectHideFlags: 0
