@@ -1,6 +1,7 @@
 using Assets.Structures;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectManagement : MonoBehaviour
@@ -17,15 +18,11 @@ public class ObjectManagement : MonoBehaviour
         Debug.Log($"Set model of type {obj.objectModelName} to {obj.objURL}.");
     }
 
-    void CreateObject(string objectJson)
-    {
+    void CreateObject(string objectJson) {
         var obj = JsonUtility.FromJson<SceneObject>(objectJson);
-        /*if (sceneObjsDict.ContainsKey(obj.objectName)) {
-            Debug.Log($"Created duplicate object with name: ${obj.objectName}");
-            return;
-        }*/
-        obj.InitGameobject();
-        sceneObjsDict[obj.objectName] = obj;
+        if (sceneObjsDict.TryAdd(obj.objectName, obj)) {
+            obj.InitGameobject();
+        }
     }
 
     void DeleteObject(string objectName) {
