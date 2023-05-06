@@ -14,6 +14,7 @@ export interface SceneObjectState {
 export interface SceneState {
   name: string;
   index: number;
+  description: string;
   sceneLogic?: ExportedNodes;
 }
 

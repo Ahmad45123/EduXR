@@ -13,7 +13,8 @@ namespace Assets.SceneManagement.Builders {
 
         public async Task<Core.Scene> CreateSceneFromData(Models.SceneData sceneData) {
             Core.Scene scene = new() {
-                sceneObjects = new List<Object>()
+                sceneObjects = new List<Object>(),
+                Description = sceneData.description
             };
 
             foreach(var obj in sceneData.objects) {

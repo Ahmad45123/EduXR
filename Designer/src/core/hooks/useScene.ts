@@ -49,6 +49,12 @@ export default function useScene(expName: string, sceneName: string) {
     });
   }
 
+  function setDescription(description: string) {
+    updateDoc(getSceneDocRef(fsapp, expName, sceneName), {
+      description: description,
+    });
+  }
+
   function getObject(objectName: string): SceneObjectInterface {
     const object = objects.find(object => object.objectName === objectName);
 
@@ -110,5 +116,6 @@ export default function useScene(expName: string, sceneName: string) {
     addObject,
     setSceneLogic,
     getObject,
+    setDescription,
   };
 }

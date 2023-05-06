@@ -27,6 +27,7 @@ export default function useExperiment(expName: string) {
       const sceneRef = getSceneDocRef(fsapp, expName, name);
       setDoc(sceneRef, {
         name,
+        description: '',
         index: nextIndex,
       });
     }

@@ -4,6 +4,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   Select,
   Skeleton,
@@ -12,6 +13,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Textarea,
 } from '@chakra-ui/react';
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
@@ -65,6 +67,8 @@ export default function Scene() {
 
   const [tabIndex, setTabIndex] = useState(0);
 
+  const [sceneDesc, setSceneDesc] = useState(sceneCore.scene.description);
+
   return (
     <Box
       display="flex"
@@ -86,6 +90,7 @@ export default function Scene() {
             <TabList>
               <Tab>Scene Objects</Tab>
               <Tab>Scene Logic</Tab>
+              <Tab>Scene Description</Tab>
             </TabList>
             <TabPanels flexGrow="1">
               <TabPanel height="100%" display="flex" flexDirection="column" gap="1em">
@@ -135,6 +140,16 @@ export default function Scene() {
                     setSceneLogicInFirebase={sceneCore.setSceneLogic}
                   />
                 )}
+              </TabPanel>
+              <TabPanel height="100%">
+                <Heading>Description</Heading>
+                <Textarea
+                  value={sceneDesc}
+                  onChange={e => {
+                    setSceneDesc(e.target.value);
+                    sceneCore.setDescription(e.target.value);
+                  }}
+                ></Textarea>
               </TabPanel>
             </TabPanels>
           </Tabs>
