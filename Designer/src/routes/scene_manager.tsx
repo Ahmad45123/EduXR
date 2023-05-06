@@ -36,16 +36,18 @@ export default function SceneManager() {
         <CardBody>
           <Button onClick={addScene}>Create Scene</Button>
           <List width="100%">
-            {scenes.map(scene => (
-              <ListItem display="flex" gap="1em" mt="1em" key={scene.name}>
-                <Text alignSelf="center">{scene.name}</Text>
-                <IconButton
-                  aria-label="delete"
-                  onClick={() => navigate('scene/' + scene.name)}
-                  icon={<SearchIcon />}
-                />
-              </ListItem>
-            ))}
+            {scenes
+              .sort((a, b) => a.index - b.index)
+              .map(scene => (
+                <ListItem display="flex" gap="1em" mt="1em" key={scene.name}>
+                  <Text alignSelf="center">{scene.name}</Text>
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => navigate('scene/' + scene.name)}
+                    icon={<SearchIcon />}
+                  />
+                </ListItem>
+              ))}
           </List>
         </CardBody>
       </Card>

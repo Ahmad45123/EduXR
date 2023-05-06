@@ -13,16 +13,28 @@ export default function useExperiment(expName: string) {
     getScenesCollectionRef(fsapp, expName),
   );
 
-  function createScene(name: string) {
-    const sceneRef = getSceneDocRef(fsapp, expName, name);
-    setDoc(sceneRef, {
-      name,
-    });
-  }
+    function createSelf() {
+      const experimentRef = getExperimentDocRef(fsapp, expName);
+      setDoc(experimentRef, {
+        name: expName,
+      });
+    }
 
-  return {
-    experiment,
-    scenes,
-    createScene,
-  };
+    function createScene(name: string) {
+      createSelf();
+
+      let nextIndex = scenes.length + 1;
+      const sceneRef = getSceneDocRef(fsapp, expName, name);
+      setDoc(sceneRef, {
+        name,
+        index: nextIndex,
+      });
+    }
+
+    return {
+      experiment,
+      scenes,
+      createScene,
+      createSelf,
+    };
 }

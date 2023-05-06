@@ -13,6 +13,7 @@ export interface SceneObjectState {
 
 export interface SceneState {
   name: string;
+  index: number;
   sceneLogic?: ExportedNodes;
 }
 

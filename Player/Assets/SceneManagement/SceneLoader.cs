@@ -23,6 +23,8 @@ namespace Assets.SceneManagement {
                 scene = await LoadScene(scene);
                 _scenes.Add(scene);
             }
+
+            _scenes.Sort(((a, b) => a.index - b.index));
         }
 
         public async Task<SceneData> LoadScene(SceneData scene) {
