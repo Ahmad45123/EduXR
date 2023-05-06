@@ -48,7 +48,8 @@ namespace Assets.SceneManagement {
         }
 
         void Awake() {
-            experimentName = PlayerPrefs.GetString("expname");
+            if (PlayerPrefs.HasKey("expname"))
+                experimentName = PlayerPrefs.GetString("expname");
         }
     }
 }
