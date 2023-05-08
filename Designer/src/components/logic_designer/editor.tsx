@@ -76,7 +76,11 @@ export async function createEditor(container: HTMLElement) {
   );
 
   connection.addPreset(ConnectionPresets.classic.setup());
-  render.addPreset(Presets.contextMenu.setup());
+  render.addPreset(
+    Presets.contextMenu.setup({
+      delay: 0,
+    }),
+  );
 
   editor.use(area);
   area.use(connection);
