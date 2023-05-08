@@ -11,7 +11,7 @@ export class ShowMessageNode extends BaseNode {
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
 
     const x = new ClassicPreset.Input(stringSocket, 'Message');
-    x.addControl(new InputBoxControl('message', true));
+    x.addControl(new InputBoxControl('Message', true));
     this.addInput('message', x);
 
     this.addOutput('exec', new ClassicPreset.Output(execSocket, 'Exec', false));

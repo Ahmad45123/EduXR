@@ -10,7 +10,10 @@ export class SetVariableNode extends BaseNode {
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
 
     this.addControl('var', new InputBoxControl('Variable Name'));
-    this.addInput('value', new ClassicPreset.Input(numberOrStringSocket, 'Value'));
+    
+    const x = new ClassicPreset.Input(numberOrStringSocket, 'Value');
+    x.addControl(new InputBoxControl('Value'));
+    this.addInput('value', x);
 
     this.addOutput('exec', new ClassicPreset.Output(execSocket, 'Exec', false));
   }
