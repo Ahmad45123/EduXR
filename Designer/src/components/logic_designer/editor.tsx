@@ -3,71 +3,28 @@ import { createRoot } from 'react-dom/client';
 import { NodeEditor } from 'rete';
 import { AreaExtensions,AreaPlugin } from 'rete-area-plugin';
 
-import { ConnectionPlugin,Presets as ConnectionPresets } from 'rete-connection-plugin';
-import {
-ContextMenuPlugin,
-Presets as ContextMenuPresets
-} from 'rete-context-menu-plugin';
-import { Presets,ReactRenderPlugin } from 'rete-react-render-plugin';
-import { AreaExtra,Schemes } from './base_types';
+import { ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
+import { Presets, ReactRenderPlugin } from 'rete-react-render-plugin';
+import { AreaExtra, Schemes } from './base_types';
 import { CustomNode } from './components/CustomNode';
 import { ExecSocket } from './components/ExecSocket';
-import { ComboBoxControl,ComboBoxControlImpl } from './controls/ComboBoxControl';
+import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl';
 
 import { addCustomBackground } from './components/Background';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
-import {
-  CompareNode,
-  EvalNode,
-  GetPositionNode,
-  GetRotationNode,
-  GetScaleNode,
-  GotoSceneNode,
-  OnCollisionNode,
-  SceneLoadNode,
-  SceneLoopNode,
-  SetBouncinessNode,
-  SetDynamicFrictionNode,
-  SetMassNode,
-  SetPositionNode,
-  SetRotationNode,
-  SetScaleNode,
-  SetStaticFrictionNode,
-  SetVisibleNode,
-} from './nodes';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
 import { execSocket } from './sockets';
 import { ExecConnectionComponent } from './components/ExecConnection';
 import { DataSocket } from './components/DataSocket';
 import { DataConnectionComponent } from './components/DataConnection';
+import { contextMenu } from './contextmenu';
+import { CompareNode } from './nodes';
 
 export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();
   const area = new AreaPlugin<Schemes, AreaExtra>(container);
   const connection = new ConnectionPlugin<Schemes, AreaExtra>();
   const render = new ReactRenderPlugin<Schemes, AreaExtra>({ createRoot });
-  const contextMenu = new ContextMenuPlugin<Schemes>({
-    items: ContextMenuPresets.classic.setup([
-      ['SceneLoad', () => new SceneLoadNode()],
-      ['SceneLoop', () => new SceneLoopNode()],
-      ['Eval', () => new EvalNode()],
-      ['Compare', () => new CompareNode()],
-      ['OnCollision', () => new OnCollisionNode()],
-      ['GotoScene', () => new GotoSceneNode()],
-      ['GetPosition', () => new GetPositionNode()],
-      ['GetRotation', () => new GetRotationNode()],
-      ['GetScale', () => new GetScaleNode()],
-      ['SetPosition', () => new SetPositionNode()],
-      ['SetRotation', () => new SetRotationNode()],
-      ['SetScale', () => new SetScaleNode()],
-      ['SetVisible', () => new SetVisibleNode()],
-
-      ['SetMass', () => new SetMassNode()],
-      ['SetDynamicFriction', () => new SetDynamicFrictionNode()],
-      ['SetStaticFriction', () => new SetStaticFrictionNode()],
-      ['SetBounciness', () => new SetBouncinessNode()],
-    ]),
-  });
 
   AreaExtensions.selectableNodes(area, AreaExtensions.selector(), {
     accumulating: AreaExtensions.accumulateOnCtrl(),

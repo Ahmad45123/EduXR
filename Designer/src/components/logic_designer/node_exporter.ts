@@ -7,7 +7,6 @@ import { AreaExtra, BaseConnection, BaseNode, Schemes } from './base_types';
 import { BaseCustomControl } from './controls/BaseCustomControl';
 
 import {
-  AskQuestionNode,
   CompareNode,
   EvalNode,
   GetPositionNode,
@@ -15,7 +14,6 @@ import {
   GetScaleNode,
   GotoSceneNode,
   NodeType,
-  OnCollisionNode,
   SceneLoadNode,
   SceneLoopNode,
   SetBouncinessNode,
@@ -112,9 +110,6 @@ export async function importIntoEditor(
     const node = nodes[nodeId];
     let actualNode: BaseNode;
     switch (node.name) {
-      case 'OnCollision':
-        actualNode = new OnCollisionNode();
-        break;
       case 'SceneLoad':
         actualNode = new SceneLoadNode();
         break;
@@ -123,9 +118,6 @@ export async function importIntoEditor(
         break;
       case 'GotoScene':
         actualNode = new GotoSceneNode();
-        break;
-      case 'AskQuestion':
-        actualNode = new AskQuestionNode();
         break;
       case 'ShowMessage':
         actualNode = new ShowMessageNode();
