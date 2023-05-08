@@ -26,6 +26,11 @@ namespace Assets.SceneManagement.Core {
             Name = obj.name;
         }
 
+        public void Destroy() {
+            UnityEngine.Object.Destroy(_gameObject);
+            UnityEngine.Object.Destroy(_labelGameObject);
+        }
+
         public void UpdateColor(string color) {
             ColorUtility.TryParseHtmlString(color, out Color clr);
 

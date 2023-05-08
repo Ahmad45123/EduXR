@@ -25,6 +25,10 @@ namespace Assets.Logic {
             HasStartedExecuting = true;
         }
 
+        public void StopExecuting() {
+            HasStartedExecuting = false;
+        }
+
         // Update is called once per frame
         void FixedUpdate() {
             if (!HasStartedExecuting) return;

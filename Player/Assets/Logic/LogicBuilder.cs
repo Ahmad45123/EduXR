@@ -51,6 +51,7 @@ namespace Assets.Logic {
                 "ShowMessage" => new ShowMessageInstruction(inputs, controls, nextInstructs),
                 "SetObjectDescription" => new SetObjectDescriptionInstruction(inputs, controls, nextInstructs),
                 "ApplyForceOnObject" => new ApplyForceOnObjectInstruction(inputs, controls, nextInstructs),
+                "GotoScene" => new GotoSceneInstruction(inputs, controls, nextInstructs),
                 _ => throw new Exception("Unknown node type")
             };
         }

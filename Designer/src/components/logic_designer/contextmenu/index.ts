@@ -54,6 +54,7 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
         list: [
           CreateItemFromNode(new SceneLoadNode()),
           CreateItemFromNode(new SceneLoopNode()),
+          CreateItemFromNode(new GotoSceneNode()),
           {
             label: 'Get Properties',
             key: 'getproperties',

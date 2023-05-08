@@ -17,7 +17,9 @@ namespace Assets.SceneManagement.Core {
         }
 
         public void Destroy() {
-            //TODO: Add destroying logic of this scene.
+            foreach (var obj in sceneObjects) {
+                obj.Destroy();
+            }
         }
     }
 }

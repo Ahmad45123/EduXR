@@ -22,10 +22,13 @@ namespace Assets.SceneManagement {
 
         public Core.Scene currentScene;
 
-        async void SetCurrentScene(SceneData sceneData) {
+        public async void SetCurrentScene(SceneData sceneData) {
             // Delete old scene
-            if (currentScene != null)
+            logicManager.StopExecuting();
+            if (currentScene != null) {
                 currentScene.Destroy();
+                currentScene = null;
+            }
 
             // Load new one.
             currentScene = await sceneBuilder.CreateSceneFromData(sceneData);

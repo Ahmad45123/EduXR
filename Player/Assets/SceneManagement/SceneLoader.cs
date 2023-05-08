@@ -43,6 +43,10 @@ namespace Assets.SceneManagement {
             return _scenes[idx];
         }
 
+        public SceneData GetSceneWithName(string nme) {
+            return _scenes.Find(x => x.name == nme);
+        }
+
         void Start() {
             _db = FirebaseFirestore.DefaultInstance;
         }
