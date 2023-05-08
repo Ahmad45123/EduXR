@@ -26,7 +26,7 @@ namespace Assets.Logic {
         }
 
         // Update is called once per frame
-        void Update() {
+        void FixedUpdate() {
             if (!HasStartedExecuting) return;
             foreach (var instruction in _loopInstructions) {
                 instruction.Execute();
