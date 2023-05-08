@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Assets.Logic.Instructions.Properties {
     class SetScaleInstruction : ExecInstruction {
         protected override void ExecuteImpl() {
-            var obj = SceneManager.currentScene.GetObject(controls["object"]);
+            var obj = GetSceneManager().currentScene.GetObject(controls["object"]);
             var x = (float)inputs["x"].GetValue();
             var y = (float)inputs["y"].GetValue();
             var z = (float)inputs["z"].GetValue();

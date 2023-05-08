@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Misc;
+using UnityEngine;
 
 namespace Assets.Logic.Instructions {
     public abstract class DataInstruction {
@@ -17,5 +18,10 @@ namespace Assets.Logic.Instructions {
         }
 
         public abstract object GetOutput(string outputName);
+
+        protected SceneManagement.SceneManager GetSceneManager() {
+            var coreObj = GameObject.Find("CoreGameObject");
+            return coreObj.GetComponent<SceneManagement.SceneManager>();
+        }
     }
 }

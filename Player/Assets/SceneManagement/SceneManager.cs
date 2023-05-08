@@ -20,7 +20,7 @@ namespace Assets.SceneManagement {
 
         public GameObject sceneDescriptionGameObject;
 
-        public static Core.Scene currentScene;
+        public Core.Scene currentScene;
 
         async void SetCurrentScene(SceneData sceneData) {
             // Delete old scene

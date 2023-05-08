@@ -14,7 +14,7 @@ namespace Assets.Logic.Instructions.Properties {
         }
 
         protected override void ExecuteImpl() {
-            var obj = SceneManager.currentScene.GetObject(controls["object"]);
+            var obj = GetSceneManager().currentScene.GetObject(controls["object"]);
             var val = (float)inputs["value"].GetValue();
             obj.UpdateStaticFriction(val);
         }

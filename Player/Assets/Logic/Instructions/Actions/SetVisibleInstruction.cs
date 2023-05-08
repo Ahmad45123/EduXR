@@ -17,7 +17,7 @@ namespace Assets.Logic.Instructions.Actions {
         }
 
         protected override void ExecuteImpl() {
-            var obj = SceneManager.currentScene.GetObject(controls["object"]);
+            var obj = GetSceneManager().currentScene.GetObject(controls["object"]);
             var isVisible = controls["visible"] == "True";
             obj.UpdateVisible(isVisible);
         }

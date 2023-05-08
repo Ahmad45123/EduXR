@@ -14,7 +14,7 @@ namespace Assets.Logic.Instructions.Properties {
             base(inputs, parms) { }
 
         public override object GetOutput(string outputName) {
-            var obj = SceneManager.currentScene.GetObject(controls["object"]);
+            var obj = GetSceneManager().currentScene.GetObject(controls["object"]);
 
             var returnedPos = obj.GetPosition();
 
