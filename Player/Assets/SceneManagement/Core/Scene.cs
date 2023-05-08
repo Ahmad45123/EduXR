@@ -12,6 +12,10 @@ namespace Assets.SceneManagement.Core {
         public DataInstruction[] Instructions;
         public string Description;
 
+        public Object GetObject(string name) {
+            return sceneObjects.Find((x) => x.Name == name);
+        }
+
         public void Destroy() {
             //TODO: Add destroying logic of this scene.
         }

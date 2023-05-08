@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Misc;
+using Assets.SceneManagement;
 using Assets.SceneManagement.Misc;
 using UnityEngine;
 
@@ -13,11 +14,9 @@ namespace Assets.Logic.Instructions.Properties {
             base(inputs, parms) { }
 
         public override object GetOutput(string outputName) {
-            string objectName = this.controls["object"];
-            GameObject gameObject = GameObject.Find(objectName);
+            var obj = SceneManager.currentScene.GetObject(controls["object"]);
 
-            var returnedPos = PositionConverter.ToDesigner(gameObject.transform.localPosition.x,
-                gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+            var returnedPos = obj.GetPosition();
 
             return outputName switch {
                 "x" => returnedPos.x,

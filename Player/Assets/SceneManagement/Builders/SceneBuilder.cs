@@ -8,7 +8,7 @@ using UnityEngine;
 using Object = Assets.SceneManagement.Core.Object;
 
 namespace Assets.SceneManagement.Builders {
-    class SceneBuilder : MonoBehaviour {
+    public class SceneBuilder : MonoBehaviour {
         public ObjectBuilder objectBuilder;
 
         public async Task<Core.Scene> CreateSceneFromData(Models.SceneData sceneData) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.SceneManagement.Builders;
 using Assets.SceneManagement.Misc;
 using Assets.SceneManagement.Models;
 using Oculus.Interaction;
@@ -12,12 +13,14 @@ using UnityEngine;
 
 namespace Assets.SceneManagement.Core {
     public class Object {
+        public readonly string Name;
         private readonly bool _hasCustomMaterial;
         private readonly GameObject _gameObject;
 
         public Object(GameObject obj, bool customMaterial) {
             _gameObject = obj;
             _hasCustomMaterial = customMaterial;
+            Name = obj.name;
         }
 
         public void UpdateColor(string color) {
@@ -28,14 +31,25 @@ namespace Assets.SceneManagement.Core {
             }
         }
 
+        public Vector3 GetPosition() {
+            var returnedPos = PositionConverter.ToDesigner(_gameObject.transform.localPosition.x,
+                _gameObject.transform.localPosition.y, _gameObject.transform.localPosition.z);
+            return returnedPos;
+        }
         public void UpdatePosition(List<float> position) {
             _gameObject.transform.localPosition = PositionConverter.FromDesigner(position[0], position[1], position[2]);
         }
 
+        public Vector3 GetScale() {
+            return _gameObject.transform.localScale;
+        }
         public void UpdateScale(List<float> scale) {
             _gameObject.transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
         }
 
+        public Vector3 GetRotation() {
+            return _gameObject.transform.rotation.eulerAngles;
+        }
         public void UpdateRotation(List<float> rotation) {
             _gameObject.transform.rotation = Quaternion.Euler(rotation[0], rotation[1], rotation[2]);
         }
@@ -67,6 +81,10 @@ namespace Assets.SceneManagement.Core {
             handGrabInteractable.InjectPointableElement(grabable);
             handGrabInteractable.InjectRigidbody(rigidbody);
             handGrabInteractable.InjectOptionalPhysicsGrabbable(physicsGrabable);
+        }
+
+        public void UpdateVisible(bool state) {
+            _gameObject.SetActive(state);
         }
     }
 }

@@ -13,25 +13,25 @@ using Oculus.Voice.Demo.UIShapesDemo;
 using TMPro;
 
 namespace Assets.SceneManagement {
-    class SceneManager : MonoBehaviour {
+    public class SceneManager : MonoBehaviour {
         public SceneLoader sceneLoader;
         public SceneBuilder sceneBuilder;
         public LogicManager logicManager;
 
         public GameObject sceneDescriptionGameObject;
 
-        private Core.Scene _currentScene;
+        public static Core.Scene currentScene;
 
         async void SetCurrentScene(SceneData sceneData) {
             // Delete old scene
-            if (_currentScene != null)
-                _currentScene.Destroy();
+            if (currentScene != null)
+                currentScene.Destroy();
 
             // Load new one.
-            _currentScene = await sceneBuilder.CreateSceneFromData(sceneData);
+            currentScene = await sceneBuilder.CreateSceneFromData(sceneData);
 
             // Show Description First
-            ShowDescription(_currentScene.Description);
+            ShowDescription(currentScene.Description);
 
             // Start Scene
             StartSceneExecution();
@@ -41,7 +41,7 @@ namespace Assets.SceneManagement {
             List<ExecInstruction> startInstructions = new();
             List<ExecInstruction> loopInstructions = new();
 
-            foreach (var instruction in _currentScene.Instructions) {
+            foreach (var instruction in currentScene.Instructions) {
                 if (instruction is not ExecInstruction execInstruct) continue;
                 if (execInstruct.IsStartInstruction) startInstructions.Add(execInstruct);
                 if (execInstruct.IsLoopInstruction) loopInstructions.Add(execInstruct);

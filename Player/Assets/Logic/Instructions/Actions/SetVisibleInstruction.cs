@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Logic.Misc;
+using Assets.SceneManagement;
 using UnityEngine;
 
 namespace Assets.Logic.Instructions.Actions {
@@ -16,12 +17,9 @@ namespace Assets.Logic.Instructions.Actions {
         }
 
         protected override void ExecuteImpl() {
-            var gameObject = GameObject.Find(controls["object"]);
+            var obj = SceneManager.currentScene.GetObject(controls["object"]);
             var isVisible = controls["visible"] == "True";
-            var renderers = gameObject.GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderers) {
-                renderer.enabled = isVisible;
-            }
+            obj.UpdateVisible(isVisible);
         }
     }
 }
