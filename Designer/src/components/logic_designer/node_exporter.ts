@@ -11,12 +11,12 @@ import {
   CompareNode,
   EvalNode,
   EvalStringNode,
-  GetAccelerationNode,
   GetElapsedTimeNode,
   GetPositionNode,
   GetRotationNode,
   GetScaleNode,
   GetSpeedNode,
+  GetTimeSinceLastLoopNode,
   GetVariableNode,
   GotoSceneNode,
   NodeType,
@@ -184,8 +184,8 @@ export async function importIntoEditor(
       case 'ApplyForceOnObject':
         actualNode = new ApplyForceOnObjectNode();
         break;
-      case 'GetAcceleration':
-        actualNode = new GetAccelerationNode();
+      case 'GetTimeSinceLastLoopNode':
+        actualNode = new GetTimeSinceLastLoopNode();
         break;
       case 'GetSpeed':
         actualNode = new GetSpeedNode();

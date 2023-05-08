@@ -21,7 +21,7 @@ export * from './ui/SetObjectDescriptionNode';
 export * from './EvalStringNode';
 export * from './actions/ApplyForceOnObjectNode';
 export * from './properties/GetSpeedNode';
-export * from './properties/GetAccelerationNode';
+export * from './GetTimeSinceLastLoopNode';
 export * from './GetElapsedTimeNode';
 
 export type NodeType =
@@ -48,5 +48,5 @@ export type NodeType =
   | 'EvalString'
   | 'ApplyForceOnObject'
   | 'GetSpeed'
-  | 'GetAcceleration'
+  | 'GetTimeSinceLastLoopNode'
   | 'GetElapsedTime';
