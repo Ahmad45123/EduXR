@@ -26,9 +26,13 @@ import {
   OnCollisionNode,
   SceneLoadNode,
   SceneLoopNode,
+  SetBouncinessNode,
+  SetDynamicFrictionNode,
+  SetMassNode,
   SetPositionNode,
   SetRotationNode,
   SetScaleNode,
+  SetStaticFrictionNode,
   SetVisibleNode,
 } from './nodes';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
@@ -57,6 +61,11 @@ export async function createEditor(container: HTMLElement) {
       ['SetRotation', () => new SetRotationNode()],
       ['SetScale', () => new SetScaleNode()],
       ['SetVisible', () => new SetVisibleNode()],
+
+      ['SetMass', () => new SetMassNode()],
+      ['SetDynamicFriction', () => new SetDynamicFrictionNode()],
+      ['SetStaticFriction', () => new SetStaticFrictionNode()],
+      ['SetBounciness', () => new SetBouncinessNode()],
     ]),
   });
 

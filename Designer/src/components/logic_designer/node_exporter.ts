@@ -18,9 +18,13 @@ import {
   OnCollisionNode,
   SceneLoadNode,
   SceneLoopNode,
+  SetBouncinessNode,
+  SetDynamicFrictionNode,
+  SetMassNode,
   SetPositionNode,
   SetRotationNode,
   SetScaleNode,
+  SetStaticFrictionNode,
   SetVisibleNode,
   ShowMessageNode,
 } from './nodes';
@@ -152,6 +156,18 @@ export async function importIntoEditor(
         break;
       case 'SetVisible':
         actualNode = new SetVisibleNode();
+        break;
+      case 'SetBounciness':
+        actualNode = new SetBouncinessNode();
+        break;
+      case 'SetDynamicFriction':
+        actualNode = new SetDynamicFrictionNode();
+        break;
+      case 'SetMass':
+        actualNode = new SetMassNode();
+        break;
+      case 'SetStaticFriction':
+        actualNode = new SetStaticFrictionNode();
         break;
     }
     actualNode.id = nodeId;

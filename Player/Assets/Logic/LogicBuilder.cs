@@ -37,6 +37,10 @@ namespace Assets.Logic {
                 "GetRotation" => new GetRotationInstruction(inputs, controls),
                 "GetScale" => new GetScaleInstruction(inputs, controls),
                 "Eval" => new EvalInstruction(inputs, controls),
+                "SetBounciness" => new SetBouncinessInstruction(inputs, controls, nextInstructs),
+                "SetStaticFriction" => new SetStaticFrictionInstruction(inputs, controls, nextInstructs),
+                "SetDynamicFriction" => new SetDynamicFrictionInstruction(inputs, controls, nextInstructs),
+                "SetMass" => new SetMassInstruction(inputs, controls, nextInstructs),
                 _ => throw new Exception("Unknown node type")
             };
         }

@@ -9,6 +9,10 @@ export * from './properties/SetPositionNode';
 export * from './properties/SetRotationNode';
 export * from './properties/SetScaleNode';
 export * from './properties/SetVisibleNode';
+export * from './properties/SetDynamicFrictionNode';
+export * from './properties/SetMassNode';
+export * from './properties/SetStaticFrictionNode';
+export * from './properties/SetBouncinessNode';
 export * from './SceneLoadNode';
 export * from './SceneLoopNode';
 export * from './ui/AskQuestionNode';
@@ -29,4 +33,8 @@ export type NodeType =
   | 'SetPosition'
   | 'SetRotation'
   | 'SetScale'
-  | 'SetVisible';
+  | 'SetVisible'
+  | 'SetBounciness'
+  | 'SetStaticFriction'
+  | 'SetDynamicFriction'
+  | 'SetMass';

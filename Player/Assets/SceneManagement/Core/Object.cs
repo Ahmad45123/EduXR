@@ -86,5 +86,37 @@ namespace Assets.SceneManagement.Core {
         public void UpdateVisible(bool state) {
             _gameObject.SetActive(state);
         }
+
+        public void UpdateStaticFriction(float value) {
+            var colliders = _gameObject.GetComponentsInChildren<Collider>();
+            foreach (var collider in colliders) {
+                if (collider.material == null)
+                    collider.material = new PhysicMaterial();
+                collider.material.staticFriction = value;
+            }
+        }
+
+        public void UpdateDynamicFriction(float value) {
+            var colliders = _gameObject.GetComponentsInChildren<Collider>();
+            foreach (var collider in colliders) {
+                if (collider.material == null)
+                    collider.material = new PhysicMaterial();
+                collider.material.dynamicFriction = value;
+            }
+        }
+
+        public void UpdateBounciness(float value) {
+            var colliders = _gameObject.GetComponentsInChildren<Collider>();
+            foreach (var collider in colliders) {
+                if (collider.material == null)
+                    collider.material = new PhysicMaterial();
+                collider.material.bounciness = value;
+            }
+        }
+
+        public void UpdateMass(float value) {
+            var rigidBody = _gameObject.GetComponent<Rigidbody>();
+            rigidBody.mass = value;
+        }
     }
 }
