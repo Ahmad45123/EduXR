@@ -19,6 +19,10 @@ export * from './variables/GetVariableNode';
 export * from './variables/SetVariableNode';
 export * from './ui/SetObjectDescriptionNode';
 export * from './EvalStringNode';
+export * from './actions/ApplyForceOnObjectNode';
+export * from './properties/GetSpeedNode';
+export * from './properties/GetAccelerationNode';
+export * from './GetElapsedTimeNode';
 
 export type NodeType =
   | 'SceneLoad'
@@ -41,4 +45,8 @@ export type NodeType =
   | 'SetObjectDescription'
   | 'GetVariable'
   | 'SetVariable'
-  | 'EvalString';
+  | 'EvalString'
+  | 'ApplyForceOnObject'
+  | 'GetSpeed'
+  | 'GetAcceleration'
+  | 'GetElapsedTime';

@@ -7,12 +7,16 @@ import { AreaExtra, BaseConnection, BaseNode, Schemes } from './base_types';
 import { BaseCustomControl } from './controls/BaseCustomControl';
 
 import {
+  ApplyForceOnObjectNode,
   CompareNode,
   EvalNode,
   EvalStringNode,
+  GetAccelerationNode,
+  GetElapsedTimeNode,
   GetPositionNode,
   GetRotationNode,
   GetScaleNode,
+  GetSpeedNode,
   GetVariableNode,
   GotoSceneNode,
   NodeType,
@@ -176,6 +180,18 @@ export async function importIntoEditor(
         break;
       case 'SetObjectDescription':
         actualNode = new SetObjectDescriptionNode();
+        break;
+      case 'ApplyForceOnObject':
+        actualNode = new ApplyForceOnObjectNode();
+        break;
+      case 'GetAcceleration':
+        actualNode = new GetAccelerationNode();
+        break;
+      case 'GetSpeed':
+        actualNode = new GetSpeedNode();
+        break;
+      case 'GetElapsedTime':
+        actualNode = new GetElapsedTimeNode();
         break;
     }
     actualNode.id = nodeId;

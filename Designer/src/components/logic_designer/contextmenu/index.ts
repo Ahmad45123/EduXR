@@ -4,12 +4,16 @@ import { ContextMenuPlugin } from 'rete-context-menu-plugin';
 import { Schemes, AreaExtra, BaseNode } from '../base_types';
 import { Item } from 'rete-context-menu-plugin/_types/types';
 import {
+  ApplyForceOnObjectNode,
   CompareNode,
   EvalNode,
   EvalStringNode,
+  GetAccelerationNode,
+  GetElapsedTimeNode,
   GetPositionNode,
   GetRotationNode,
   GetScaleNode,
+  GetSpeedNode,
   GetVariableNode,
   GotoSceneNode,
   SceneLoadNode,
@@ -58,6 +62,8 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
               CreateItemFromNode(new GetPositionNode()),
               CreateItemFromNode(new GetRotationNode()),
               CreateItemFromNode(new GetScaleNode()),
+              CreateItemFromNode(new GetSpeedNode()),
+              CreateItemFromNode(new GetAccelerationNode()),
             ],
           },
           {
@@ -88,17 +94,21 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
             key: 'flowcontrol',
             handler: () => {},
             subitems: [
-              CreateItemFromNode(new GotoSceneNode()),
               CreateItemFromNode(new EvalNode()),
               CreateItemFromNode(new EvalStringNode()),
               CreateItemFromNode(new CompareNode()),
+              CreateItemFromNode(new GetElapsedTimeNode()),
+              CreateItemFromNode(new GotoSceneNode()),
             ],
           },
           {
             label: 'Actions',
             key: 'actions',
             handler: () => {},
-            subitems: [CreateItemFromNode(new SetVisibleNode())],
+            subitems: [
+              CreateItemFromNode(new SetVisibleNode()),
+              CreateItemFromNode(new ApplyForceOnObjectNode()),
+            ],
           },
           {
             label: 'Variables',
