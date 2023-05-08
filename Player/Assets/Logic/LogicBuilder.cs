@@ -45,6 +45,11 @@ namespace Assets.Logic {
                 "GetElapsedTime" => new GetElapsedTimeInstruction(inputs, controls),
                 "SetVariable" => new SetVariableInstruction(inputs, controls, nextInstructs),
                 "GetVariable" => new GetVariableInstruction(inputs, controls),
+                "GetSpeed" => new GetSpeedInstruction(inputs, controls),
+                "EvalString" => new EvalStringInstruction(inputs, controls),
+                "GetTimeSinceLastLoop" => new GetTimeSinceLastLoopInstruction(inputs, controls),
+                "ShowMessage" => new ShowMessageInstruction(inputs, controls, nextInstructs),
+                "SetObjectDescription" => new SetObjectDescriptionInstruction(inputs, controls, nextInstructs),
                 _ => throw new Exception("Unknown node type")
             };
         }

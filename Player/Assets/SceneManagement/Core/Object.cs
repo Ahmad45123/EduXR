@@ -9,6 +9,7 @@ using Assets.SceneManagement.Models;
 using Oculus.Interaction;
 using Oculus.Interaction.Grab.GrabSurfaces;
 using Oculus.Interaction.HandGrab;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.SceneManagement.Core {
@@ -16,9 +17,11 @@ namespace Assets.SceneManagement.Core {
         public readonly string Name;
         private readonly bool _hasCustomMaterial;
         private readonly GameObject _gameObject;
+        private readonly GameObject _labelGameObject;
 
-        public Object(GameObject obj, bool customMaterial) {
+        public Object(GameObject obj, GameObject label, bool customMaterial) {
             _gameObject = obj;
+            _labelGameObject = label;
             _hasCustomMaterial = customMaterial;
             Name = obj.name;
         }
@@ -117,6 +120,15 @@ namespace Assets.SceneManagement.Core {
         public void UpdateMass(float value) {
             var rigidBody = _gameObject.GetComponent<Rigidbody>();
             rigidBody.mass = value;
+        }
+
+        public float GetSpeed() {
+            var rigidBody = _gameObject.GetComponent<Rigidbody>();
+            return rigidBody.velocity.magnitude;
+        }
+
+        public void SetDescription(string desc) {
+            _labelGameObject.GetComponent<TextMeshPro>().text = desc;
         }
     }
 }

@@ -66,12 +66,12 @@ namespace Assets.SceneManagement.Builders {
             labelGameObject.transform.localScale = new Vector3(-1, 1, 1);
             var textMeshPro = labelGameObject.AddComponent<TextMeshPro>();
             textMeshPro.text = objectData.objectName;
-            textMeshPro.fontSize = 0.3f;
+            textMeshPro.fontSize = 0.2f;
             textMeshPro.alignment = TextAlignmentOptions.Center;
             textMeshPro.verticalAlignment = VerticalAlignmentOptions.Middle;
 
             // Create our Object
-            var obj = new Core.Object(gameObj, isCustomObj);
+            var obj = new Core.Object(gameObj, labelGameObject, isCustomObj);
             
             obj.UpdateScale(objectData.scale);
             obj.UpdateGravity(objectData.hasGravity);
