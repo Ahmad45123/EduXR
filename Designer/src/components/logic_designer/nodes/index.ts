@@ -23,6 +23,8 @@ export * from './actions/ApplyForceOnObjectNode';
 export * from './properties/GetSpeedNode';
 export * from './GetTimeSinceLastLoopNode';
 export * from './GetElapsedTimeNode';
+export * from './properties/SetColorNode';
+export * from './misc/GetDistanceBetweenNode';
 
 export type NodeType =
   | 'SceneLoad'
@@ -49,4 +51,6 @@ export type NodeType =
   | 'ApplyForceOnObject'
   | 'GetSpeed'
   | 'GetTimeSinceLastLoopNode'
-  | 'GetElapsedTime';
+  | 'GetElapsedTime'
+  | 'SetColor'
+  | 'GetDistanceBetween';

@@ -7,6 +7,7 @@ using Assets.Logic.Instructions;
 using Assets.Logic.Instructions.Actions;
 using Assets.Logic.Instructions.Core;
 using Assets.Logic.Instructions.Deciders;
+using Assets.Logic.Instructions.Misc;
 using Assets.Logic.Instructions.Mutators;
 using Assets.Logic.Instructions.Properties;
 using Assets.Logic.Instructions.Variables;
@@ -52,6 +53,8 @@ namespace Assets.Logic {
                 "SetObjectDescription" => new SetObjectDescriptionInstruction(inputs, controls, nextInstructs),
                 "ApplyForceOnObject" => new ApplyForceOnObjectInstruction(inputs, controls, nextInstructs),
                 "GotoScene" => new GotoSceneInstruction(inputs, controls, nextInstructs),
+                "SetColor" => new SetColorInstruction(inputs, controls, nextInstructs),
+                "GetDistanceBetween" => new GetDistanceBetweenInstruction(inputs, controls),
                 _ => throw new Exception("Unknown node type")
             };
         }

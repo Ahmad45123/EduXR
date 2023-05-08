@@ -140,5 +140,9 @@ namespace Assets.SceneManagement.Core {
             var rigidBody = _gameObject.GetComponent<Rigidbody>();
             rigidBody.AddForce(force);
         }
+
+        public Vector3 GetRealPosition() {
+            return _gameObject.transform.localPosition;
+        }
     }
 }

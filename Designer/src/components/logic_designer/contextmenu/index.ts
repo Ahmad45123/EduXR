@@ -29,6 +29,8 @@ import {
   SetVariableNode,
   SetVisibleNode,
   ShowMessageNode,
+  SetColorNode,
+  GetDistanceBetweenNode,
 } from '../nodes';
 
 export const contextMenu = new ContextMenuPlugin<Schemes>({
@@ -78,6 +80,7 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
               CreateItemFromNode(new SetStaticFrictionNode()),
               CreateItemFromNode(new SetDynamicFrictionNode()),
               CreateItemFromNode(new SetMassNode()),
+              CreateItemFromNode(new SetColorNode()),
             ],
           },
           {
@@ -119,6 +122,12 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
               CreateItemFromNode(new GetVariableNode()),
               CreateItemFromNode(new SetVariableNode()),
             ],
+          },
+          {
+            label: 'Msic',
+            key: 'misc',
+            handler: () => {},
+            subitems: [CreateItemFromNode(new GetDistanceBetweenNode())],
           },
         ],
       };

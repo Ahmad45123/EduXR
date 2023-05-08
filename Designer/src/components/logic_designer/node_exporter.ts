@@ -11,6 +11,7 @@ import {
   CompareNode,
   EvalNode,
   EvalStringNode,
+  GetDistanceBetweenNode,
   GetElapsedTimeNode,
   GetPositionNode,
   GetRotationNode,
@@ -23,6 +24,7 @@ import {
   SceneLoadNode,
   SceneLoopNode,
   SetBouncinessNode,
+  SetColorNode,
   SetDynamicFrictionNode,
   SetMassNode,
   SetObjectDescriptionNode,
@@ -192,6 +194,12 @@ export async function importIntoEditor(
         break;
       case 'GetElapsedTime':
         actualNode = new GetElapsedTimeNode();
+        break;
+      case 'SetColor':
+        actualNode = new SetColorNode();
+        break;
+      case 'GetDistanceBetween':
+        actualNode = new GetDistanceBetweenNode();
         break;
     }
     actualNode.id = nodeId;
