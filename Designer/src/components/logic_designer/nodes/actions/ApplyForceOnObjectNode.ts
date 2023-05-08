@@ -4,14 +4,23 @@ import { InputBoxControl } from '../../controls/InputBoxControl';
 import { execSocket, numberSocket } from '../../sockets';
 
 export class ApplyForceOnObjectNode extends BaseNode {
+  width = 300;
   constructor() {
     super('ApplyForceOnObject');
 
     this.addInput('exec', new ClassicPreset.Input(execSocket, 'Exec', true));
 
-    const x = new ClassicPreset.Input(numberSocket, 'Force In Newtons');
-    x.addControl(new InputBoxControl('value'));
-    this.addInput('value', x);
+    const x = new ClassicPreset.Input(numberSocket, 'x');
+    x.addControl(new InputBoxControl('x'));
+    this.addInput('x', x);
+
+    const y = new ClassicPreset.Input(numberSocket, 'y');
+    y.addControl(new InputBoxControl('y'));
+    this.addInput('y', y);
+
+    const z = new ClassicPreset.Input(numberSocket, 'z');
+    z.addControl(new InputBoxControl('z'));
+    this.addInput('z', z);
 
     this.addControl('object', new InputBoxControl('Object Name'));
 

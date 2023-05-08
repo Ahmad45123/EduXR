@@ -50,6 +50,7 @@ namespace Assets.Logic {
                 "GetTimeSinceLastLoop" => new GetTimeSinceLastLoopInstruction(inputs, controls),
                 "ShowMessage" => new ShowMessageInstruction(inputs, controls, nextInstructs),
                 "SetObjectDescription" => new SetObjectDescriptionInstruction(inputs, controls, nextInstructs),
+                "ApplyForceOnObject" => new ApplyForceOnObjectInstruction(inputs, controls, nextInstructs),
                 _ => throw new Exception("Unknown node type")
             };
         }

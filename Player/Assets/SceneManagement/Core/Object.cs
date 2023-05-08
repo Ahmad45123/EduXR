@@ -130,5 +130,10 @@ namespace Assets.SceneManagement.Core {
         public void SetDescription(string desc) {
             _labelGameObject.GetComponent<TextMeshPro>().text = desc;
         }
+
+        public void ApplyForce(Vector3 force) {
+            var rigidBody = _gameObject.GetComponent<Rigidbody>();
+            rigidBody.AddForce(force);
+        }
     }
 }
