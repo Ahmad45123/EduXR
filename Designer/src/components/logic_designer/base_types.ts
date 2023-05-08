@@ -19,4 +19,4 @@ export class BaseConnection extends ClassicPreset.Connection<
 > {}
 
 export type Schemes = GetSchemes<BaseNode, BaseConnection>;
-export type AreaExtra = ReactArea2D<Schemes> | ContextMenuExtra<Schemes>;
+export type AreaExtra = ReactArea2D<Schemes> | ContextMenuExtra;

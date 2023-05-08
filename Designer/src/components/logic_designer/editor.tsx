@@ -45,8 +45,8 @@ export async function createEditor(container: HTMLElement) {
   const editor = new NodeEditor<Schemes>();
   const area = new AreaPlugin<Schemes, AreaExtra>(container);
   const connection = new ConnectionPlugin<Schemes, AreaExtra>();
-  const render = new ReactRenderPlugin<Schemes>({ createRoot });
-  const contextMenu = new ContextMenuPlugin<Schemes, AreaExtra>({
+  const render = new ReactRenderPlugin<Schemes, AreaExtra>({ createRoot });
+  const contextMenu = new ContextMenuPlugin<Schemes>({
     items: ContextMenuPresets.classic.setup([
       ['SceneLoad', () => new SceneLoadNode()],
       ['SceneLoop', () => new SceneLoopNode()],
@@ -75,7 +75,6 @@ export async function createEditor(container: HTMLElement) {
 
   render.addPreset(
     Presets.classic.setup({
-      area,
       customize: {
         node(context) {
           return CustomNode;

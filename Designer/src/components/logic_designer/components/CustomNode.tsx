@@ -1,9 +1,13 @@
 import { Box } from '@chakra-ui/react';
 import { ClassicPreset } from 'rete';
-import { ClassicScheme, RenderEmit } from 'rete-react-render-plugin';
+import {
+  ClassicScheme,
+  RenderEmit,
+  Presets as ReactPresets,
+} from 'rete-react-render-plugin';
 import styled, { css } from 'styled-components';
-import { RefControl } from '../refs/RefControl';
-import { RefSocket } from '../refs/RefSocket';
+
+const { RefSocket, RefControl } = ReactPresets.classic;
 
 const $nodewidth = 200;
 const $socketmargin = 6;
