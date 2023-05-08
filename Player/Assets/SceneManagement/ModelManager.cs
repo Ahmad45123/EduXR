@@ -30,7 +30,7 @@ namespace Assets.SceneManagement {
             var downloadUrl = await pathReference.GetDownloadUrlAsync();
             using var objRequest = UnityWebRequest.Get(downloadUrl);
             await objRequest.SendWebRequest();
-            CacheManager.PutFileInCache(modelName, objRequest.downloadHandler.data);
+            CacheManager.PutFileInCache(modelName + ".glb", objRequest.downloadHandler.data);
             return objRequest.downloadHandler.data;
         }
     }
