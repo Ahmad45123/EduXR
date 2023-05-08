@@ -9,6 +9,7 @@ using Assets.Logic.Instructions.Core;
 using Assets.Logic.Instructions.Deciders;
 using Assets.Logic.Instructions.Mutators;
 using Assets.Logic.Instructions.Properties;
+using Assets.Logic.Instructions.Variables;
 using Assets.Logic.Misc;
 using Assets.SceneManagement.Models;
 
@@ -41,6 +42,9 @@ namespace Assets.Logic {
                 "SetStaticFriction" => new SetStaticFrictionInstruction(inputs, controls, nextInstructs),
                 "SetDynamicFriction" => new SetDynamicFrictionInstruction(inputs, controls, nextInstructs),
                 "SetMass" => new SetMassInstruction(inputs, controls, nextInstructs),
+                "GetElapsedTime" => new GetElapsedTimeInstruction(inputs, controls),
+                "SetVariable" => new SetVariableInstruction(inputs, controls, nextInstructs),
+                "GetVariable" => new GetVariableInstruction(inputs, controls),
                 _ => throw new Exception("Unknown node type")
             };
         }

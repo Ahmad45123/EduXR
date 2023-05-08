@@ -7636,7 +7636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abeba81e6587bac469ae716fffc8f36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experimentName: friction
+  experimentName: magnetism
 --- !u!114 &1168948299
 MonoBehaviour:
   m_ObjectHideFlags: 0

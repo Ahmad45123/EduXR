@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Assets.Logic.Instructions;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ namespace Assets.Logic {
     public class LogicManager : MonoBehaviour {
         private ExecInstruction[] _startInstructions;
         private ExecInstruction[] _loopInstructions;
+
+        public Dictionary<string, object> VariablesStore = new();
+
         public bool HasStartedExecuting { get; private set; }
 
         public void InitLogicManager(ExecInstruction[] startInstructs, ExecInstruction[] loopInstructs) {
