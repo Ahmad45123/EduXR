@@ -13,7 +13,7 @@ import { ComboBoxControl, ComboBoxControlImpl } from './controls/ComboBoxControl
 import { addCustomBackground } from './components/Background';
 import { InputBoxControl, InputBoxControlImpl } from './controls/InputBoxControl';
 import { ExportedNodes, getSceneJSON, importIntoEditor } from './node_exporter';
-import { execSocket } from './sockets';
+import { execSocket, numberOrStringSocket } from './sockets';
 import { ExecConnectionComponent } from './components/ExecConnection';
 import { DataSocket } from './components/DataSocket';
 import { DataConnectionComponent } from './components/DataConnection';
@@ -123,6 +123,9 @@ export async function createEditor(container: HTMLElement) {
 
         return context;
       }
+
+      if (sourceSocket == numberOrStringSocket || targetSocket == numberOrStringSocket)
+        return context;
 
       if (sourceSocket != targetSocket) return;
     }

@@ -6,19 +6,23 @@ import { Item } from 'rete-context-menu-plugin/_types/types';
 import {
   CompareNode,
   EvalNode,
+  EvalStringNode,
   GetPositionNode,
   GetRotationNode,
   GetScaleNode,
+  GetVariableNode,
   GotoSceneNode,
   SceneLoadNode,
   SceneLoopNode,
   SetBouncinessNode,
   SetDynamicFrictionNode,
   SetMassNode,
+  SetObjectDescriptionNode,
   SetPositionNode,
   SetRotationNode,
   SetScaleNode,
   SetStaticFrictionNode,
+  SetVariableNode,
   SetVisibleNode,
   ShowMessageNode,
 } from '../nodes';
@@ -74,7 +78,10 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
             label: 'UI',
             key: 'ui',
             handler: () => {},
-            subitems: [CreateItemFromNode(new ShowMessageNode())],
+            subitems: [
+              CreateItemFromNode(new ShowMessageNode()),
+              CreateItemFromNode(new SetObjectDescriptionNode()),
+            ],
           },
           {
             label: 'Flow Control',
@@ -83,6 +90,7 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
             subitems: [
               CreateItemFromNode(new GotoSceneNode()),
               CreateItemFromNode(new EvalNode()),
+              CreateItemFromNode(new EvalStringNode()),
               CreateItemFromNode(new CompareNode()),
             ],
           },
@@ -91,6 +99,15 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
             key: 'actions',
             handler: () => {},
             subitems: [CreateItemFromNode(new SetVisibleNode())],
+          },
+          {
+            label: 'Variables',
+            key: 'variables',
+            handler: () => {},
+            subitems: [
+              CreateItemFromNode(new GetVariableNode()),
+              CreateItemFromNode(new SetVariableNode()),
+            ],
           },
         ],
       };

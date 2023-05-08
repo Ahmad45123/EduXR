@@ -9,9 +9,11 @@ import { BaseCustomControl } from './controls/BaseCustomControl';
 import {
   CompareNode,
   EvalNode,
+  EvalStringNode,
   GetPositionNode,
   GetRotationNode,
   GetScaleNode,
+  GetVariableNode,
   GotoSceneNode,
   NodeType,
   SceneLoadNode,
@@ -19,10 +21,12 @@ import {
   SetBouncinessNode,
   SetDynamicFrictionNode,
   SetMassNode,
+  SetObjectDescriptionNode,
   SetPositionNode,
   SetRotationNode,
   SetScaleNode,
   SetStaticFrictionNode,
+  SetVariableNode,
   SetVisibleNode,
   ShowMessageNode,
 } from './nodes';
@@ -160,6 +164,18 @@ export async function importIntoEditor(
         break;
       case 'SetStaticFriction':
         actualNode = new SetStaticFrictionNode();
+        break;
+      case 'EvalString':
+        actualNode = new EvalStringNode();
+        break;
+      case 'GetVariable':
+        actualNode = new GetVariableNode();
+        break;
+      case 'SetVariable':
+        actualNode = new SetVariableNode();
+        break;
+      case 'SetObjectDescription':
+        actualNode = new SetObjectDescriptionNode();
         break;
     }
     actualNode.id = nodeId;

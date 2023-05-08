@@ -15,6 +15,10 @@ export * from './properties/SetBouncinessNode';
 export * from './SceneLoadNode';
 export * from './SceneLoopNode';
 export * from './ui/ShowMessageNode';
+export * from './variables/GetVariableNode';
+export * from './variables/SetVariableNode';
+export * from './ui/SetObjectDescriptionNode';
+export * from './EvalStringNode';
 
 export type NodeType =
   | 'SceneLoad'
@@ -33,4 +37,8 @@ export type NodeType =
   | 'SetBounciness'
   | 'SetStaticFriction'
   | 'SetDynamicFriction'
-  | 'SetMass';
+  | 'SetMass'
+  | 'SetObjectDescription'
+  | 'GetVariable'
+  | 'SetVariable'
+  | 'EvalString';

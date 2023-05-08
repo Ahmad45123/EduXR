@@ -4,7 +4,11 @@ import { BaseCustomControl } from './BaseCustomControl';
 
 export class InputBoxControl extends BaseCustomControl {
   public value: string = '';
-  constructor(public label: string, public isMultiline: boolean = false) {
+  constructor(
+    public label: string,
+    public isMultiline: boolean = false,
+    public placeholder: string = '',
+  ) {
     super();
   }
 }
@@ -26,6 +30,7 @@ export function InputBoxControlImpl(props: { data: InputBoxControl }) {
             width="100%"
             value={value}
             onPointerDown={e => e.stopPropagation()}
+            placeholder={props.data.placeholder}
             onChange={e => {
               setValue(e.target.value);
               props.data.value = e.target.value;
@@ -36,6 +41,7 @@ export function InputBoxControlImpl(props: { data: InputBoxControl }) {
             value={value}
             width="100%"
             onPointerDown={e => e.stopPropagation()}
+            placeholder={props.data.placeholder}
             onChange={e => {
               setValue(e.target.value);
               props.data.value = e.target.value;
