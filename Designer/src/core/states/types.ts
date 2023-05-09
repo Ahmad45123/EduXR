@@ -9,6 +9,7 @@ export interface SceneObjectState {
   scale: [number, number, number];
   hasGravity: boolean;
   isGrabbable: boolean;
+  showDesc: boolean;
 }
 
 export interface SceneState {

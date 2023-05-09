@@ -29,7 +29,7 @@ namespace Assets.SceneManagement {
                 bigBound.Encapsulate(rr.bounds);
             }
 
-            transform.position = new Vector3(bigBound.center.x, bigBound.max.y + 0.01f, bigBound.center.z);
+            transform.position = new Vector3(bigBound.center.x, bigBound.max.y + 0.02f, bigBound.center.z);
 
         }
     }

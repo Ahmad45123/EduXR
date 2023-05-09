@@ -18,6 +18,7 @@ export interface SceneObjectInterface {
   setGrabbable: (isGrabbable: boolean) => void;
   setColor: (color: string) => void;
   deleteSelf: () => void;
+  setShowDesc: (showDesc: boolean) => void;
 }
 
 export default function useScene(expName: string, sceneName: string) {
@@ -37,6 +38,7 @@ export default function useScene(expName: string, sceneName: string) {
       scale: [0.08, 0.08, 0.08],
       hasGravity: false,
       isGrabbable: true,
+      showDesc: true,
     };
 
     setDoc(getSceneObjectDocRef(fsapp, expName, sceneName, name), obj);
@@ -88,6 +90,12 @@ export default function useScene(expName: string, sceneName: string) {
       });
     }
 
+    function setShowDesc(showDesc: boolean) {
+      updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
+        showDesc: showDesc,
+      });
+    }
+
     function setColor(color: string) {
       updateDoc(getSceneObjectDocRef(fsapp, expName, sceneName, objectName), {
         color: color,
@@ -107,6 +115,7 @@ export default function useScene(expName: string, sceneName: string) {
       setGrabbable,
       setColor,
       deleteSelf,
+      setShowDesc,
     };
   }
 

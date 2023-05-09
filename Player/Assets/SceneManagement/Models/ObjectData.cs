@@ -17,5 +17,6 @@ namespace Assets.SceneManagement.Models {
         [FirestoreProperty] public List<float> scale { get; set; }
         [FirestoreProperty] public bool hasGravity { get; set; }
         [FirestoreProperty] public bool isGrabbable { get; set; }
+        [FirestoreProperty] public bool showDesc { get; set; }
     }
 }

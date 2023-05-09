@@ -65,8 +65,8 @@ namespace Assets.SceneManagement.Builders {
             syncComp.modelGameObject = gameObj;
             labelGameObject.transform.localScale = new Vector3(-1, 1, 1);
             var textMeshPro = labelGameObject.AddComponent<TextMeshPro>();
-            textMeshPro.text = objectData.objectName;
-            textMeshPro.fontSize = 0.2f;
+            textMeshPro.text = objectData.showDesc ? objectData.objectName : "";
+            textMeshPro.fontSize = 0.1f;
             textMeshPro.alignment = TextAlignmentOptions.Center;
             textMeshPro.verticalAlignment = VerticalAlignmentOptions.Middle;
 

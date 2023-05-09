@@ -76,6 +76,12 @@ export default function SceneObjectComp({ sceneObject }: CompProps) {
             >
               Is Grabable
             </Checkbox>
+            <Checkbox
+              isChecked={sceneObject.object?.showDesc}
+              onChange={e => sceneObject.setShowDesc(e.target.checked)}
+            >
+              Show Description
+            </Checkbox>
           </FormControl>
           <Button color="red" onClick={sceneObject.deleteSelf}>
             Delete
