@@ -31,6 +31,7 @@ import {
   ShowMessageNode,
   SetColorNode,
   GetDistanceBetweenNode,
+  SetColorRGBNode,
 } from '../nodes';
 
 export const contextMenu = new ContextMenuPlugin<Schemes>({
@@ -81,6 +82,7 @@ export const contextMenu = new ContextMenuPlugin<Schemes>({
               CreateItemFromNode(new SetDynamicFrictionNode()),
               CreateItemFromNode(new SetMassNode()),
               CreateItemFromNode(new SetColorNode()),
+              CreateItemFromNode(new SetColorRGBNode()),
             ],
           },
           {

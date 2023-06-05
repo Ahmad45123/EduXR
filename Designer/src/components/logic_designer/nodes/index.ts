@@ -24,6 +24,7 @@ export * from './properties/GetSpeedNode';
 export * from './GetTimeSinceLastLoopNode';
 export * from './GetElapsedTimeNode';
 export * from './properties/SetColorNode';
+export * from './properties/SetColorRGBNode';
 export * from './misc/GetDistanceBetweenNode';
 
 export type NodeType =
@@ -53,4 +54,5 @@ export type NodeType =
   | 'GetTimeSinceLastLoopNode'
   | 'GetElapsedTime'
   | 'SetColor'
-  | 'GetDistanceBetween';
+  | 'GetDistanceBetween'
+  | 'SetColorRGB';

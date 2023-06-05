@@ -38,6 +38,12 @@ namespace Assets.SceneManagement.Core {
                 _gameObject.GetComponent<Renderer>().material.color = clr;
             }
         }
+        
+        public void UpdateColor(float r, float g, float b) {
+            if (!_hasCustomMaterial) {
+                _gameObject.GetComponent<Renderer>().material.color = new Color(r, g, b);
+            }
+        }
 
         public Vector3 GetPosition() {
             var returnedPos = PositionConverter.ToDesigner(_gameObject.transform.localPosition.x,

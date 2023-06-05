@@ -25,6 +25,7 @@ import {
   SceneLoopNode,
   SetBouncinessNode,
   SetColorNode,
+  SetColorRGBNode,
   SetDynamicFrictionNode,
   SetMassNode,
   SetObjectDescriptionNode,
@@ -200,6 +201,9 @@ export async function importIntoEditor(
         break;
       case 'GetDistanceBetween':
         actualNode = new GetDistanceBetweenNode();
+        break;
+      case 'SetColorRGB':
+        actualNode = new SetColorRGBNode();
         break;
     }
     actualNode.id = nodeId;

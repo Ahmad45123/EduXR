@@ -54,6 +54,7 @@ namespace Assets.Logic {
                 "ApplyForceOnObject" => new ApplyForceOnObjectInstruction(inputs, controls, nextInstructs),
                 "GotoScene" => new GotoSceneInstruction(inputs, controls, nextInstructs),
                 "SetColor" => new SetColorInstruction(inputs, controls, nextInstructs),
+                "SetColorRGB" => new SetColorRGBInstruction(inputs, controls, nextInstructs),
                 "GetDistanceBetween" => new GetDistanceBetweenInstruction(inputs, controls),
                 _ => throw new Exception("Unknown node type")
             };
