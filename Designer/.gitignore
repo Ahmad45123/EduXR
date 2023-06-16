@@ -29,3 +29,5 @@ public/renderer/Build/renderer.loader.js
 public/renderer/Build/renderer.wasm
 
 .vscode
+
+src/firebaseConfig.ts
