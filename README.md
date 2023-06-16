@@ -185,7 +185,7 @@ Project Link: [https://github.com/Ahmad45123/EduXR](https://github.com/Ahmad4512
 [stars-url]: https://github.com/Ahmad45123/EduXR/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Ahmad45123/EduXR.svg?style=for-the-badge
 [issues-url]: https://github.com/Ahmad45123/EduXR/issues
-[license-shield]: https://img.shields.io/github/license/Ahmad45123/EduXR.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/Ahmad45123/EduXR.svg?style=for-the-badge&
 [license-url]: https://github.com/Ahmad45123/EduXR/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/Ahmad45123
