@@ -121,7 +121,7 @@ Briefly, you only need to do this in order to get the platform running. Please f
 ## Usage
 Unfortunately, we do not offer a public build of the Designer. You must build the source code from scratch if you want to try it out. However, a build of the player app is available in the Releases tab. **You MUST have an Oculus Quest 2 headset and know your way about installing an APK on the headset.**
 
-Some sample experiments are available on the headset for trying. These headsets were completely built using the designer. Check the thesis for details on how some of them were built.
+Some sample experiments are available on the headset for trying. These experiments were completely built using the designer. Check the thesis for details on how some of them were built.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
