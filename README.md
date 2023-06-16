@@ -26,7 +26,7 @@
   </a>
 
   <p align="center">
-    A (science) experiments designing platform where teachers can create AR/VR experiments via a visual programming language.
+    A (science) experiments designing platform where teachers can create AR experiments via a visual programming language.
     <br />
     <a href="https://github.com/Ahmad45123/EduXR/blob/main/bachelor_thesis.pdf"><strong>Explore the thesis »</strong></a>
     <br />
@@ -78,7 +78,7 @@ Thus, we suggested creating EduXR, a platform targetted for designing and playin
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 EduXR is a platform developed for teachers to create experiments in both AR and VR. The platform consists of two applications:
-1. Designer Web App: A web app that has the designer. The web app would consist of a scene editor with support for a Visual Programing Language. A unity instance would also be embedded in the web app for live preview of changes.
+1. Designer Web App: A web app that has the designer. The web app would consist of a scene editor with support for a drag and drop Visual Programing Language. A unity instance would also be embedded in the web app for live preview of changes.
 2. Player App: Built for the oculus quest and has support for hand tracking and running the scenes designed in the designer.
 
 Please check out the thesis or the video linked above for a preview on how the platform works!
