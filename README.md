@@ -103,7 +103,7 @@ The platform consists of three main applications:
 
 ### Installation
 1. First build the EditorRenderer app which is the WebGL build. This is the preview app that appears inside the designer.
-    - Building this is as simple as opening the folder `EditorRenderer` in Unity and building it targetting Unity.
+    - Building this is as simple as opening the folder `EditorRenderer` in Unity and building it targetting WebGL.
     - The built files should be placed in https://github.com/Ahmad45123/EduXR/tree/main/Designer/public/renderer where the index html file would exist at `Designer/public/renderer/index.html`.
 
 2. The designer app itself needs firebase access in order to run properly.
