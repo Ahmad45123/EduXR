@@ -6,11 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.SceneManagement.Core;
 using Assets.SceneManagement.Misc;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
 using GLTFast;
-using Oculus.Interaction.Samples;
 using TMPro;
 
 namespace Assets.SceneManagement.Builders {

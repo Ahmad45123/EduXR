@@ -92,7 +92,7 @@ namespace Assets.SceneManagement.Core {
             physicsGrabable.InjectOptionalScaleMassWithSize(true);
                 
             var handGrabInteractable = _gameObject.AddComponent<HandGrabInteractable>();
-            handGrabInteractable.InjectPointableElement(grabable);
+            handGrabInteractable.InjectOptionalPointableElement(grabable);
             handGrabInteractable.InjectRigidbody(rigidbody);
             handGrabInteractable.InjectOptionalPhysicsGrabbable(physicsGrabable);
         }

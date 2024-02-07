@@ -9,7 +9,6 @@ using Assets.Logic.Instructions;
 using Assets.SceneManagement.Builders;
 using UnityEngine;
 using Firebase.Extensions;
-using Oculus.Voice.Demo.UIShapesDemo;
 using TMPro;
 
 namespace Assets.SceneManagement {
